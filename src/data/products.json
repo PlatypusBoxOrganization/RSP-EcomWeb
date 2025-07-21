@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Earbuds Pro",
+    "price": 129.99,
+    "description": "High-quality wireless earbuds with active noise cancellation and 24-hour battery life.",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80",
+    "category": "audio"
+  },
+  {
+    "id": 2,
+    "name": "Smartphone X",
+    "price": 899.99,
+    "description": "Latest smartphone with advanced camera system and all-day battery life.",
+    "image": "https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "category": "mobile"
+  },
+  {
+    "id": 3,
+    "name": "4K Smart TV",
+    "price": 699.99,
+    "description": "55-inch 4K Ultra HD Smart TV with HDR and built-in streaming apps.",
+    "image": "https://images.unsplash.com/photo-1593305848501-dc47f225cf49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "category": "television"
+  },
+  {
+    "id": 4,
+    "name": "Gaming Laptop",
+    "price": 1499.99,
+    "description": "High-performance gaming laptop with RTX graphics and high refresh rate display.",
+    "image": "https://images.unsplash.com/photo-1593642702821-8a615e6d0dcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "category": "computers"
+  },
+  {
+    "id": 5,
+    "name": "Smart Watch Pro",
+    "price": 249.99,
+    "description": "Feature-rich smartwatch with health monitoring and smartphone notifications.",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80",
+    "category": "wearables"
+  },
+  {
+    "id": 6,
+    "name": "Wireless Headphones",
+    "price": 199.99,
+    "description": "Premium over-ear wireless headphones with active noise cancellation.",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "category": "audio"
+  },
+  {
+    "id": 7,
+    "name": "Tablet Pro",
+    "price": 499.99,
+    "description": "Powerful tablet with a stunning display and all-day battery life.",
+    "image": "https://images.unsplash.com/photo-1542751110-97427bbecf20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1384&q=80",
+    "category": "tablets"
+  },
+  {
+    "id": 8,
+    "name": "DSLR Camera",
+    "price": 1299.99,
+    "description": "Professional DSLR camera with 4K video and interchangeable lenses.",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
+    "category": "cameras"
+  }
+]
