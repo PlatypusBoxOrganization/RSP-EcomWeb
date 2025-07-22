@@ -9,7 +9,10 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import ContactUs from './pages/ContactUs';
-import History from './pages/History';
+// import History from './pages/History';
+// import Team from './pages/Team';
+// import Faq from './pages/Faq';
+// import ComplaintBox from './pages/ComplaintBox';
 
 function App() {
   return (
@@ -21,11 +24,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/contact" element={<ContactUs />} />
+              {/* <Route path="/history" element={<History />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/complaints" element={<ComplaintBox />} /> */}
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/history" element={<History />} />
             </Routes>
           </main>
           <Footer />
