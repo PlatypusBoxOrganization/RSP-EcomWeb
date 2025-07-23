@@ -56,7 +56,9 @@ const Shop = () => {
 
       <section className="max-w-7xl mx-auto ml-18 px-6 pr-0   pb-16 grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Sidebar */}
-        <FilterSidebar filters={filters} setFilters={setFilters} className="pr-10  "  />
+        <div>
+        <FilterSidebar filters={filters} setFilters={setFilters} className="pr-10"  />
+        </div>
 
         {/* Main Area */}
         <div className="md:col-span-4 ml-10 ">
