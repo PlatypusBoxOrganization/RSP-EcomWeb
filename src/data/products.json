@@ -1,66 +1,217 @@
 [
   {
     "id": 1,
-    "name": "Wireless Earbuds Pro",
-    "price": 129.99,
-    "description": "High-quality wireless earbuds with active noise cancellation and 24-hour battery life.",
-    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80",
-    "category": "audio"
+    "name": "PCB Board",
+    "category": "Electronics",
+    "price": 850,
+    "brand": "Portronics",
+    "rating": 4.3,
+    "reviewCount": 71,
+    "color": "Green",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+    "images": [
+      "/public/images/pcb-circuit.png",
+      "/public/images/QR.jpeg",
+      "/public/images/PIO.jpg"
+    ]
   },
   {
     "id": 2,
-    "name": "Smartphone X",
-    "price": 899.99,
-    "description": "Latest smartphone with advanced camera system and all-day battery life.",
-    "image": "https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    "category": "mobile"
+    "name": "Integrated Circuit",
+    "category": "Electronics",
+    "price": 240,
+    "brand": "Portronics",
+    "rating": 4.6,
+    "reviewCount": 71,
+    "color": "Yellow",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+    "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   },
   {
     "id": 3,
-    "name": "4K Smart TV",
-    "price": 699.99,
-    "description": "55-inch 4K Ultra HD Smart TV with HDR and built-in streaming apps.",
-    "image": "https://images.unsplash.com/photo-1593305848501-dc47f225cf49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    "category": "television"
+    "name": "Hospital Bed",
+    "category": "Medical",
+    "price": 9000,
+    "brand": "Portronics",
+    "rating": 4.0,
+    "reviewCount": 71,
+    "color": "Green",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   },
   {
     "id": 4,
-    "name": "Gaming Laptop",
-    "price": 1499.99,
-    "description": "High-performance gaming laptop with RTX graphics and high refresh rate display.",
-    "image": "https://images.unsplash.com/photo-1593642702821-8a615e6d0dcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    "category": "computers"
+    "name": "PCB Board",
+    "category": "Electronics",
+    "price": 850,
+    "brand": "Portronics",
+    "rating": 4.3,
+    "reviewCount": 71,
+    "color": "Red",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   },
   {
     "id": 5,
-    "name": "Smart Watch Pro",
-    "price": 249.99,
-    "description": "Feature-rich smartwatch with health monitoring and smartphone notifications.",
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80",
-    "category": "wearables"
-  },
+    "name": "Integrated Circuit",
+    "category": "Electronics",
+    "price": 240,
+    "brand": "Portronics",
+    "rating": 4.6,
+    "reviewCount": 71,
+    "color": "Green",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]  },
   {
     "id": 6,
-    "name": "Wireless Headphones",
-    "price": 199.99,
-    "description": "Premium over-ear wireless headphones with active noise cancellation.",
-    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    "category": "audio"
+    "name": "Hospital Bed",
+    "category": "Medical",
+    "price": 9000,
+    "brand": "Portronics",
+    "rating": 4.0,
+    "reviewCount": 71,
+    "color": "Blue",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   },
   {
     "id": 7,
-    "name": "Tablet Pro",
-    "price": 499.99,
-    "description": "Powerful tablet with a stunning display and all-day battery life.",
-    "image": "https://images.unsplash.com/photo-1542751110-97427bbecf20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1384&q=80",
-    "category": "tablets"
+    "name": "PCB Board",
+    "category": "Electronics",
+    "price": 850,
+    "brand": "Portronics",
+    "rating": 4.3,
+    "reviewCount": 71,
+    "color": "Red",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   },
   {
     "id": 8,
-    "name": "DSLR Camera",
-    "price": 1299.99,
-    "description": "Professional DSLR camera with 4K video and interchangeable lenses.",
-    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
-    "category": "cameras"
+    "name": "Integrated Circuit",
+    "category": "Electronics",
+    "price": 240,
+    "brand": "Portronics",
+    "rating": 4.6,
+    "reviewCount": 71,
+    "color": "Yellow",
+    "mrp": 1000,
+    "discount": 20,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]  },
+  {
+    "id": 9,
+    "name": "Hospital Bed",
+    "category": "Medical",
+    "price": 9000,
+    "brand": "Portronics",
+    "rating": 4.0,
+    "reviewCount": 71,
+    "color": "Blue",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "PCB Board",
+    "category": "Electronics",
+    "price": 850,
+    "brand": "Portronics",
+    "rating": 4.3,
+    "reviewCount": 71,
+    "color": "Yellow",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Integrated Circuit",
+    "category": "Electronics",
+    "price": 240,
+    "brand": "Portronics",
+    "rating": 4.6,
+    "reviewCount": 71,
+    "color": "Red",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+     "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]  
+  },
+  {
+    "id": 12,
+    "name": "Hospital Bed",
+    "category": "Medical",
+    "price": 9000,
+    "brand": "Portronics",
+    "rating": 4.0,
+    "reviewCount": 71,
+    "color": "Blue",
+    "discount": 20,
+    "mrp": 1000,
+    "description": "Printed Circuit Board suitable for robotics and electronics projects.",
+    "images": [
+      "/images/pcb1.jpg",
+      "/images/pcb2.jpg",
+      "/images/pcb3.jpg"
+    ]
   }
+ 
 ]
