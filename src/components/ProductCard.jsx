@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useWishlist } from '../context/WishlistContext.jsx';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { toggleWishlist, isWishlisted } = useWishlist();
+  const navigate = useNavigate();
   const handleNextImage = () => {
     setCurrentImageIndex((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
@@ -15,6 +17,9 @@ const ProductCard = ({ product }) => {
     setCurrentImageIndex((prev) =>
       prev === 0 ? product.images.length - 1 : prev - 1
     );
+  };
+  const handleQuickView = () => {
+    navigate(`/product/${product.id}`); // This id should match product.id from your JSON
   };
 
   return (
@@ -57,7 +62,10 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Rest of the ProductCard remains unchanged */}
-      <button className="mt-2 text-sm text-pink-600 bg-pink-200 p-1 flex justify-center items-center w-full hover:bg-pink-300 hover:transition duration-200">
+      <button
+        onClick={handleQuickView}
+        className="mt-2 text-sm text-pink-600 bg-pink-200 p-1 flex justify-center items-center w-full hover:bg-pink-300 hover:transition duration-200"
+      >
         Quick View
       </button>
       <h3 className="text-sm font-semibold">{product.name}</h3>

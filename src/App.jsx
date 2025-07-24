@@ -10,10 +10,11 @@ import Home from './pages/Home';
 // import Checkout from './pages/Checkout';
 import ContactUs from './pages/ContactUs';
 import History from './pages/History';
-// import Team from './pages/Team';
-// import Faq from './pages/Faq';
+import Team from './pages/Team';
+import Faq from './pages/Faq';
 // import ComplaintBox from './pages/ComplaintBox';
 import Shop from './pages/Shop';
+import ProductQuickView from './components/QuickView/ProductOverview';
 
 function App() {
   return (
@@ -26,10 +27,11 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/history" element={<History />} />
-              {/* <Route path="/team" element={<Team />} />
+               <Route path="/team" element={<Team />} />
               <Route path="/faq" element={<Faq />} />
-              <Route path="/complaints" element={<ComplaintBox />} /> */}
+             {/* <Route path="/complaints" element={<ComplaintBox />} /> */}
               <Route path="/shop" element={<Shop />} /> 
+              <Route path="/product/:id" element={<ProductQuickView />} />
               {/* <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} /> */}

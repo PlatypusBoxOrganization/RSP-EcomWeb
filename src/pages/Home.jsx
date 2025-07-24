@@ -27,7 +27,7 @@ const Home = () => {
         <h2 className="text-2xl font-bold mb-4">About Us</h2>
         <div className="flex justify-center items-center ">
           <img
-            src="/public/images/logo.jpg"
+            src="/public/images/logo.png"
             alt="About Us"
             className="relative left-25 top-2  w-20 h-20 mx-auto mb-4 rounded-full hover:shadow-lg transition duration-300"
           />

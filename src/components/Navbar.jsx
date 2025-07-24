@@ -9,11 +9,11 @@ const Navbar = () => {
         {/* Left: Logo and Brand */}
         <div className="flex items-center gap-3">
           <img
-            src="/public/images/logo.jpg" // Replace this with your logo path (public/logo.png)
+            src="/public/images/logo.png" // Replace this with your logo path (public/logo.png)
             alt="Logo"
             className="h-10 w-10 object-contain rounded-full"
           />
-          <span className="text-xl font-semibold">ElectroHive</span>
+          <span className="text-xl font-semibold">RS PORTRONICS</span>
         </div>
 
         {/* Right: Navigation Links */}

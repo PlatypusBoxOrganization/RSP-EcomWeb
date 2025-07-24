@@ -25,7 +25,7 @@ const History = () => {
 
           {/* Text */}
           
-            <div className="pl-15 z-1 col-span-2 pt-18 border-r  border-gray-300 font-bold text-white">A brief history <br /><h3 className='text-white font-bold text-2xl relative -left-2'>ElectroHive</h3></div>
+            <div className="pl-15 z-1 col-span-2 pt-18 border-r  border-gray-300 font-bold text-white">A brief history <br /><h3 className='text-white font-bold text-2xl relative -left-9'>RS PORTRONICS</h3></div>
             <div className=" z-1 col-span-6 px-10 text-sm leading-relaxed">
             Welcome to RS Portronics, we are leading distributor of electronics & robotics components, we are working towards excellence in electronics space and believe in pursuing business through innovation and technology. Our team comes with several years of industry experience and comprise of a highly motivated set of specialists & industry experts.
 

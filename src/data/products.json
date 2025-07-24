@@ -15,6 +15,11 @@
       "/public/images/pcb-circuit.png",
       "/public/images/QR.jpeg",
       "/public/images/PIO.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -33,6 +38,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -51,6 +61,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -69,6 +84,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -87,7 +107,13 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
-    ]  },
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
+    ]  
+  },
   {
     "id": 6,
     "name": "Hospital Bed",
@@ -104,6 +130,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -122,6 +153,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -140,7 +176,13 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
-    ]  },
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
+    ]
+  },
   {
     "id": 9,
     "name": "Hospital Bed",
@@ -157,6 +199,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."  
     ]
   },
   {
@@ -175,6 +222,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   },
   {
@@ -193,7 +245,12 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
-    ]  
+    ]  ,
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
+    ]
   },
   {
     "id": 12,
@@ -211,6 +268,11 @@
       "/images/pcb1.jpg",
       "/images/pcb2.jpg",
       "/images/pcb3.jpg"
+    ],
+    "highlights": [
+      "Double-Side PCB Board, 8 pins.",
+      "Compatible with 4 & 8 pin chips.",
+      "Pin pitch size 1.27mm (SO, SOP, SOIC)."
     ]
   }
  
