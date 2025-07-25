@@ -43,7 +43,7 @@ const Team = () => {
     <main className="bg-white text-gray-800">
       {/* Header */}
       <section className="text-center py-10">
-        <h1 className="text-3xl font-bold text-[#2e3a5e]">Our Team</h1>
+        <h1 className="text-3xl font-bold text-[#292355]">Our Team</h1>
       </section>
 
      {/* Team Grid with Row Separator */}
@@ -57,7 +57,7 @@ const Team = () => {
           <img
             src={member.img}
             alt={member.name}
-            className="w-28 h-28 object-cover rounded-xl shadow-md border-4 border-[#2e3a5e] hover:scale-105 transition duration-300"
+            className="w-28 h-28 object-cover rounded-xl shadow-md border-4 border-[#292355] hover:scale-105 transition duration-300"
           />
           <h3 className="mt-4 font-semibold">{member.name}</h3>
           <p className="text-sm text-gray-600">{member.role}</p>
@@ -75,10 +75,10 @@ const Team = () => {
 
 
       {/* CTA Section */}
-      <section className="max-w-md mx-auto mb-12 bg-[#2e3a5e] text-white text-center py-8 px-6 rounded-xl shadow-md">
+      <section className="max-w-md mx-auto mb-12 bg-[#292355] text-white text-center py-8 px-6 rounded-xl shadow-md">
         <h2 className="text-lg font-semibold mb-2">Join us</h2>
         <p className="text-sm mb-4">Looking for desirable and dedicated Technical Teammates</p>
-        <button className="bg-white text-[#2e3a5e] font-semibold px-6 py-2 rounded hover:bg-gray-200 transition">
+        <button className="bg-white text-[#292355] font-semibold px-6 py-2 rounded hover:bg-gray-200 transition">
           Apply now
         </button>
       </section>

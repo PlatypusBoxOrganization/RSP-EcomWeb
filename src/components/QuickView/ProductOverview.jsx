@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 import productsData from '../../data/products.json';
 import { FaHeart, FaRegHeart, FaShareAlt } from 'react-icons/fa';
 import ProductTabs from './ProductTabs';
@@ -14,6 +15,7 @@ const ProductOverview = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [wishlist, setWishlist] = useState(false);
+  const { addToCart } = useCart();
 
 
   useEffect(() => {
@@ -97,10 +99,13 @@ const ProductOverview = () => {
             onChange={(e) => setQuantity(Number(e.target.value))}
             className="border rounded px-2 py-1 w-16 text-center"
           />
-          <button className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+          <button 
+            
+            className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600"
+          >
             Buy Now
           </button>
-          <button className="border border-pink-500 text-pink-500 px-4 py-2 rounded hover:bg-pink-50">
+          <button onClick={() => addToCart({ ...product, quantity })} className="border border-pink-500 text-pink-500 px-4 py-2 rounded hover:bg-pink-50">
             Add to Cart
           </button>
         </div>

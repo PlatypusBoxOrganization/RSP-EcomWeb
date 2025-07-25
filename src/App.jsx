@@ -6,13 +6,14 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 // import Products from './pages/Products';
 // import ProductDetail from './pages/ProductDetail';
-// import Cart from './pages/Cart';
+import Wishlist from './pages/WishlistPage';
+import Cart from './pages/Cart';
 // import Checkout from './pages/Checkout';
 import ContactUs from './pages/ContactUs';
 import History from './pages/History';
 import Team from './pages/Team';
 import Faq from './pages/Faq';
-// import ComplaintBox from './pages/ComplaintBox';
+import ComplaintBox from './pages/ComplaintBox';
 import Shop from './pages/Shop';
 import ProductQuickView from './components/QuickView/ProductOverview';
 
@@ -29,12 +30,13 @@ function App() {
               <Route path="/history" element={<History />} />
                <Route path="/team" element={<Team />} />
               <Route path="/faq" element={<Faq />} />
-             {/* <Route path="/complaints" element={<ComplaintBox />} /> */}
+             <Route path="/complaints" element={<ComplaintBox />} />
               <Route path="/shop" element={<Shop />} /> 
               <Route path="/product/:id" element={<ProductQuickView />} />
-              {/* <Route path="/products/:id" element={<ProductDetail />} />
+               {/* <Route path="/products/:id" element={<ProductDetail />} /> */}
+               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} /> */}
+              {/* <Route path="/checkout" element={<Checkout />} />  */}
             </Routes>
           </main>
           <Footer />
