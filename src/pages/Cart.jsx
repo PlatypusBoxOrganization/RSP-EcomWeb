@@ -14,7 +14,7 @@ const Cart = () => {
   deliveryDate.setDate(deliveryDate.getDate() + 7);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10 px-15">
+    <div className="min-h-screen bg-gray-50 p-10 px-2">
       <h2 className="text-2xl font-bold mb-6">My Cart</h2>
       <div className="flex flex-col md:flex-row gap-4">
         {/* Cart Items */}
@@ -118,12 +118,13 @@ const Cart = () => {
               <span>₹ {cartTotal + 10 - 2000}</span>
             </div>
           </div>
-
-          <button className="bg-pink-600 text-white w-full py-2 rounded-md hover:bg-pink-700">
+          <Link to="/checkout">
+          <button className="bg-[#292355] text-white w-full py-2 rounded-md hover:bg-[#482e5e]">
             Checkout
           </button>
+          </Link>
 
-          <div className="text-xs text-gray-500">
+          <div className="text-xs text-gray-500 mt-5">
             <p>✅ Safe and secure payments</p>
             <p>🔁 Easy returns</p>
             <p>📦 100% Authentic products</p>

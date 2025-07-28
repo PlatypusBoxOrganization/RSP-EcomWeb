@@ -8,7 +8,7 @@ import Home from './pages/Home';
 // import ProductDetail from './pages/ProductDetail';
 import Wishlist from './pages/WishlistPage';
 import Cart from './pages/Cart';
-// import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout';
 import ContactUs from './pages/ContactUs';
 import History from './pages/History';
 import Team from './pages/Team';
@@ -36,7 +36,7 @@ function App() {
                {/* <Route path="/products/:id" element={<ProductDetail />} /> */}
                <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/cart" element={<Cart />} />
-              {/* <Route path="/checkout" element={<Checkout />} />  */}
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
           </main>
           <Footer />

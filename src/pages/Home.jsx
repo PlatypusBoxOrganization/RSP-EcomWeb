@@ -58,11 +58,11 @@ const Home = () => {
             <img
               src="/Images/pcb-circuit.png"
               alt="Electronic Project"
-              className="pt-10 w-4/12 sm:w-3/4 md:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
+              className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
             />
           </div>
           <div className="p-4 sm:p-6 md:p-8 -mt-8 sm:-mt-0 lg:relative lg:right-25 ">
-            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-full sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-2xl font-bold mb-3 sm:mb-4 text-center  lg:relative lg:-top-12">
+            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%]   sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-2xl font-bold mb-3 sm:mb-4 text-center relative lg:-top-12 left-15 lg:left-15">
               Electronic Projects
             </h3>
             <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6  lg:relative lg:-top-4">
@@ -80,7 +80,7 @@ const Home = () => {
         {/* Health Care */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8  items-center bg-[#292355] text-white rounded-xl sm:rounded-2xl overflow-hidden lg:overflow-visible">
           <div className="order-2 md:order-1 p-4 sm:p-6 md:p-8 -mt-8 sm:-mt-0 lg:relative lg:left-23">
-            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-full sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold mb-3 sm:mb-4 text-center lg:relative lg:-top-14">
+            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%] sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold mb-3 sm:mb-4 text-center relative lg:-top-14 left-15 lg:left-15">
               Health Care
             </h3>
             <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
@@ -96,7 +96,7 @@ const Home = () => {
             <img
               src="/Images/PIO.jpg"
               alt="Health Care"
-              className="w-4/5 sm:w-3/4 md:w-70 h-auto lg:h-60  max-h-full object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
+              className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-70 h-auto lg:h-60  max-h-full object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>
