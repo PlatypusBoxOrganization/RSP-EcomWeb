@@ -23,7 +23,7 @@ const ComplaintBox = () => {
           <div className="flex flex-col items-center border-l border-gray-300">
             <p className="mb-2 text-xl font-semibold hidden md:block">For any complaint contact us</p>
             <img
-              src="/public/images/complaint.jpg" // Replace with your image
+              src="/images/complaint.jpg" // Replace with your image
               alt="Complaint Discussion"
               className="rounded-lg shadow-md w-full max-w-md"
             />

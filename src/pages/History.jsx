@@ -23,7 +23,7 @@ const History = () => {
                 <h2 className="text-xl md:text-xl  font-bold text-white mb-2 z-10">A brief history</h2>
                 <h3 className="text-2xl md:text-2xl  font-bold text-blue-300 z-10">RS PORTRONICS</h3>
         <img 
-          src="/public/images/history-chip.jpg" 
+          src="/images/history-chip.jpg" 
           alt="" 
           className="w-250 h-38 rotate-135  relative lg:-left-15 opacity-70 lg:top-48 z-12 overflow-hidden hidden md:block"
           aria-hidden="true"
@@ -125,7 +125,7 @@ const History = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-16">
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 w-48 h-24 flex items-center justify-center">
             <img 
-              src="/public/images/platypusbox-history.png" 
+              src="/images/platypusbox-history.png" 
               alt="Platypus Box" 
               className="h-full w-auto object-contain rounded-lg"
               loading="lazy"
@@ -133,7 +133,7 @@ const History = () => {
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 w-48 h-24 flex items-center justify-center">
             <img 
-              src="/public/images/amazon-history.png" 
+              src="/images/amazon-history.png" 
               alt="Amazon" 
               className="h-full w-auto object-contain"
               loading="lazy"

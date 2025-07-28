@@ -30,7 +30,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center   max-w-6xl mx-auto">
           <div className="mb-6 sm:mb-0 sm:mr-8 flex-shrink-0">
             <img
-              src="Public/Images/logo.png"
+              src="/Images/logo.png"
               alt="About Us"
               className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full hover:shadow-lg transition duration-300"
             />
@@ -107,7 +107,7 @@ const Home = () => {
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Scan to Shop</h4>
             <img
-              src="/public/images/QR.jpeg"
+              src="/images/QR.jpeg"
               alt="QR Code"
               className="w-48 hover:shadow-lg rounded shadow transition duration-300 mx-auto"
             />
@@ -135,21 +135,21 @@ const Home = () => {
         <div className="flex flex-wrap justify-center gap-8">
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/public/images/partner1.jpeg"
+              src="/images/partner1.jpeg"
               alt="Partner 1"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/public/images/partner2.jpeg"
+              src="/images/partner2.jpeg"
               alt="Partner 2"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/public/images/partner3.jpeg"
+              src="/images/partner3.jpeg"
               alt="Partner 3"
               className="h-20"
             />
