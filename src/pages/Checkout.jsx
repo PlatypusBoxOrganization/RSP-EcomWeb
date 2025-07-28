@@ -39,13 +39,13 @@ const Checkout = () => {
                 <input type="radio" name="payment" id="amazon" className="mr-2" />
                 <label htmlFor="amazon">Use your ₹65.00 Amazon Pay Balance</label>
                 <p className="text-xs text-gray-500 pl-6">Insufficient balance. <a href="#" className="text-blue-600">Add money</a></p>
-                <div className="pl-6 mt-2">
+                <div className="mt-3 flex flex-col items-center md:items-start">
                   <input
                     type="text"
                     placeholder="Enter code"
-                    className="border px-2 py-1 rounded mr-2 items-center"
+                    className="border px-2 py-1 rounded  items-center "
                   />
-                  <button className="text-sm bg-gray-200 px-3 py-1 rounded translate-x-15 lg:translate-x-0 mt-2 lg:mt-0 ">Apply</button>
+                  <button className="text-sm w-[30%] md:w-[10%]  bg-gray-200 px-3 py-1 rounded  mt-2  ">Apply</button>
                 </div>
               </div>
 
@@ -60,7 +60,7 @@ const Checkout = () => {
               <div className="border p-4 rounded">
                 <input type="radio" name="payment" id="netbanking" className="mr-2" />
                 <label htmlFor="netbanking">Net Banking</label>
-                <div className="pl-6 mt-2">
+                <div className="pl-0 mt-2">
                   <select className="border px-3 py-1 rounded w-full sm:w-1/2">
                     <option>Choose an option</option>
                     <option>HDFC</option>
