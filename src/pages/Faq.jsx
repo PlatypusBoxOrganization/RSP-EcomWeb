@@ -19,7 +19,7 @@ const Faq = () => {
       {/* FAQ Content */}
       <section className="max-w-6xl mx-auto px-6 lg:px-0 py-12  items-start">
         {/* Questions */}
-        <div className="lg:relative lg:-top-40 lg:space-y-6 z-2">
+        <div className="relative lg:-top-40 lg:space-y-6 z-2">
           <div>
             <h3 className="font-bold">What is the purpose of our company?</h3>
             <p className="text-sm/7 mt-1">
