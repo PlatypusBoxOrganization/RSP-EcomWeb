@@ -97,9 +97,9 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
-            <li>
+            {/* <li>
               <FaSearch className="cursor-pointer hover:text-blue-400 text-lg" />
-            </li>
+            </li> */}
             
             {/* Auth Buttons - Desktop */}
             {user ? (

@@ -57,7 +57,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
   };
 
   return (
-    <aside className="hidden md:block  p-4 rounded-lg bg-white shadow-sm w-64  ">
+    <aside className="p-4 rounded-lg bg-white shadow-sm w-full md:w-64 relative z-10">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-semibold text-lg">Filters</h3>
         <button

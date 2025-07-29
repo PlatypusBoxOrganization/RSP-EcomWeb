@@ -16,6 +16,7 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState("popularity");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     setProducts(productsData);
@@ -31,6 +32,18 @@ const Shop = () => {
 
   const applyFilters = () => {
     return products
+      .filter(product => {
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase();
+          return (
+            product.name.toLowerCase().includes(query) ||
+            product.category.toLowerCase().includes(query) ||
+            product.brand.toLowerCase().includes(query) ||
+            (product.description && product.description.toLowerCase().includes(query))
+          );
+        }
+        return true;
+      })
       .filter((product) =>
         filters.category ? product.category === filters.category : true
       )
@@ -62,11 +75,31 @@ const Shop = () => {
       {/* Header Section */}
       <section className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Shop Products</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            {productCount} {productCount === 1 ? 'Product' : 'Products'} Found
-            {activeFiltersCount > 0 && ` • ${activeFiltersCount} active filter${activeFiltersCount > 1 ? 's' : ''}`}
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Shop Products</h1>
+              <p className="mt-1 text-sm text-gray-500">
+                {productCount} {productCount === 1 ? 'Product' : 'Products'} Found
+                {activeFiltersCount > 0 && ` • ${activeFiltersCount} active filter${activeFiltersCount > 1 ? 's' : ''}`}
+              </p>
+            </div>
+            
+            {/* Search Bar */}
+            <div className="relative w-full md:w-80">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
           
           {/* Mobile Filter Button */}
           <div className="mt-4 md:hidden">
@@ -94,54 +127,58 @@ const Shop = () => {
           {isMobileFilterOpen && (
             <div className="fixed inset-0 z-50 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                {/* Overlay */}
                 <div 
-                  className="fixed inset-0 transition-opacity" 
+                  className="fixed inset-0 bg-gray-100/70 bg-opacity-10 transition-opacity" 
                   aria-hidden="true" 
                   onClick={() => setIsMobileFilterOpen(false)}
-                >
-                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
+                ></div>
 
-                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                  <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Filters</h3>
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-gray-500"
-                        onClick={() => setIsMobileFilterOpen(false)}
-                      >
-                        <FaTimes className="h-6 w-6" />
-                      </button>
+                {/* Modal Container */}
+                <div className="fixed inset-0 z-10 overflow-y-auto">
+                  <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-full max-w-lg">
+                      <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div className="flex justify-between items-center mb-4">
+                          <h3 className="text-lg leading-6 font-medium text-gray-900">Filters</h3>
+                          <button
+                            type="button"
+                            className="text-gray-400 hover:text-gray-500"
+                            onClick={() => setIsMobileFilterOpen(false)}
+                          >
+                            <FaTimes className="h-6 w-6" />
+                          </button>
+                        </div>
+                        <div className="mt-4">
+                          <FilterSidebar filters={filters} setFilters={setFilters} />
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button
+                          type="button"
+                          onClick={() => setIsMobileFilterOpen(false)}
+                          className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                        >
+                          Apply Filters
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setFilters({
+                              category: "",
+                              brand: "",
+                              priceRange: [0, 20000],
+                              colors: [],
+                              discount: ""
+                            });
+                            setIsMobileFilterOpen(false);
+                          }}
+                          className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                        >
+                          Clear All
+                        </button>
+                      </div>
                     </div>
-                    <div className="mt-4">
-                      <FilterSidebar filters={filters} setFilters={setFilters} />
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button
-                      type="button"
-                      onClick={() => setIsMobileFilterOpen(false)}
-                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
-                      Apply Filters
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setFilters({
-                          category: "",
-                          brand: "",
-                          priceRange: [0, 20000],
-                          colors: [],
-                          discount: ""
-                        });
-                        setIsMobileFilterOpen(false);
-                      }}
-                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
-                      Clear All
-                    </button>
                   </div>
                 </div>
               </div>
