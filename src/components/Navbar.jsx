@@ -244,7 +244,7 @@ const Navbar = () => {
                 </div>
               )}
               
-              <div className="pt-4 mt-4 border-t border-gray-800">
+              {/* <div className="pt-4 mt-4 border-t border-gray-800">
                 <div className="relative">
                   <input
                     type="text"
@@ -253,7 +253,7 @@ const Navbar = () => {
                   />
                   <FaSearch className="absolute right-3 top-3 text-gray-400" />
                 </div>
-              </div>
+              </div> */}
             </nav>
           </div>
         </div>
