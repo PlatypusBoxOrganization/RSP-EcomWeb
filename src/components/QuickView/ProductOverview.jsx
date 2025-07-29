@@ -135,10 +135,10 @@ const ProductOverview = () => {
 
       </div> 
     </div>
-    <div className="px-20">
+    <div className="md:px-20">
       <ProductTabs product={product} />
     </div>
-    <div className='px-10 w-full'>
+    <div className='md:px-10 w-full '>
     <RecommendationSection currentProduct={product} />
     </div>
     </>
