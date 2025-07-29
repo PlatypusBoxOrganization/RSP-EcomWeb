@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { FaFilter, FaTimes, FaChevronDown } from "react-icons/fa";
 import productsData from "../data/products.json";
 import ProductCard from "../components/ProductCard";
 import FilterSidebar from "../components/FilterSidebar";
+import OptimizedImage from "../components/OptimizedImage";
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(productsData);
   const [filters, setFilters] = useState({
     category: "",
     brand: "",
@@ -15,60 +16,72 @@ const Shop = () => {
   });
   const [sortBy, setSortBy] = useState("popularity");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [activeFiltersCount, setActiveFiltersCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    setProducts(productsData);
-    // Calculate active filters count
+  // Memoize active filters count
+  const activeFiltersCount = useMemo(() => {
     let count = 0;
     if (filters.category) count++;
     if (filters.brand) count++;
     if (filters.priceRange[0] > 0 || filters.priceRange[1] < 20000) count++;
     if (filters.colors.length > 0) count++;
     if (filters.discount) count++;
-    setActiveFiltersCount(count);
+    return count;
   }, [filters]);
 
-  const applyFilters = () => {
-    return products
-      .filter(product => {
-        if (searchQuery) {
-          const query = searchQuery.toLowerCase();
-          return (
-            product.name.toLowerCase().includes(query) ||
-            product.category.toLowerCase().includes(query) ||
-            product.brand.toLowerCase().includes(query) ||
-            (product.description && product.description.toLowerCase().includes(query))
-          );
-        }
-        return true;
-      })
-      .filter((product) =>
-        filters.category ? product.category === filters.category : true
-      )
-      .filter((product) =>
-        filters.brand ? product.brand === filters.brand : true
-      )
-      .filter(
-        (product) =>
-          product.price >= filters.priceRange[0] &&
-          product.price <= filters.priceRange[1]
-      )
-      .filter((product) =>
-        filters.colors.length > 0
-          ? filters.colors.includes(product.color)
-          : true
-      )
-      .filter((product) =>
-        filters.discount
-          ? product.discount >= parseInt(filters.discount)
-          : true
-      );
-  };
+  // Memoize filtered products
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      // Search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const matchesSearch = 
+          product.name.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query) ||
+          product.brand.toLowerCase().includes(query) ||
+          (product.description && product.description.toLowerCase().includes(query));
+        
+        if (!matchesSearch) return false;
+      }
 
-  const filteredProducts = applyFilters();
+      // Other filters
+      if (filters.category && product.category !== filters.category) return false;
+      if (filters.brand && product.brand !== filters.brand) return false;
+      if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) return false;
+      if (filters.colors.length > 0 && !filters.colors.includes(product.color)) return false;
+      if (filters.discount && (!product.discount || product.discount < parseInt(filters.discount))) return false;
+      
+      return true;
+    });
+  }, [products, searchQuery, filters]);
+
+  // Memoize sorted products
+  const sortedProducts = useMemo(() => {
+    return [...filteredProducts].sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low-high':
+          return a.price - b.price;
+        case 'price-high-low':
+          return b.price - a.price;
+        case 'popularity':
+        default:
+          return (b.rating || 0) - (a.rating || 0);
+      }
+    });
+  }, [filteredProducts, sortBy]);
+
   const productCount = filteredProducts.length;
+  
+  // Memoize the filter reset function
+  const resetFilters = useCallback(() => {
+    setFilters({
+      category: "",
+      brand: "",
+      priceRange: [0, 20000],
+      colors: [],
+      discount: ""
+    });
+  }, []);
 
   return (
     <main className="bg-gray-50 min-h-screen">
@@ -150,7 +163,11 @@ const Shop = () => {
                           </button>
                         </div>
                         <div className="mt-4">
-                          <FilterSidebar filters={filters} setFilters={setFilters} />
+                          <FilterSidebar 
+                            filters={filters} 
+                            setFilters={setFilters} 
+                            onReset={resetFilters}
+                          />
                         </div>
                       </div>
                       <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -235,10 +252,13 @@ const Shop = () => {
             </div>
 
             {/* Product Grid */}
-            {filteredProducts.length > 0 ? (
+            {sortedProducts.length > 0 ? (
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product}  />
+                {sortedProducts.map((product) => (
+                  <ProductCard 
+                    key={`${product.id}-${product.name}`} 
+                    product={product}
+                  />
                 ))}
               </div>
             ) : (

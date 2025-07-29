@@ -1,5 +1,17 @@
-import React from "react";
+import React, { useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
+import OptimizedImage from "../components/OptimizedImage";
+
+// Lazy load heavy components
+const LazyBanner = lazy(() => import('../components/Banner'));
+const LazyFeatureCards = lazy(() => import('../components/FeatureCards'));
+
+// Loading component
+const Loading = () => (
+  <div className="flex items-center justify-center min-h-[200px]">
+    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 const Home = () => {
   return (
@@ -97,11 +109,14 @@ const Home = () => {
             </button>
             </Link>
           </div>
-          <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80  lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8">
-            <img
+          <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
+            <OptimizedImage
               src="/Images/PIO.jpg"
               alt="Health Care"
-              className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-70 h-auto lg:h-60  max-h-full object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
+              width="100%"
+              height="100%"
+              className="pt-10 md:pt-0 w-full h-full object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
+              effect="blur"
             />
           </div>
         </div>
