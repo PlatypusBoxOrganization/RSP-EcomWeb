@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -71,9 +72,11 @@ const Home = () => {
               customization. We support All Layers PCB (1-20) with custom Copper layer (1oz - 4oz).
               Customized IOT Modules for Automotive and Home Automation.
             </p>
+            <Link to="/shop" >
             <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base px-4 py-1.5 sm:px-5 sm:py-2 rounded transition-colors">
-              View Details
+              View Items
             </button>
+            </Link>
           </div>
         </div>
 
@@ -88,9 +91,11 @@ const Home = () => {
               hospitals. We use best Quality SS and MS sheets and pipes for long-lasting
               reliability.
             </p>
+            <Link to="/shop" >
             <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base px-4 py-1.5 sm:px-5 sm:py-2 rounded transition-colors">
               View Items
             </button>
+            </Link>
           </div>
           <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80  lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8">
             <img
