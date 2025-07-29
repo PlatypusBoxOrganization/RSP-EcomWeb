@@ -1,12 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaSearch, FaTimes, FaBars, FaShoppingCart, FaHeart } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaSearch, FaTimes, FaBars, FaShoppingCart, FaHeart, FaUser, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { items: cartItems } = useCart();
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const userMenuRef = useRef(null);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+    setIsOpen(false);
+    navigate('/');
+  };
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -36,6 +60,9 @@ const Navbar = () => {
     { to: "/wishlist", text: "Wishlist" },
     { to: "/cart", text: "My Cart" },
   ];
+
+  // Only show login link, signup will be available on the login page
+  const loginLink = { to: "/login", text: "Login" };
 
   return (
     <>
@@ -73,6 +100,52 @@ const Navbar = () => {
             <li>
               <FaSearch className="cursor-pointer hover:text-blue-400 text-lg" />
             </li>
+            
+            {/* Auth Buttons - Desktop */}
+            {user ? (
+              <li className="relative" ref={userMenuRef}>
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center space-x-1 hover:text-blue-400 focus:outline-none"
+                >
+                  <FaUserCircle className="h-6 w-6" />
+                  <span className="text-sm">{user.name || 'Account'}</span>
+                </button>
+                
+                {/* User Dropdown */}
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-sm text-gray-700">
+                        {user.phone ? `+91 ${user.phone}` : 'Welcome'}
+                      </p>
+                    </div>
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <FaUser className="inline mr-2" /> Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <FaSignOutAlt className="inline mr-2" /> Logout
+                    </button>
+                  </div>
+                )}
+              </li>
+            ) : (
+              <li>
+                <Link
+                  to={loginLink.to}
+                  className="px-3 py-1 rounded-md hover:text-blue-400"
+                >
+                  {loginLink.text}
+                </Link>
+              </li>
+            )}
           </ul>
 
           {/* Mobile menu button */}
@@ -132,6 +205,45 @@ const Navbar = () => {
                   {link.text}
                 </Link>
               ))}
+              {/* Login Button - Mobile */}
+              {!user && (
+                <div className="pt-2">
+                  <Link
+                    to={loginLink.to}
+                    className="block w-full text-center px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {loginLink.text}
+                  </Link>
+                </div>
+              )}
+              
+              {user && (
+                <div className="pt-2 space-y-2 border-t border-gray-800">
+                  <div className="px-4 py-2">
+                    <p className="text-sm text-gray-300">
+                      {user.phone ? `+91 ${user.phone}` : 'Welcome'}
+                    </p>
+                  </div>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FaUser className="inline mr-2" /> Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
+                  >
+                    <FaSignOutAlt className="inline mr-2" /> Logout
+                  </button>
+                </div>
+              )}
+              
               <div className="pt-4 mt-4 border-t border-gray-800">
                 <div className="relative">
                   <input
