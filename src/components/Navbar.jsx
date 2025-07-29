@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaSearch, FaTimes, FaBars, FaShoppingCart, FaHeart } from "react-icons/fa";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
+  const { items: cartItems } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -58,8 +60,13 @@ const Navbar = () => {
           <ul className="hidden md:flex items-center space-x-4 lg:space-x-6 text-sm font-medium">
             {navLinks.map((link) => (
               <li key={link.to}>
-                <Link to={link.to} className="hover:text-blue-400 px-2 py-1">
+                <Link to={link.to} className="hover:text-blue-400 px-2 py-1 flex items-center">
                   {link.text}
+                  {link.text === 'My Cart' && cartItems.length > 0 && (
+                    <span className="ml-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                      {cartItems.length}
+                    </span>
+                  )}
                 </Link>
               </li>
             ))}
@@ -74,7 +81,14 @@ const Navbar = () => {
               <FaHeart className="h-5 w-5" />
             </Link>
             <Link to="/cart" className="text-white hover:text-blue-400">
-              <FaShoppingCart className="h-5 w-5" />
+              <div className="relative">
+                <FaShoppingCart className="h-5 w-5" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {cartItems.length}
+                  </span>
+                )}
+              </div>
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
