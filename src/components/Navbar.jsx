@@ -76,7 +76,7 @@ const Navbar = () => {
           {/* Left: Logo and Brand */}
           <div className="flex items-center gap-3">
             <img
-              src="/Images/logo.webp"
+              src="/logo.webp"
               alt="Logo"
               className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-full"
             />
