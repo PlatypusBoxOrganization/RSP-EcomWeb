@@ -7,7 +7,23 @@
   port = 5173  # Default Vite port
   publish = "dist"
 
+# Handle SPA routing - redirect all requests to index.html except for static files
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false  # Don't override existing files
+  conditions = {Type = "request"}
+
+# Explicitly serve static files
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
