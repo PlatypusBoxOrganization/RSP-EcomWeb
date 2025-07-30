@@ -19,7 +19,7 @@ const Home = () => {
       {/* Hero Section */}
       <section
         className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center  bg-cover bg-center"
-        style={{ backgroundImage: "url('/Images/Main-banner.webp')" }}
+        style={{ backgroundImage: "url('/Images/Main-banner.jpg')" }}
       >
         <div className="bg-black/50 w-full h-full absolute top-0 left-0"></div>
         <div className="relative z-10 text-center  px-4  bg-blue-400/10 flex flex-col items-center  py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:px-8">
