@@ -18,11 +18,11 @@ const Home = () => {
     <main className="font-sans text-gray-800">
       {/* Hero Section */}
       <section
-        className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center sm:justify-start sm:pl-5 bg-cover bg-center"
-        style={{ backgroundImage: "url('/Images/Main-banner.jpg')" }}
+        className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center  bg-cover bg-center"
+        style={{ backgroundImage: "url('/Images/Main-banner.webp')" }}
       >
         <div className="bg-black/50 w-full h-full absolute top-0 left-0"></div>
-        <div className="relative z-10 text-center sm:text-left px-4 sm:px-6 bg-blue-400/10 flex flex-col items-center sm:items-start py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:pr-16">
+        <div className="relative z-10 text-center  px-4  bg-blue-400/10 flex flex-col items-center  py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:pr-16">
           <h1 className="text-2xl sm:text-4xl md:text-4xl font-bold leading-tight">
             Making Advance Technology
           </h1>
@@ -43,7 +43,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center   max-w-6xl mx-auto">
           <div className="mb-6 sm:mb-0 sm:mr-8 flex-shrink-0">
             <img
-              src="/Images/logo.png"
+              src="/Images/logo.webp"
               alt="About Us"
               className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full hover:shadow-lg transition duration-300"
             />
@@ -69,7 +69,7 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 lg:mb-30 sm:mb-16 items-center bg-[#292355] text-white rounded-xl sm:rounded-2xl overflow-hidden lg:overflow-visible ">
           <div className="relative w-full h-40 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:ml-30  rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8">
             <img
-              src="/Images/pcb-circuit.png"
+              src="/Images/pcb-circuit.webp"
               alt="Electronic Project"
               className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
             />
@@ -86,7 +86,7 @@ const Home = () => {
             </p>
             <Link to="/shop" >
             <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base px-4 py-1.5 sm:px-5 sm:py-2 rounded transition-colors">
-              View Items
+              Quote Us
             </button>
             </Link>
           </div>
@@ -111,7 +111,7 @@ const Home = () => {
           </div>
           <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
             <OptimizedImage
-              src="/Images/PIO.jpg"
+              src="/Images/PIO.webp"
               alt="Health Care"
               width="100%"
               height="100%"
@@ -127,13 +127,15 @@ const Home = () => {
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Scan to Shop</h4>
             <img
-              src="/images/QR.jpeg"
+              src="/images/QR.webp"
               alt="QR Code"
               className="w-48 hover:shadow-lg rounded shadow transition duration-300 mx-auto"
             />
+            <Link to="/shop" >
             <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
               Shop Now
             </button>
+            </Link>
           </div>
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Product Demo</h4>
@@ -151,25 +153,25 @@ const Home = () => {
       </section>
       {/* Partners */}
       <section className="py-12 bg-gray-100 px-6">
-        <h2 className="text-2xl font-bold text-center mb-8">Our Partners</h2>
+        <h2 className="text-2xl font-bold text-center mb-8">Trusted By</h2>
         <div className="flex flex-wrap justify-center gap-8">
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner1.jpeg"
+              src="/images/partner1.webp"
               alt="Partner 1"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner2.jpeg"
+              src="/images/partner2.webp"
               alt="Partner 2"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner3.jpeg"
+              src="/images/partner3.webp"
               alt="Partner 3"
               className="h-20"
             />
