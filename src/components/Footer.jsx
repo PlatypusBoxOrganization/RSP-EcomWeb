@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="md:col-span-2 lg:col-span-1">
             <div className="flex items-center mb-4">
               <img 
-                src="/logo.webp" 
+                src="/Images/logo.webp" 
                 alt="ElectroHive Logo" 
                 className="h-10 w-10 sm:h-12 sm:w-12 mr-3 object-contain"
               />

@@ -43,7 +43,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center   max-w-6xl mx-auto">
           <div className="mb-6 sm:mb-0 sm:mr-8 flex-shrink-0">
             <img
-              src="/logo.webp"
+              src="/Images/logo.webp"
               alt="About Us"
               className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full hover:shadow-lg transition duration-300"
             />
