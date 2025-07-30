@@ -29,7 +29,7 @@ const Cart = () => {
               >
                 <div className="flex items-start gap-4">
                   <img
-                    src={item.images?.[0] || '/images/placeholder.webp'}
+                    src={item.images?.[0] || '/Images/placeholder.webp'}
                     alt={item.name}
                     className="w-20 h-20 object-contain"
                   />

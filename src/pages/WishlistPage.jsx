@@ -43,7 +43,7 @@ const WishlistPage = () => {
               
               <button
                 type="button"
-                className="px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-[#292355] bg-white border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#292355] transition-colors"
+                className="px-6 py-3 border  rounded-md shadow-sm text-base font-medium text-[#292355] bg-white border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#292355] transition-colors"
               >
                 Share Wishlist
               </button>
