@@ -1,9 +1,19 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import { FixedSizeGrid as Grid } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import { FaFilter, FaTimes, FaChevronDown } from "react-icons/fa";
+import debounce from 'lodash.debounce';
 import productsData from "../data/products.json";
-import ProductCard from "../components/ProductCard";
-import FilterSidebar from "../components/FilterSidebar";
+const ProductCard = lazy(() => import('../components/ProductCard'));
+const FilterSidebar = lazy(() => import('../components/FilterSidebar'));
 import OptimizedImage from "../components/OptimizedImage";
+
+// Fallback component for lazy loading
+const LoadingFallback = () => (
+  <div className="flex justify-center items-center h-64">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 const Shop = () => {
   const [products, setProducts] = useState(productsData);
@@ -17,6 +27,7 @@ const Shop = () => {
   const [sortBy, setSortBy] = useState("popularity");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 
   // Memoize active filters count
   const activeFiltersCount = useMemo(() => {
@@ -29,12 +40,28 @@ const Shop = () => {
     return count;
   }, [filters]);
 
+  // Debounce search input
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      setDebouncedSearchQuery(query);
+    }, 300),
+    []
+  );
+
+  // Update debounced search query when searchQuery changes
+  const handleSearchChange = (e) => {
+    const { value } = e.target;
+    setSearchQuery(value);
+    debouncedSearch(value);
+  };
+
   // Memoize filtered products
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       // Search filter
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
+      if (debouncedSearchQuery) {
+        const query = debouncedSearchQuery.toLowerCase();
         const matchesSearch = 
           product.name.toLowerCase().includes(query) ||
           product.category.toLowerCase().includes(query) ||
@@ -70,6 +97,24 @@ const Shop = () => {
     });
   }, [filteredProducts, sortBy]);
 
+  // Virtualized grid cell renderer
+  const Cell = ({ columnIndex, rowIndex, style }) => {
+    const index = rowIndex * 4 + columnIndex;
+    if (index >= sortedProducts.length) return null;
+    
+    const product = sortedProducts[index];
+    return (
+      <div style={style} className="px-2 py-2">
+        <Suspense fallback={<div className="h-64 bg-gray-100 rounded-lg animate-pulse"></div>}>
+          <ProductCard 
+            key={`${product.id}-${product.name}`} 
+            product={product}
+          />
+        </Suspense>
+      </div>
+    );
+  };
+
   const productCount = filteredProducts.length;
   
   // Memoize the filter reset function
@@ -85,6 +130,7 @@ const Shop = () => {
 
   return (
     <main className="bg-gray-50 min-h-screen">
+      <Suspense fallback={<LoadingFallback />}>
       {/* Header Section */}
       <section className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -109,7 +155,7 @@ const Shop = () => {
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Search products..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearchChange}
               />
             </div>
           </div>
@@ -251,16 +297,34 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Product Grid */}
-            {sortedProducts.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                {sortedProducts.map((product) => (
-                  <ProductCard 
-                    key={`${product.id}-${product.name}`} 
-                    product={product}
-                  />
-                ))}
-              </div>
+            {/* Virtualized Product Grid */}
+          {sortedProducts.length > 0 ? (
+            <div className="h-[calc(100vh-300px)] w-full">
+              <AutoSizer>
+                {({ height, width }) => {
+                  // Calculate number of columns based on container width
+                  const columnCount = width < 640 ? 2 : width < 1024 ? 3 : 4;
+                  const rowCount = Math.ceil(sortedProducts.length / columnCount);
+                  const columnWidth = width / columnCount;
+                  const rowHeight = 500; // Adjust based on your card height
+
+                  return (
+                    <Grid
+                      columnCount={columnCount}
+                      columnWidth={columnWidth}
+                      height={height}
+                      rowCount={rowCount}
+                      rowHeight={rowHeight}
+                      width={width}
+                      itemData={sortedProducts}
+                      className="scrollbar-hide"
+                    >
+                      {Cell}
+                    </Grid>
+                  );
+                }}
+              </AutoSizer>
+            </div>
             ) : (
               <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-gray-100">
@@ -292,6 +356,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
+      </Suspense>
     </main>
   );
 };
