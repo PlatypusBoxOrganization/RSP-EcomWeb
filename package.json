@@ -17,6 +17,7 @@
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
     "compression": "^1.8.1",
     "express": "^5.1.0",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
