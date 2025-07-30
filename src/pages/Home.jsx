@@ -22,7 +22,7 @@ const Home = () => {
         style={{ backgroundImage: "url('/Images/Main-banner.webp')" }}
       >
         <div className="bg-black/50 w-full h-full absolute top-0 left-0"></div>
-        <div className="relative z-10 text-center  px-4  bg-blue-400/10 flex flex-col items-center  py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:pr-16">
+        <div className="relative z-10 text-center  px-4  bg-blue-400/10 flex flex-col items-center  py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:px-8">
           <h1 className="text-2xl sm:text-4xl md:text-4xl font-bold leading-tight">
             Making Advance Technology
           </h1>
