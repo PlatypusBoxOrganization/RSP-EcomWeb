@@ -6,7 +6,7 @@ const features = [
   {
     title: 'Electronic Projects',
     description: 'Best Quality PCB Fabrication Service for Aerospace, Medical Departments and defense. Our company has Experienced Engineers for PCB Designing and customization. We support All Layers PCB (1-20) with custom Copper layer (1oz - 4oz). Customized IOT Modules for Automotive and Home Automation.',
-    image: '/Images/pcb-circuit.png',
+    image: '/Images/pcb-circuit.webp',
     bgColor: '#482e5e',
     link: '/shop',
     buttonText: 'View Items',
@@ -15,7 +15,7 @@ const features = [
   {
     title: 'Health Care',
     description: 'We offer medical hospital furniture for both human and animals\' hospitals. We use best Quality SS and MS sheets and pipes for long-lasting reliability.',
-    image: '/Images/PIO.jpg',
+    image: '/Images/PIO.webp',
     bgColor: '#482e5e',
     link: '/shop',
     buttonText: 'View Items',
@@ -38,7 +38,7 @@ const FeatureCards = () => {
           <div className={`relative w-full h-40 sm:h-64 md:h-80 lg:h-82 lg:w-92 ${feature.imageOnRight ? 'order-2' : ''}`} 
                style={{ backgroundColor: feature.bgColor, order: feature.imageOnRight ? 2 : 1 }}>
             <div className="flex justify-center items-center h-full -mt-8 sm:-mt-12 md:-mt-16 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
-              {feature.image.endsWith('.jpg') || feature.image.endsWith('.jpeg') || feature.image.endsWith('.png') ? (
+              {feature.image.endsWith('.webp') ? (
                 <img
                   src={feature.image}
                   alt={feature.title}
