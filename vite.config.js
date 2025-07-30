@@ -6,7 +6,7 @@ import { compression } from 'vite-plugin-compression2';
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => ({
-  base: '/', // Using relative path for Netlify
+  base: './', // Using relative path for Netlify
   plugins: [
     react({
       babel: {
@@ -43,6 +43,8 @@ export default defineConfig(({ command, mode }) => ({
     }),
   ],
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
     target: 'es2020',
     sourcemap: mode !== 'production',
     minify: 'terser',

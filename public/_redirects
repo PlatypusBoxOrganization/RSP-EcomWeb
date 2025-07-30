@@ -1,1 +1,6 @@
+# Handle all routes by serving index.html for the SPA
 /* /index.html 200
+
+# Handle image paths case insensitively
+/Images/* /Images/:splat 200
+/images/* /Images/:splat 200
