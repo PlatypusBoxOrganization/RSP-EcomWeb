@@ -127,7 +127,7 @@ const Home = () => {
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Scan to Shop</h4>
             <img
-              src="/images/QR.webp"
+              src="/Images/QR.webp"
               alt="QR Code"
               className="w-48 hover:shadow-lg rounded shadow transition duration-300 mx-auto"
             />
@@ -157,21 +157,21 @@ const Home = () => {
         <div className="flex flex-wrap justify-center gap-8">
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner1.webp"
+              src="/Images/partner1.webp"
               alt="Partner 1"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner2.webp"
+              src="/Images/partner2.webp"
               alt="Partner 2"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src="/images/partner3.webp"
+              src="/Images/partner3.webp"
               alt="Partner 3"
               className="h-20"
             />
