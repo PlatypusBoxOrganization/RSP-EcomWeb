@@ -3,96 +3,138 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { compression } from 'vite-plugin-compression2';
+import { resolve } from 'path';
 
 // https://vite.dev/config/
-export default defineConfig(({ command, mode }) => ({
-  base: './', // Using relative path for Netlify
-  plugins: [
-    react({
-      babel: {
-        plugins: [
-          ['babel-plugin-react-compiler'],
-        ],
-      },
-    }),
-    tailwindcss(),
-
-    // Optimize images
-    ViteImageOptimizer({
-      png: {
-        quality: 80,
-      },
-      jpeg: {
-        quality: 80,
-      },
-      jpg: {
-        quality: 80,
-      },
-      webp: {
-        lossless: true,
-      },
-    }),
-    // Gzip and Brotli compression
-    compression({
-      algorithm: 'brotliCompress',
-      exclude: [/.(js|mjs|json|css|html)$/i],
-    }),
-    compression({
-      algorithm: 'gzip',
-      exclude: [/.(js|mjs|json|css|html)$/i],
-    }),
-  ],
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    target: 'es2020',
-    sourcemap: mode !== 'production',
-    minify: 'terser',
-    cssMinify: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // Split vendor code into separate chunks
-          react: ['react', 'react-dom', 'react-router-dom'],
-          reactIcons: ['react-icons', '@heroicons/react'],
-          reactWindow: ['react-window', 'react-virtualized-auto-sizer'],
-          // Other dependencies
-          vendor: ['lodash', 'lodash.debounce'],
+export default defineConfig(({ command, mode }) => {
+  const isProduction = mode === 'production';
+  
+  return {
+    base: isProduction ? './' : '/',
+    plugins: [
+      react({
+        babel: {
+          plugins: [
+            ['babel-plugin-react-compiler'],
+          ],
         },
-        // Add content hashes to filenames for better caching
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash][extname]',
+      }),
+      tailwindcss(),
+
+      // Optimize images
+      ViteImageOptimizer({
+        png: { quality: 80 },
+        jpeg: { quality: 80 },
+        jpg: { quality: 80 },
+        webp: { 
+          quality: 80,
+          lossless: false
+        },
+        avif: {
+          quality: 70,
+          lossless: false
+        },
+        cache: true,
+        includePublic: true,
+      }),
+      
+      // Compression for production
+      isProduction && compression({
+        algorithm: 'brotliCompress',
+        exclude: [/\.(js|mjs|json|css|html|webp|avif)$/i],
+        threshold: 1024,
+      }),
+      isProduction && compression({
+        algorithm: 'gzip',
+        exclude: [/\.(br|gz)$/i],
+        threshold: 1024,
+      }),
+    ].filter(Boolean),
+
+    // Build configuration
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      target: 'esnext',
+      sourcemap: !isProduction,
+      minify: isProduction ? 'terser' : false,
+      cssMinify: isProduction,
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+        },
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            reactIcons: ['react-icons', '@heroicons/react'],
+            reactWindow: ['react-window', 'react-virtualized-auto-sizer'],
+            vendor: ['lodash', 'lodash.debounce'],
+          },
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            const info = assetInfo.name.split('.');
+            const ext = info[info.length - 1];
+            
+            if (ext === 'css') {
+              return 'assets/css/[name]-[hash][extname]';
+            } else if (['png', 'jpe?g', 'webp', 'avif', 'gif', 'svg'].includes(ext)) {
+              return 'assets/images/[name]-[hash][extname]';
+            } else if (['woff', 'woff2', 'eot', 'ttf', 'otf'].includes(ext)) {
+              return 'assets/fonts/[name]-[hash][extname]';
+            }
+            return 'assets/[name]-[hash][extname]';
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000,
+      cssCodeSplit: true,
+      copyPublicDir: true,
+      emptyOutDir: true,
+      reportCompressedSize: false,
+    },
+
+    // Optimize dependencies
+    optimizeDeps: {
+      esbuildOptions: {
+        target: 'esnext',
+      },
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'react-window',
+        'react-virtualized-auto-sizer',
+        'lodash',
+        'lodash.debounce'
+      ],
+    },
+
+    // Development server configuration
+    server: {
+      port: 3000,
+      open: true,
+      strictPort: true,
+      hmr: {
+        overlay: true,
       },
     },
-    // Enable CSS code splitting
-    cssCodeSplit: true,
-    // Don't copy public dir to dist - we'll handle it manually
-    copyPublicDir: false,
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'es2020',
+
+    // Preview server configuration
+    preview: {
+      port: 3001,
+      open: true,
+      strictPort: true,
     },
-    // Pre-bundle dependencies for faster dev server starts
-    include: ['react', 'react-dom', 'react-router-dom'],
-  },
-  // Enable server-side rendering for faster initial loads
-  ssr: {
-    noExternal: true,
-  },
-  // Configure development server
-  server: {
-    port: 3000,
-    open: true,
-    // Enable HMR (Hot Module Replacement)
-    hmr: {
-      overlay: true,
+
+    // Resolve aliases
+    resolve: {
+      alias: [
+        { find: '@', replacement: resolve(__dirname, 'src') },
+        { find: '@components', replacement: resolve(__dirname, 'src/components') },
+        { find: '@pages', replacement: resolve(__dirname, 'src/pages') },
+        { find: '@assets', replacement: resolve(__dirname, 'src/assets') },
+      ],
     },
-  },
-  // Configure preview server
-  preview: {
-    port: 3001,
-    open: true,
-  },
-}))
+  };
+});
