@@ -4,37 +4,37 @@ const teamMembers = [
   {
     name: "Supinder Singh",
     role: "Founder of Company",
-    img: "/images/team/supinder.jpg",
+    img: "/Images/team/supinder.webp",
   },
   {
     name: "Priyanka",
     role: "Manager & Co-founder",
-    img: "/images/team/priyanka.jpg",
+    img: "/Images/team/priyanka.webp",
   },
   {
     name: "Shanbir Singh",
     role: "Administrator",
-    img: "/images/team/shanbir.jpg",
+    img: "/Images/team/shanbir.webp",
   },
   {
     name: "Swarnim Sharma",
     role: "Product Manager",
-    img: "/images/team/swarmin.jpg",
+    img: "/Images/team/swarmin.webp",
   },
   {
     name: "Yuvraj Sharma",
     role: "Web Designer & Developer",
-    img: "/images/team/yuvraj.jpg",
+    img: "/Images/team/yuvraj.webp",
   },
   {
     name: "Mukul Sharma",
     role: "Product Analyzer",
-    img: "/images/team/mukul.jpg",
+    img: "/Images/team/mukul.webp",
   },
   {
     name: "Adv. Yadwinder Singh",
     role: "Advocate & CA",
-    img: "/images/team/yadwinder.jpg",
+    img: "/Images/team/yadwinder.webp",
   },
 ];
 

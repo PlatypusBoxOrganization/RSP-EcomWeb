@@ -12,9 +12,9 @@
     "discount": 20,
     "description": "Printed Circuit Board suitable for robotics and electronics projects.",
     "images": [
-      "/images/pcb-circuit.webp",
-      "/images/QR.webp",
-      "/images/PIO.webp"
+      "/Images/pcb-circuit.webp",
+      "/Images/QR.webp",
+      "/Images/PIO.webp"
     ],
     "highlights": [
       "Double-Side PCB Board, 8 pins.",
