@@ -1,6 +1,5 @@
 import React, { useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import { getImagePath } from "../utils/assetUtils";
 import OptimizedImage from "../components/OptimizedImage";
 
 // Lazy load heavy components
@@ -19,8 +18,8 @@ const Home = () => {
     <main className="font-sans text-gray-800">
       {/* Hero Section */}
       <section
-        className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${getImagePath('Main-banner.webp')})` }}
+        className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center  bg-cover bg-center"
+        style={{ backgroundImage: "url('/Images/Main-banner.webp')" }}
       >
         <div className="bg-black/50 w-full h-full absolute top-0 left-0"></div>
         <div className="relative z-10 text-center  px-4  bg-blue-400/10 flex flex-col items-center  py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:pr-16">
@@ -44,7 +43,7 @@ const Home = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center   max-w-6xl mx-auto">
           <div className="mb-6 sm:mb-0 sm:mr-8 flex-shrink-0">
             <img
-              src={getImagePath('logo.webp')}
+              src="/Images/logo.webp"
               alt="About Us"
               className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full hover:shadow-lg transition duration-300"
             />
@@ -70,7 +69,7 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 lg:mb-30 sm:mb-16 items-center bg-[#292355] text-white rounded-xl sm:rounded-2xl overflow-hidden lg:overflow-visible ">
           <div className="relative w-full h-40 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:ml-30  rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8">
             <img
-              src={getImagePath('pcb-circuit.webp')}
+              src="/Images/pcb-circuit.webp"
               alt="Electronic Project"
               className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
             />
@@ -112,7 +111,7 @@ const Home = () => {
           </div>
           <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
             <OptimizedImage
-              src={getImagePath('PIO.webp')}
+              src="/Images/PIO.webp"
               alt="Health Care"
               width="100%"
               height="100%"
@@ -124,30 +123,31 @@ const Home = () => {
       </section>
       {/* QR & Demo */}
       <section className="py-12 px-6 text-center bg-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-6">
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Scan to Shop</h4>
             <img
-              src={getImagePath('QR.webp')}
+              src="/Images/QR.webp"
               alt="QR Code"
               className="w-48 hover:shadow-lg rounded shadow transition duration-300 mx-auto"
             />
             <Link to="/shop" >
-              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Shop Now
-              </button>
+            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+              Shop Now
+            </button>
             </Link>
           </div>
           <div className="p-4 bg-blue-100 rounded shadow">
             <h4 className="font-semibold mb-2">Product Demo</h4>
-            <div className="bg-gray-200 w-full h-48 rounded flex items-center justify-center">
-              <p className="text-gray-500">Video coming soon</p>
-            </div>
-            <Link to="/contact">
-              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Contact Us
-              </button>
-            </Link>
+            <iframe
+              className="mx-auto w-full h-48 rounded"
+              // src="https://www.youtube.com/embed/nNI_x-WVTM0"
+              title="Demo Video"
+              allowFullScreen
+            />
+            <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+              Contact Us
+            </button>
           </div>
         </div>
       </section>
@@ -157,21 +157,21 @@ const Home = () => {
         <div className="flex flex-wrap justify-center gap-8">
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src={getImagePath('partner1.webp')}
+              src="/Images/partner1.webp"
               alt="Partner 1"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src={getImagePath('partner2.webp')}
+              src="/Images/partner2.webp"
               alt="Partner 2"
               className="h-20"
             />
           </div>
           <div className=" border border-gray-300 flex items-center justify-center bg-white w-50 h-35 hover:shadow-lg transition duration-300">
             <img
-              src={getImagePath('partner3.webp')}
+              src="/Images/partner3.webp"
               alt="Partner 3"
               className="h-20"
             />

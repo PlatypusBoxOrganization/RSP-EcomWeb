@@ -5,19 +5,8 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { compression } from 'vite-plugin-compression2';
 
 // https://vite.dev/config/
-// Helper function to handle asset paths
-const assetPath = (path) => {
-  if (process.env.NODE_ENV === 'production') {
-    return `./${path}`;
-  }
-  return `/${path}`;
-};
-
 export default defineConfig(({ command, mode }) => ({
   base: './', // Using relative path for Netlify
-  define: {
-    'import.meta.env.ASSET_PATH': JSON.stringify(assetPath('')),
-  },
   plugins: [
     react({
       babel: {

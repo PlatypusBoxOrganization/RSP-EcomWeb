@@ -1,41 +1,40 @@
 import React from 'react';
-import { getImagePath } from '../utils/assetUtils';
 
 const teamMembers = [
   {
     name: "Supinder Singh",
     role: "Founder of Company",
-    img: getImagePath('team/supinder.webp'),
+    img: "/Images/team/supinder.webp",
   },
   {
     name: "Priyanka",
     role: "Manager & Co-founder",
-    img: getImagePath('team/priyanka.webp'),
+    img: "/Images/team/priyanka.webp",
   },
   {
     name: "Shanbir Singh",
     role: "Administrator",
-    img: getImagePath('team/shanbir.webp'),
+    img: "/Images/team/shanbir.webp",
   },
   {
     name: "Swarnim Sharma",
     role: "Product Manager",
-    img: getImagePath('team/swarmin.webp'),
+    img: "/Images/team/swarmin.webp",
   },
   {
     name: "Yuvraj Sharma",
     role: "Web Designer & Developer",
-    img: getImagePath('team/yuvraj.webp'),
+    img: "/Images/team/yuvraj.webp",
   },
   {
     name: "Mukul Sharma",
     role: "Product Analyzer",
-    img: getImagePath('team/mukul.webp'),
+    img: "/Images/team/mukul.webp",
   },
   {
     name: "Adv. Yadwinder Singh",
     role: "Advocate & CA",
-    img: getImagePath('team/aman.webp'),
+    img: "/Images/team/yadwinder.webp",
   },
 ];
 

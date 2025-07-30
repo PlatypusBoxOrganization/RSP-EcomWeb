@@ -1,5 +1,4 @@
 import React from 'react';
-import { getImagePath } from '../utils/assetUtils';
 
 const History = () => {
   return (
@@ -23,12 +22,12 @@ const History = () => {
               <div className="md:w-1/3 lg:w-1/4 border-b md:border-b-0 md:border-r border-gray-400/30 pb-6 md:pb-0 md:pr-6">
                 <h2 className="text-xl md:text-xl  font-bold text-white mb-2 z-10">A brief history</h2>
                 <h3 className="text-2xl md:text-2xl  font-bold text-blue-300 z-10">RS PORTRONICS</h3>
-                <img 
-                  src={getImagePath('history-chip.webp')} 
-                  alt="" 
-                  className="w-250 h-38 rotate-135 relative lg:-left-15 opacity-70 lg:top-48 z-12 overflow-hidden hidden md:block"
-                  aria-hidden="true"
-                />
+        <img 
+          src="/Images/history-chip.webp" 
+          alt="" 
+          className="w-250 h-38 rotate-135 relative lg:-left-15 opacity-70 lg:top-48 z-12 overflow-hidden hidden md:block"
+          aria-hidden="true"
+          />
               </div>
               
               <div className="md:w-2/3 lg:w-3/4 text-sm md:text-base leading-relaxed text-gray-100">
@@ -126,17 +125,17 @@ const History = () => {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-16">
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 w-48 h-24 flex items-center justify-center">
             <img 
-              src={getImagePath('platypusbox-history.webp')} 
-              alt="PlatypusBox History" 
-              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-lg"
+              src="/Images/platypusbox-history.webp" 
+              alt="Platypus Box" 
+              className="h-full w-auto object-contain rounded-lg"
               loading="lazy"
             />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 w-48 h-24 flex items-center justify-center">
             <img 
-              src={getImagePath('amazon-history.webp')} 
-              alt="Amazon History" 
-              className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-lg"
+              src="/Images/amazon-history.webp" 
+              alt="Amazon" 
+              className="h-full w-auto object-contain"
               loading="lazy"
             />
           </div>
