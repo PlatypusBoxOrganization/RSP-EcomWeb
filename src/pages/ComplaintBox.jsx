@@ -1,4 +1,5 @@
 import React from "react";
+import { getImagePath } from "../utils/assetUtils";
 
 const ComplaintBox = () => {
   return (
@@ -23,7 +24,7 @@ const ComplaintBox = () => {
           <div className="flex flex-col items-center border-l border-gray-300">
             <p className="mb-2 text-xl font-semibold hidden md:block">For any complaint contact us</p>
             <img
-              src="/Images/complaint.webp" // Replace with your image
+              src={getImagePath('complaint.webp')}
               alt="Complaint Discussion"
               className="rounded-lg shadow-md w-full max-w-md"
             />

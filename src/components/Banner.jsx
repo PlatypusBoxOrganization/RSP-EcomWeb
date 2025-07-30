@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getImagePath } from '../utils/assetUtils';
 
 const Banner = () => {
   return (
     <section className="relative bg-black text-white flex items-center h-[50vh] sm:h-[60vh] justify-center sm:justify-start sm:pl-5 bg-cover bg-center"
-      style={{ backgroundImage: "url('/Images/Main-banner.jpg')" }}>
+      style={{ backgroundImage: `url(${getImagePath('Main-banner.webp')})` }}>
       <div className="bg-black/50 w-full h-full absolute top-0 left-0"></div>
       <div className="relative z-10 text-center sm:text-left px-4 sm:px-6 bg-blue-400/10 flex flex-col items-center sm:items-start py-8 sm:py-10 rounded-xl sm:rounded-2xl max-w-[90%] sm:max-w-[80%] md:max-w-2xl md:pr-16">
         <h1 className="text-2xl sm:text-4xl md:text-4xl font-bold leading-tight">

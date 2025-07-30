@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import OptimizedImage from './OptimizedImage';
+import { getImagePath } from '../utils/assetUtils';
 
 const features = [
   {
     title: 'Electronic Projects',
     description: 'Best Quality PCB Fabrication Service for Aerospace, Medical Departments and defense. Our company has Experienced Engineers for PCB Designing and customization. We support All Layers PCB (1-20) with custom Copper layer (1oz - 4oz). Customized IOT Modules for Automotive and Home Automation.',
-    image: '/Images/pcb-circuit.png',
+    image: getImagePath('pcb-circuit.webp'),
     bgColor: '#482e5e',
     link: '/shop',
     buttonText: 'View Items',
@@ -15,7 +16,7 @@ const features = [
   {
     title: 'Health Care',
     description: 'We offer medical hospital furniture for both human and animals\' hospitals. We use best Quality SS and MS sheets and pipes for long-lasting reliability.',
-    image: '/Images/PIO.jpg',
+    image: getImagePath('PIO.webp'),
     bgColor: '#482e5e',
     link: '/shop',
     buttonText: 'View Items',
