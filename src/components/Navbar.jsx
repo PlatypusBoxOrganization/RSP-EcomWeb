@@ -148,8 +148,8 @@ const Navbar = () => {
             )}
           </ul>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-4">
+          {/* Mobile menu button with explicit tablet and mobile classes */}
+          <div className="mobile-menu-buttons flex items-center space-x-4 md:flex lg:hidden">
             <Link to="/wishlist" className="text-white hover:text-blue-400">
               <FaHeart className="h-5 w-5" />
             </Link>

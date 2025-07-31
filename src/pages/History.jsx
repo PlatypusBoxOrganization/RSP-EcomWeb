@@ -10,27 +10,27 @@ const History = () => {
       </section>
 
       {/* Intro Card */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative mb-10 md:mb-16">
+      <section className="max-w-6xl mx-auto   px-4 sm:px-6 lg:px-8 relative mb-10 md:mb-16">
         <div className="bg-[#292355] text-white rounded-xl shadow-lg overflow-hidden relative">
           {/* Background Image */}
           <div className="absolute inset-0 z-0 opacity-20">
             <div className="absolute inset-0 bg-gradient-to-br from-[#292355] to-black/70"></div>
           </div>
           
-          <div className="relative z-10 p-6 md:p-10 ">
+          <div className="relative z-10 p-6 md:p-10  ">
             <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-              <div className="md:w-1/3 lg:w-1/4 border-b md:border-b-0 md:border-r border-gray-400/30 pb-6 md:pb-0 md:pr-6">
+              <div className="md:w-1/3 lg:w-1/4 border-b lg:border-b-0 lg:border-r md:border-b border-gray-400/30 pb-6 md:pb-0 md:pr-6 ">
                 <h2 className="text-xl md:text-xl  font-bold text-white mb-2 z-10">A brief history</h2>
                 <h3 className="text-2xl md:text-2xl  font-bold text-blue-300 z-10">RS PORTRONICS</h3>
         <img 
           src="/Images/history-chip.webp" 
           alt="" 
-          className="w-250 h-38 rotate-135 relative lg:-left-15 opacity-70 lg:top-48 z-12 overflow-hidden hidden md:block"
+          className="w-250 h-38 rotate-135 relative lg:-left-15 opacity-70 lg:top-48 z-12 overflow-hidden hidden lg:block"
           aria-hidden="true"
           />
               </div>
               
-              <div className="md:w-2/3 lg:w-3/4 text-sm md:text-base leading-relaxed text-gray-100">
+              <div className="md:w-full lg:w-3/4 text-sm md:text-base leading-relaxed text-gray-100 md:pb-6 lg:pb-0">
                 <p className="mb-4">
                   Welcome to RS Portronics, we are leading distributor of electronics & robotics components, 
                   working towards excellence in electronics space and believe in pursuing business through 
@@ -63,8 +63,8 @@ const History = () => {
       {/* Next Projects / Milestones */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 md:mb-16">
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-          <div className="flex flex-col md:flex-row">
-            <div className="p-6 md:p-8 md:w-3/4">
+          <div className="flex flex-col md:flex-row ">
+            <div className="p-6 md:p-8 lg:w-3/4 md:w-full">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 We are moving towards medical projects. We have already accomplished our Dog Electric Control Beds for safety in clinics.
               </h3>
@@ -80,8 +80,8 @@ const History = () => {
               </ol>
             </div>
             
-            <div className="bg-gray-50 p-6 md:p-8 md:w-1/4 border-t md:border-t-0 md:border-l border-gray-200 flex flex-col justify-center">
-              <div className="text-center">
+            <div className="bg-gray-50 p-6 md:p-8 lg:w-1/4 md:w-full border-t md:border-t-0 md:border-l border-gray-200 flex flex-col justify-center">
+              <div className="text-center ">
                 <div className="text-4xl md:text-5xl font-bold text-[#292355] mb-2">Next</div>
                 <div className="text-2xl md:text-3xl font-bold text-[#482e5e]">Step</div>
               </div>
@@ -94,10 +94,10 @@ const History = () => {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 md:mb-16">
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
           <div className="flex flex-col md:flex-row">
-            <div className="bg-gray-50 text-[#292355] p-6 md:p-8 md:w-1/5 border-r border-gray-200 flex items-center">
+            <div className="bg-gray-50 text-[#292355] p-6 md:p-8 lg:w-1/4 md:w-full border-r border-gray-200 flex items-center">
               <h3 className="text-xl font-bold">Where We Are Today</h3>
             </div>
-            <div className="p-6 md:p-8 md:w-3/4">
+            <div className="p-6 md:p-8 lg:w-3/4 md:w-full">
               <div className="prose max-w-none text-gray-700">
                 <p className="mb-4">
                   We recently accomplished our major project of Dragline Crane, marking a significant 

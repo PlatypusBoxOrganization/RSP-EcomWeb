@@ -1,0 +1,88 @@
+/* Tablet-specific styles (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Navbar adjustments */
+  .md\:hidden {
+    display: block !important;
+  }
+  
+  .md\:flex {
+    display: none !important;
+  }
+  
+  /* Mobile menu buttons - force horizontal layout on tablets */
+  .mobile-menu-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1rem !important;
+  }
+  
+  /* Ensure all direct children are in a row */
+  .mobile-menu-buttons > * {
+    display: inline-flex !important;
+  }
+  
+  /* Adjust main content padding */
+  main > section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  
+  /* Product sections */
+  .grid-cols-1 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Adjust product card layouts */
+  .md\:flex-row {
+    flex-direction: column !important;
+  }
+  
+  /* Adjust image sizes */
+  .h-40, .h-48, .h-64, .h-80, .h-82 {
+    height: auto !important;
+    max-height: 300px !important;
+  }
+  
+  /* Adjust text sizes */
+  .text-sm, .text-base {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+  
+  /* Adjust spacing */
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem !important;
+  }
+  
+  /* Adjust padding */
+  .p-4, .p-6, .p-8 {
+    padding: 1rem !important;
+  }
+  
+  /* Adjust margins */
+  .mt-8, .mt-12 {
+    margin-top: 1.5rem !important;
+  }
+  
+  .mb-8, .mb-12, .mb-16, .mb-30 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Adjust partner logos */
+  .flex-wrap {
+    justify-content: center !important;
+  }
+  
+  .w-50 {
+    width: 120px !important;
+  }
+  
+  .h-35 {
+    height: 80px !important;
+  }
+}

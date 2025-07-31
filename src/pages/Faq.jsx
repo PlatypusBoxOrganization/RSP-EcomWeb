@@ -9,13 +9,13 @@ const Faq = () => {
           <img
             src="/Images/faq-question marks.webp"
             alt="FAQ Icon"
-            className="md:w-12 md:h-12 w-8 h-8"
+            className="md:w-12 md:h-12 w-8 h-8 "
           />
         </div>
        <div> <h1 className="text-lg md:text-3xl font-bold">Frequently Asked Questions</h1></div>
       </section>
 
-        <img src="/Images/FAQ-question1.webp" className="relative left-130 top-40 opacity-10 hidden md:block w-50 z-1" alt="Decorative question mark" />
+        <img src="/Images/FAQ-question1.webp" className="relative left-130 top-40 opacity-10 hidden lg:block w-50 z-1" alt="Decorative question mark" />
       {/* FAQ Content */}
       <section className="max-w-6xl mx-auto px-6 lg:px-0 py-12  items-start">
         {/* Questions */}
@@ -53,14 +53,14 @@ const Faq = () => {
           </div>
         </div>
 
-            <img src="/Images/line.webp" className="relative  top-0 h-1 w-1000  z-3 rounded-2xl hidden md:block" />
-            <img src="/Images/line.webp" className="relative  left-250 -top-100 h-1 w-100  z-3 rotate-90 rounded-2xl hidden md:block" />
+            <img src="/Images/line.webp" className="relative  top-0 h-1 w-1000  z-3 rounded-2xl hidden lg:block" />
+            <img src="/Images/line.webp" className="relative  left-250 -top-100 h-1 w-100  z-3 rotate-90 rounded-2xl hidden lg:block" />
         {/* Image */}
         <div className=" relative -top-80 flex justify-center md:justify-end z-2">
           <img
             src="/Images/faq-illustration.webp" // Put your FAQ illustration image here
             alt="FAQ Illustration"
-            className="w-72 rounded-xl hidden md:block"
+            className="w-72 rounded-xl hidden lg:block"
           />
         </div>
       </section>

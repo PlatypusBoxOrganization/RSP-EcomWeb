@@ -15,3 +15,5 @@ code {
     monospace;
 }
 
+/* Import tablet-specific styles */
+@import './styles/tablet.css';

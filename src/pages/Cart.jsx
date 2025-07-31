@@ -14,7 +14,7 @@ const Cart = () => {
   deliveryDate.setDate(deliveryDate.getDate() + 7);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10 px-2 md:px-4">
+    <div className=" bg-gray-50 p-10 px-2 lg:px-4 md:px-10">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">My Cart</h2>
       <div className="flex flex-col md:flex-row gap-4">
         {/* Cart Items */}
@@ -82,7 +82,7 @@ const Cart = () => {
         </div>
 
         {/* Summary */}
-        <div className="w-full md:w-96 bg-white p-4 rounded-md shadow-sm h-fit space-y-4">
+        <div className="w-full lg:w-96 bg-white p-4  rounded-md shadow-sm h-fit space-y-4 ">
           <div className="text-sm border-b pb-2">
             <div className="flex justify-between">
               <span>Deliver To</span>

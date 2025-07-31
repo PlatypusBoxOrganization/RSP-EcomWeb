@@ -67,15 +67,15 @@ const Home = () => {
 
         {/* Electronic Projects */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 lg:mb-30 sm:mb-16 items-center bg-[#292355] text-white rounded-xl sm:rounded-2xl overflow-hidden lg:overflow-visible ">
-          <div className="relative w-full h-40 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:ml-30  rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8">
+          <div className="relative w-full h-40 sm:h-64 md:h-82 md:py-2 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 md:mt-0 sm:-mt-12 lg:-mt-16 lg:ml-30  rounded-xl sm:rounded-2xl shadow-lg transform lg:-translate-y-8">
             <img
               src="/Images/pcb-circuit.webp"
               alt="Electronic Project"
-              className="pt-10 md:pt-0 w-4/12 sm:w-3/4 md:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
+              className="pt-10 md:pt-0  w-4/12 sm:w-3/4 md:w-4/14 lg:w-72 rounded-lg max-h-full object-contain hover:scale-105 transition-transform duration-300"
             />
           </div>
-          <div className="p-4 sm:p-6 md:p-8 -mt-8 sm:-mt-0 lg:relative lg:right-25 ">
-            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%]   sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-2xl font-bold mb-3 sm:mb-4 text-center relative lg:-top-12 left-15 lg:left-15">
+          <div className="p-4 md:pt-0 lg:pt-4 sm:p-6 md:p-8  -mt-8 sm:-mt-0 lg:relative lg:right-25 ">
+            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%]   sm:w-48 py-2 sm:py-3  rounded-lg sm:rounded-2xl font-bold mb-3 sm:mb-4 text-center relative md:-left-0 lg:-top-12 left-15 lg:left-15">
               Electronic Projects
             </h3>
             <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6  lg:relative lg:-top-4">
@@ -95,7 +95,7 @@ const Home = () => {
         {/* Health Care */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8  items-center bg-[#292355] text-white rounded-xl sm:rounded-2xl overflow-hidden lg:overflow-visible">
           <div className="order-2 md:order-1 p-4 sm:p-6 md:p-8 -mt-8 sm:-mt-0 lg:relative lg:left-23">
-            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%] sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold mb-3 sm:mb-4 text-center relative lg:-top-14 left-15 lg:left-15">
+            <h3 className="text-lg sm:text-xl bg-[#482e5e] w-[60%] sm:w-48 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold mb-3 sm:mb-4 text-center relative md:-left-0 lg:-top-14 left-15 lg:left-15">
               Health Care
             </h3>
             <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
@@ -109,14 +109,11 @@ const Home = () => {
             </button>
             </Link>
           </div>
-          <div className="relative lg:left-50 w-full h-48 sm:h-64 md:h-80 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center -mt-8 sm:-mt-12 md:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
+          <div className="relative md:top-12 lg:top-0 lg:left-50 w-full h-48 sm:h-64 md:h-82 lg:h-82 lg:w-92 bg-[#482e5e] flex justify-center items-center  -mt-8 sm:-mt-12 lg:-mt-16 md:mr-8 order-1 md:order-2 rounded-xl sm:rounded-2xl shadow-lg transform md:-translate-y-8 overflow-hidden">
             <OptimizedImage
               src="/Images/PIO.webp"
               alt="Health Care"
-              width="100%"
-              height="100%"
-              className="pt-10 md:pt-0 w-full h-full object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
-              effect="blur"
+              className="  pt-10 md:pt-2 md:pb-5 lg:pb-0 lg:pt-0  w-4/12 sm:w-3/4 md:w-4/14 lg:w-72  object-cover rounded-lg sm:rounded-xl hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>
