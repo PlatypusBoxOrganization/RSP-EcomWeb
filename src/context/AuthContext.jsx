@@ -1,4 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import authService from '../services/api/authService';
+import { isTokenExpired } from '../utils/tokenService';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -6,98 +9,96 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [otpSent, setOtpSent] = useState(false);
+  const [error, setError] = useState(null);
 
   // Check if user is logged in on initial load
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const loadUser = useCallback(async () => {
+    try {
+      const token = authService.getToken();
+      if (token && !isTokenExpired(token)) {
+        const response = await authService.getCurrentUser();
+        setUser(response.data);
+      } else {
+        authService.logout();
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Error loading user:', error);
+      authService.logout();
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
-  // Mock function to send OTP
-  const sendOtp = async (phoneNumber) => {
-    // In a real app, this would be an API call to your backend
-    console.log(`Sending OTP to ${phoneNumber}`);
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // In a real app, you would get this from the server
-        const mockOtp = Math.floor(1000 + Math.random() * 9000);
-        console.log(`Mock OTP for ${phoneNumber}: ${mockOtp}`);
-        localStorage.setItem('otp', mockOtp.toString());
-        localStorage.setItem('otpPhone', phoneNumber);
-        setOtpSent(true);
-        resolve({ success: true });
-      }, 1000);
-    });
-  };
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
 
-  // Mock function to verify OTP
-  const verifyOtp = async (otp) => {
-    const storedOtp = localStorage.getItem('otp');
-    const phoneNumber = localStorage.getItem('otpPhone');
-    
-    if (otp === storedOtp) {
-      // In a real app, you would get a token from the server
-      const mockUser = {
-        id: '1',
-        phone: phoneNumber,
-        name: 'User',
-        token: 'mock-jwt-token',
-      };
-      
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      localStorage.removeItem('otp');
-      localStorage.removeItem('otpPhone');
-      setUser(mockUser);
-      setOtpSent(false);
-      return { success: true, user: mockUser };
+  // Register a new user
+  const register = async (userData) => {
+    setError(null);
+    setLoading(true);
+    try {
+      const result = await authService.register(userData);
+      if (result.success) {
+        setUser(result.data.user);
+        return { success: true, data: result.data };
+      } else {
+        // Handle the error case from authService
+        setError(result.error);
+        return { success: false, error: result.error };
+      }
+    } catch (error) {
+      // This will catch any unexpected errors
+      console.error('Unexpected error during registration:', error);
+      const errorMessage = error.message || 'Registration failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    } finally {
+      setLoading(false);
     }
-    
-    return { success: false, error: 'Invalid OTP' };
   };
 
-  const login = async (phoneNumber, password) => {
-    // In a real app, this would be an API call to your backend
-    console.log(`Logging in with ${phoneNumber}`);
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // In a real app, you would verify credentials with the server
-        if (phoneNumber && password) {
-          const mockUser = {
-            id: '1',
-            phone: phoneNumber,
-            name: 'User',
-            token: 'mock-jwt-token',
-          };
-          
-          localStorage.setItem('user', JSON.stringify(mockUser));
-          setUser(mockUser);
-          resolve({ success: true, user: mockUser });
-        } else {
-          resolve({ success: false, error: 'Invalid credentials' });
-        }
-      }, 1000);
-    });
+  // Login user
+  const login = async (credentials) => {
+    setError(null);
+    // Don't set loading state here - let the component handle it
+    try {
+      const response = await authService.login(credentials);
+      // Update user state
+      setUser(response.user);
+      // Don't show toast here to prevent flash before redirect
+      return { success: true, data: response };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message || 'Login failed';
+      setError(errorMessage);
+      // Don't show toast here - let the component handle it
+      return { success: false, error: errorMessage };
+    }
   };
 
-  const logout = () => {
-    localStorage.removeItem('user');
+  // Logout user
+  const logout = useCallback(() => {
+    authService.logout();
     setUser(null);
-    setOtpSent(false);
-  };
+    setError(null);
+    // Clear any pending redirects or auth state
+    window.history.replaceState(null, '', '/');
+    return true;
+  }, []);
 
   const value = {
     user,
-    otpSent,
     loading,
-    sendOtp,
-    verifyOtp,
+    error,
+    isAuthenticated: !!user,
+    register,
     login,
     logout,
+    loadUser,
+    setUser, // Expose setUser to update user context
+    clearError: () => setError(null),
   };
 
   return (

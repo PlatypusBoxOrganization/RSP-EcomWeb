@@ -26,10 +26,19 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    logout();
+    // Close menus first
     setIsUserMenuOpen(false);
     setIsOpen(false);
-    navigate('/');
+    
+    // Perform logout
+    logout();
+    
+    // If we're on the profile page, force a full page reload to ensure clean state
+    if (location.pathname.startsWith('/profile')) {
+      window.location.href = '/';
+    } else {
+      navigate('/', { replace: true });
+    }
   };
 
   // Close mobile menu when route changes
@@ -106,32 +115,28 @@ const Navbar = () => {
               <li className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-1 hover:text-blue-400 focus:outline-none"
+                  className="flex items-center gap-2 hover:text-blue-400 focus:outline-none"
                 >
-                  <FaUserCircle className="h-6 w-6" />
-                  <span className="text-sm">{user.name || 'Account'}</span>
+                  <FaUserCircle className="text-2xl" />
+                  <span className="hidden sm:inline">My Account</span>
                 </button>
-                
-                {/* User Dropdown */}
+
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-sm text-gray-700">
-                        {user.phone ? `+91 ${user.phone}` : 'Welcome'}
-                      </p>
-                    </div>
                     <Link
                       to="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsUserMenuOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                     >
-                      <FaUser className="inline mr-2" /> Profile
+                      <FaUser />
+                      <span>My Profile</span>
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                     >
-                      <FaSignOutAlt className="inline mr-2" /> Logout
+                      <FaSignOutAlt />
+                      <span>Logout</span>
                     </button>
                   </div>
                 )}

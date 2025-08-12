@@ -20,26 +20,42 @@ const ProductCard = memo(({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { toggleWishlist, isWishlisted } = useWishlist();
   const navigate = useNavigate();
-  const isInWishlist = isWishlisted(product.id);
+  
+  // Handle both _id (MongoDB) and id (local) formats
+  const productId = product?._id || product?.id;
+  const isInWishlist = isWishlisted(productId);
+  
+  // Ensure we have a valid images array
+  const images = Array.isArray(product?.images) && product.images.length > 0 
+    ? product.images 
+    : ['/Images/placeholder.webp'];
+    
+  // Calculate discount if not provided
+  const discount = product?.discount || 
+    (product?.mrp > product?.price 
+      ? Math.round(((product.mrp - product.price) / product.mrp) * 100) 
+      : 0);
 
   const handleNextImage = useCallback((e) => {
     e?.stopPropagation?.();
-    setCurrentImageIndex(prev => (prev === product.images.length - 1 ? 0 : prev + 1));
-  }, [product.images.length]);
+    setCurrentImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
 
   const handlePrevImage = useCallback((e) => {
     e?.stopPropagation?.();
-    setCurrentImageIndex(prev => (prev === 0 ? product.images.length - 1 : prev - 1));
-  }, [product.images.length]);
+    setCurrentImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
 
   const handleQuickView = useCallback((e) => {
     e?.stopPropagation?.();
-    navigate(`/product/${product.id}`);
-  }, [navigate, product.id]);
+    if (!productId) return;
+    navigate(`/product/${productId}`);
+  }, [navigate, productId]);
 
   const handleCardClick = useCallback(() => {
-    navigate(`/product/${product.id}`);
-  }, [navigate, product.id]);
+    if (!productId) return;
+    navigate(`/product/${productId}`);
+  }, [navigate, productId]);
 
   const handleWishlistToggle = useCallback((e) => {
     e?.stopPropagation?.();
@@ -80,14 +96,14 @@ const ProductCard = memo(({ product }) => {
       {/* Image Container */}
       <div className="relative w-full aspect-square overflow-hidden bg-gray-50">
         <OptimizedImage
-          src={product.images[currentImageIndex]}
-          alt={product.name}
+          src={images[currentImageIndex]}
+          alt={product?.name || 'Product image'}
           className="w-full h-full object-contain"
-          placeholderClassName="bg-gray-100"
+          loading="lazy"
         />
 
-        {/* Image Navigation Arrows */}
-        {product.images.length > 1 && (
+        {/* Show navigation arrows only if multiple images */}
+        {images.length > 1 && (
           <div className={`absolute inset-0 flex items-center justify-between px-2 opacity-0 ${isHovered ? 'opacity-100' : 'md:opacity-0'} transition-opacity duration-200`}>
             <NavigationButton 
               onClick={handlePrevImage} 
@@ -120,33 +136,44 @@ const ProductCard = memo(({ product }) => {
 
       {/* Product Info */}
       <div className="p-3">
-        <h3 className="text-sm font-medium text-gray-900 mb-1 line-clamp-2 h-10">
-          {product.name}
+        <h3 className="text-sm font-medium text-gray-900 mb-1 line-clamp-2" title={product?.name}>
+          {product?.name || 'Product Name'}
         </h3>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-bold text-gray-900">
-              ₹{product.price.toLocaleString()}
-            </p>
-            {product.originalPrice > product.price && (
-              <p className="text-xs text-gray-500 line-through">
-                ₹{product.originalPrice.toLocaleString()}
-              </p>
+            <span className="text-sm font-semibold text-gray-900">
+              ₹{product?.price?.toLocaleString() || 'N/A'}
+            </span>
+            {product?.mrp > product?.price && (
+              <span className="ml-1 text-xs text-gray-500 line-through">
+                ₹{product.mrp?.toLocaleString()}
+              </span>
+            )}
+            {discount > 0 && (
+              <span className="ml-1.5 text-xs font-medium text-green-600">
+                {discount}% off
+              </span>
             )}
           </div>
           <div className="flex items-center">
             <div className="flex items-center bg-blue-50 px-1.5 py-0.5 rounded">
-              <span className="text-xs font-medium text-blue-700">
-                {product.rating || '4.5'}
-              </span>
-              <svg
-                className="w-3 h-3 text-yellow-400 ml-0.5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                aria-hidden="true"
-              >
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
+              {product?.rating !== undefined && (
+                <div className="flex items-center text-yellow-400">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className={`w-3 h-3 ${star <= Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                  <span className="ml-1 text-xs text-gray-500">
+                    ({product.reviewCount || 0})
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

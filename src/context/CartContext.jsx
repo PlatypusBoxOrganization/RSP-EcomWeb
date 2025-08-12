@@ -1,84 +1,205 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
+    case 'SET_LOADING':
+      return { ...state, loading: action.payload };
+      
+    case 'SET_ERROR':
+      return { ...state, error: action.payload };
+      
+    case 'SET_CART':
+      return { 
+        ...state, 
+        items: action.payload.items || [],
+        loading: false,
+        error: null 
+      };
+      
     case 'ADD_ITEM':
-      const existingItem = state.items.find(item => item.id === action.payload.id);
-      if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map(item =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-        };
-      }
       return {
         ...state,
-        items: [...state.items, { ...action.payload, quantity: 1 }],
+        items: action.payload,
+        loading: false,
+        error: null
       };
-
+      
+    case 'UPDATE_ITEM':
+      return {
+        ...state,
+        items: state.items.map(item => 
+          item._id === action.payload._id ? action.payload : item
+        ),
+        loading: false,
+        error: null
+      };
+      
     case 'REMOVE_ITEM':
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload.id),
+        items: state.items.filter(item => item._id !== action.payload),
+        loading: false,
+        error: null
       };
-
-    case 'UPDATE_QUANTITY':
-      return {
-        ...state,
-        items: state.items.map(item =>
-          item.id === action.payload.id
-            ? { ...item, quantity: Math.max(1, action.payload.quantity) }
-            : item
-        ),
-      };
-
+      
     case 'CLEAR_CART':
-      return { ...state, items: [] };
-
+      return { 
+        ...state, 
+        items: [],
+        loading: false,
+        error: null 
+      };
+      
     default:
       return state;
   }
 };
 
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { 
+    items: [], 
+    loading: false, 
+    error: null 
+  });
+  
+  const { user } = useAuth();
+  const API_URL = 'http://localhost:5000/api/cart';
 
-  // Load cart from localStorage on initial render
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      dispatch({ type: 'LOAD_CART', payload: JSON.parse(savedCart) });
+  // Fetch cart from API on mount and when user changes
+  const fetchCart = useCallback(async () => {
+    if (!user?.token) return;
+    
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    try {
+      const { data } = await axios.get(API_URL, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      });
+      dispatch({ type: 'SET_CART', payload: { items: data.items } });
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      dispatch({ 
+        type: 'SET_ERROR', 
+        payload: error.response?.data?.message || 'Failed to load cart' 
+      });
     }
-  }, []);
-
-  // Save cart to localStorage whenever it changes
+  }, [user?.token]);
+  
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(state.items));
-  }, [state.items]);
+    fetchCart();
+  }, [fetchCart]);
 
-  const addToCart = (product) => {
-    dispatch({ type: 'ADD_ITEM', payload: product });
+  // Add item to cart
+  const addToCart = async (product) => {
+    if (!user?.token) {
+      // Option: Redirect to login or show auth modal
+      return { success: false, error: 'Please login to add items to cart' };
+    }
+    
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    try {
+      const { data } = await axios.post(
+        API_URL,
+        { 
+          productId: product._id || product.id,
+          quantity: 1,
+          price: product.price,
+          name: product.name,
+          image: product.images?.[0] || ''
+        },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      
+      dispatch({ type: 'ADD_ITEM', payload: data.items });
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      const errorMsg = error.response?.data?.message || 'Failed to add to cart';
+      dispatch({ type: 'SET_ERROR', payload: errorMsg });
+      return { success: false, error: errorMsg };
+    }
   };
 
-  const removeFromCart = (productId) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: { id: productId } });
+  // Update item quantity
+  const updateQuantity = async (productId, quantity) => {
+    if (!user?.token) return { success: false, error: 'Not authenticated' };
+    if (quantity < 1) return { success: false, error: 'Invalid quantity' };
+    
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    try {
+      const { data } = await axios.put(
+        `${API_URL}/${productId}`,
+        { quantity },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      
+      dispatch({ type: 'UPDATE_ITEM', payload: data.item });
+      return { success: true, data };
+    } catch (error) {
+      console.error('Error updating cart:', error);
+      const errorMsg = error.response?.data?.message || 'Failed to update cart';
+      dispatch({ type: 'SET_ERROR', payload: errorMsg });
+      return { success: false, error: errorMsg };
+    }
   };
 
-  const updateQuantity = (productId, quantity) => {
-    dispatch({ type: 'UPDATE_QUANTITY', payload: { id: productId, quantity } });
+  // Remove item from cart
+  const removeFromCart = async (productId) => {
+    if (!user?.token) return { success: false, error: 'Not authenticated' };
+    
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    try {
+      await axios.delete(`${API_URL}/${productId}`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      });
+      
+      dispatch({ type: 'REMOVE_ITEM', payload: productId });
+      return { success: true };
+    } catch (error) {
+      console.error('Error removing from cart:', error);
+      const errorMsg = error.response?.data?.message || 'Failed to remove item';
+      dispatch({ type: 'SET_ERROR', payload: errorMsg });
+      return { success: false, error: errorMsg };
+    }
   };
 
-  const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+  // Clear cart
+  const clearCart = async () => {
+    if (!user?.token) return { success: false, error: 'Not authenticated' };
+    
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    try {
+      await axios.delete(API_URL, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      });
+      
+      dispatch({ type: 'CLEAR_CART' });
+      return { success: true };
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      const errorMsg = error.response?.data?.message || 'Failed to clear cart';
+      dispatch({ type: 'SET_ERROR', payload: errorMsg });
+      return { success: false, error: errorMsg };
+    }
   };
 
+  // Calculate cart total
   const cartTotal = state.items.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + (item.price * (item.quantity || 1)),
+    0
+  );
+
+  // Calculate total items
+  const itemCount = state.items.reduce(
+    (count, item) => count + (item.quantity || 1),
     0
   );
 
@@ -87,10 +208,14 @@ export const CartProvider = ({ children }) => {
       value={{
         items: state.items,
         cartTotal,
+        itemCount,
+        loading: state.loading,
+        error: state.error,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
+        refreshCart: fetchCart
       }}
     >
       {children}

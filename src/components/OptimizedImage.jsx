@@ -12,6 +12,7 @@ const OptimizedImage = ({
   width,
   height,
   placeholderSrc,
+  placeholderClassName = 'bg-gray-100',
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -76,7 +77,7 @@ const OptimizedImage = ({
       {/* Placeholder/Loading state */}
       {isLoading && (
         <div 
-          className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
+          className={`absolute inset-0 ${placeholderClassName} animate-pulse flex items-center justify-center`}
           aria-hidden={!isLoading}
         >
           <div 

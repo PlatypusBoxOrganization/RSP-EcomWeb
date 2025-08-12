@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useMemo, lazy, Suspense } from "react";
+import React, { useState, useCallback, useMemo, lazy, Suspense, useEffect } from "react";
 import { FixedSizeGrid as Grid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { FaFilter, FaTimes, FaChevronDown } from "react-icons/fa";
+import { FaFilter, FaTimes, FaChevronDown, FaSpinner } from "react-icons/fa";
 import debounce from 'lodash.debounce';
-import productsData from "../data/products.json";
 const ProductCard = lazy(() => import('../components/ProductCard'));
 const FilterSidebar = lazy(() => import('../components/FilterSidebar'));
 import OptimizedImage from "../components/OptimizedImage";
@@ -16,7 +15,9 @@ const LoadingFallback = () => (
 );
 
 const Shop = () => {
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     category: "",
     brand: "",
@@ -28,6 +29,28 @@ const Shop = () => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
+  // Fetch products from API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/products");
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError('Failed to load products. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Memoize active filters count
   const activeFiltersCount = useMemo(() => {
@@ -98,8 +121,11 @@ const Shop = () => {
   }, [filteredProducts, sortBy]);
 
   // Virtualized grid cell renderer
-  const Cell = ({ columnIndex, rowIndex, style }) => {
-    const index = rowIndex * 4 + columnIndex;
+  const Cell = useCallback(({ columnIndex, rowIndex, style, data }) => {
+    // Get column count from the parent Grid's props
+    const columnCount = data.columnCount;
+    const index = rowIndex * columnCount + columnIndex;
+    
     if (index >= sortedProducts.length) return null;
     
     const product = sortedProducts[index];
@@ -113,7 +139,7 @@ const Shop = () => {
         </Suspense>
       </div>
     );
-  };
+  }, [sortedProducts]);
 
   const productCount = filteredProducts.length;
   
@@ -127,6 +153,41 @@ const Shop = () => {
       discount: ""
     });
   }, []);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-red-500 mb-4">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  // No products found
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-10">
+        <p className="text-gray-600">No products found.</p>
+      </div>
+    );
+  }
+
+
 
   return (
     <main className="bg-gray-50 min-h-screen">
@@ -297,34 +358,48 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Virtualized Product Grid */}
-          {sortedProducts.length > 0 ? (
-            <div className="h-[calc(100vh-300px)] w-full">
-              <AutoSizer>
-                {({ height, width }) => {
-                  // Calculate number of columns based on container width
-                  const columnCount = width < 640 ? 2 : width < 1024 ? 3 : 4;
-                  const rowCount = Math.ceil(sortedProducts.length / columnCount);
-                  const columnWidth = width / columnCount;
-                  const rowHeight = 500; // Adjust based on your card height
+            {/* Product Grid */}
+            {sortedProducts.length > 0 ? (
+              <div className="w-full">
+                <AutoSizer disableHeight>
+                  {({ width }) => {
+                    // Calculate number of columns based on container width
+                    const columnCount = Math.max(1, Math.min(
+                      Math.floor(width / 240), // Min card width ~240px
+                      4 // Max 4 columns
+                    ));
+                    const rowCount = Math.ceil(sortedProducts.length / columnCount);
+                    const columnWidth = Math.floor(width / columnCount);
+                    const rowHeight = 420; // Card height including padding
+                    const gridHeight = rowHeight * rowCount;
 
-                  return (
-                    <Grid
-                      columnCount={columnCount}
-                      columnWidth={columnWidth}
-                      height={height}
-                      rowCount={rowCount}
-                      rowHeight={rowHeight}
-                      width={width}
-                      itemData={sortedProducts}
-                      className="scrollbar-hide"
-                    >
-                      {Cell}
-                    </Grid>
-                  );
-                }}
-              </AutoSizer>
-            </div>
+                    // Ensure we have enough rows to show all products
+                    const actualRowCount = Math.ceil(sortedProducts.length / columnCount);
+                    const actualGridHeight = actualRowCount * rowHeight;
+
+                    return (
+                      <div style={{ width: '100%', minHeight: actualGridHeight }}>
+                        <Grid
+                          columnCount={columnCount}
+                          columnWidth={columnWidth}
+                          height={actualGridHeight}
+                          rowCount={actualRowCount}
+                          rowHeight={rowHeight}
+                          width={width}
+                          itemData={{ products: sortedProducts, columnCount }}
+                          style={{ overflow: 'visible' }}
+                          itemKey={({ rowIndex, columnIndex }) => {
+                            const index = rowIndex * columnCount + columnIndex;
+                            return sortedProducts[index]?.id || `${rowIndex}-${columnIndex}`;
+                          }}
+                        >
+                          {Cell}
+                        </Grid>
+                      </div>
+                    );
+                  }}
+                </AutoSizer>
+              </div>
             ) : (
               <div className="text-center py-12 bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-gray-100">
