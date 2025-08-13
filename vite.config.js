@@ -1,12 +1,16 @@
-const { defineConfig } = require('vite');
-const react = require('@vitejs/plugin-react');
-const tailwindcss = require('@tailwindcss/vite').default;
-const { ViteImageOptimizer } = require('vite-plugin-image-optimizer');
-const { compression } = require('vite-plugin-compression2');
-const { resolve } = require('path');
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { compression } from 'vite-plugin-compression2';
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
-module.exports = defineConfig(({ command, mode }) => {
+export default defineConfig(({ command, mode }) => {
   const isProduction = mode === 'production';
   
   return {
