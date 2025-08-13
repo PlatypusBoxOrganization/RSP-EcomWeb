@@ -37,7 +37,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
   'http://localhost:5173',
-  'http://127.0.0.1:5173'
+  'http://127.0.0.1:5173',
+  'https://rsprotronics.netlify.app/' // Add your Netlify URL here
 ];
 
 // Enable CORS for all routes
@@ -77,15 +78,16 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 
-// Serve static assets in production
+// In production, redirect to Netlify frontend
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  const staticPath = path.join(path.dirname(__dirname), 'dist');
-  app.use(express.static(staticPath));
-  
-  // Handle SPA
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(staticPath, 'index.html'));
+  // Redirect all non-API routes to Netlify frontend
+  app.get('*', (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    // Redirect to Netlify frontend
+    res.redirect(302, 'https://rsprotronics.netlify.app/' + req.path);
   });
 }
 
