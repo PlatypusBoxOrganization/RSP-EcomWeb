@@ -331,11 +331,11 @@ const Cart = () => {
     
     const totalDiscount = productDiscount + couponDiscount;
     
-    // Calculate delivery charge (free for orders above ₹500)
-    const deliveryCharge = subtotal > 500 ? 0 : 50;
+    // Calculate delivery charge (free for orders above ₹500 or if cart is empty)
+    const deliveryCharge = localItems.length === 0 ? 0 : (subtotal > 500 ? 0 : 50);
     
-    // Processing fee (fixed for now, could be made dynamic)
-    const processingFee = 10;
+    // Processing fee (fixed, but zero if cart is empty)
+    const processingFee = localItems.length === 0 ? 0 : 10;
     
     const total = Math.max(0, subtotal - totalDiscount + deliveryCharge + processingFee);
     
