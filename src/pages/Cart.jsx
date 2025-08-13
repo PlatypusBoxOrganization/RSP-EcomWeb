@@ -539,7 +539,7 @@ const Cart = () => {
                   {shippingAddress.state}, {shippingAddress.postalCode}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  Phone: {shippingAddress.phone}
+                  Phone: {shippingAddress.phone || user?.phone || 'Not provided'}
                 </p>
               </div>
             ) : user ? (
