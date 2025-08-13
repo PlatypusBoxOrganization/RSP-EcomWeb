@@ -3,6 +3,7 @@ import { FixedSizeGrid as Grid } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FaFilter, FaTimes, FaChevronDown, FaSpinner } from "react-icons/fa";
 import debounce from 'lodash.debounce';
+import api from '../services/api/axiosConfig';
 const ProductCard = lazy(() => import('../components/ProductCard'));
 const FilterSidebar = lazy(() => import('../components/FilterSidebar'));
 import OptimizedImage from "../components/OptimizedImage";
@@ -34,12 +35,8 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        const data = await response.json();
-        setProducts(data);
+        const response = await api.get('/products');
+        setProducts(response.data);
         setError(null);
       } catch (err) {
         console.error('Error fetching products:', err);
