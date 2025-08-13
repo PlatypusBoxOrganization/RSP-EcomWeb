@@ -401,23 +401,9 @@ const Cart = () => {
                         )}
                       </>
                     )}
-                    <div className="mt-2 flex gap-2">
-                      <select className="border px-2 py-1 text-sm rounded">
-                        <option key="one-size" value="one-size">One Size</option>
-                      </select>
-                      <select
-                        className="border px-2 py-1 text-sm rounded"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          updateQuantity(item.id, parseInt(e.target.value))
-                        }
-                      >
-                        {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
-                          <option key={`qty-${num}`} value={num}>
-                            {num}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="mt-2 text-sm text-gray-600">
+                      <div>Size: One Size</div>
+                      <div>Qty: {item.quantity}</div>
                     </div>
                     <div className="text-xs text-gray-500 mt-2">
                       Delivery by <strong>{deliveryDate.toDateString()}</strong>
