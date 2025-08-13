@@ -21,6 +21,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
+import { getProfile } from '../services/api/profileService';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -49,6 +50,8 @@ const Cart = () => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [showCouponInput, setShowCouponInput] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState(null);
+  const [isLoadingAddress, setIsLoadingAddress] = useState(true);
 
   // Calculate delivery date (3 days from now)
   const deliveryDate = useMemo(() => {
@@ -65,6 +68,30 @@ const Cart = () => {
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
+
+  // Fetch user's shipping address
+  useEffect(() => {
+    const fetchUserAddress = async () => {
+      if (!user) {
+        setIsLoadingAddress(false);
+        return;
+      }
+      
+      try {
+        const response = await getProfile();
+        const addresses = response.data?.addresses || [];
+        const defaultAddress = addresses.find(addr => addr.isDefault) || addresses[0];
+        setShippingAddress(defaultAddress || null);
+      } catch (err) {
+        console.error('Error fetching shipping address:', err);
+        toast.error('Failed to load shipping address');
+      } finally {
+        setIsLoadingAddress(false);
+      }
+    };
+
+    fetchUserAddress();
+  }, [user]);
 
   // Sync local items with cart context and handle errors
   useEffect(() => {
@@ -281,24 +308,44 @@ const Cart = () => {
   
   // Calculate cart totals
   const cartTotals = useMemo(() => {
-    const subtotal = localItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = localItems.reduce((sum, item) => {
+      const itemPrice = item.product?.price || 0;
+      return sum + (itemPrice * item.quantity);
+    }, 0);
+    
+    // Calculate total discount from product discounts
+    const productDiscount = localItems.reduce((sum, item) => {
+      if (item.product?.discount) {
+        const discountAmount = (item.product.price * item.product.discount / 100) * item.quantity;
+        return sum + parseFloat(discountAmount.toFixed(2));
+      }
+      return sum;
+    }, 0);
     
     // Apply coupon discount if available
-    let discount = 0;
+    let couponDiscount = 0;
     if (appliedCoupon) {
       const calculatedDiscount = (subtotal * appliedCoupon.discount) / 100;
-      discount = Math.min(calculatedDiscount, appliedCoupon.maxDiscount);
+      couponDiscount = Math.min(calculatedDiscount, appliedCoupon.maxDiscount);
     }
+    
+    const totalDiscount = productDiscount + couponDiscount;
     
     // Calculate delivery charge (free for orders above ₹500)
     const deliveryCharge = subtotal > 500 ? 0 : 50;
     
-    const total = Math.max(0, subtotal - discount + deliveryCharge);
+    // Processing fee (fixed for now, could be made dynamic)
+    const processingFee = 10;
+    
+    const total = Math.max(0, subtotal - totalDiscount + deliveryCharge + processingFee);
     
     return {
       subtotal,
-      discount,
+      productDiscount,
+      couponDiscount,
+      totalDiscount,
       deliveryCharge,
+      processingFee,
       total,
       totalItems: localItems.reduce((sum, item) => sum + item.quantity, 0)
     };
@@ -448,47 +495,168 @@ const Cart = () => {
         </div>
 
         {/* Summary */}
-        <div className="w-full lg:w-96 bg-white p-4  rounded-md shadow-sm h-fit space-y-4 ">
+        <div className="w-full lg:w-96 bg-white p-4 rounded-md shadow-sm h-fit space-y-4">
+          {/* Shipping Address Section */}
           <div className="text-sm border-b pb-2">
-            <div className="flex justify-between">
-              <span>Deliver To</span>
-              <button className="text-blue-500 text-xs">Change</button>
+            <div className="flex justify-between items-center">
+              <span className="font-medium">Deliver To</span>
+              {user ? (
+                <Link 
+                  to="/profile?tab=address" 
+                  className="text-blue-500 text-xs hover:underline"
+                >
+                  {shippingAddress ? 'Change' : 'Add Address'}
+                </Link>
+              ) : (
+                <Link 
+                  to="/login?redirect=/cart" 
+                  className="text-blue-500 text-xs hover:underline"
+                >
+                  Login to add address
+                </Link>
+              )}
             </div>
-            <p className="text-gray-700 font-medium">Delhi, 110001</p>
-            <button className="text-xs text-pink-600">Login to select/ add address</button>
+            
+            {isLoadingAddress ? (
+              <div className="animate-pulse space-y-2 mt-2">
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              </div>
+            ) : shippingAddress ? (
+              <div className="mt-1">
+                <p className="text-gray-700 font-medium">
+                  {shippingAddress.name}
+                  {shippingAddress.isDefault && (
+                    <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">
+                      Default
+                    </span>
+                  )}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {shippingAddress.street}, {shippingAddress.city}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {shippingAddress.state}, {shippingAddress.postalCode}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  Phone: {shippingAddress.phone}
+                </p>
+              </div>
+            ) : user ? (
+              <p className="text-gray-500 text-sm mt-1">
+                No address saved. Please add a shipping address.
+              </p>
+            ) : (
+              <p className="text-gray-500 text-sm mt-1">
+                Please login to manage your addresses.
+              </p>
+            )}
           </div>
 
+          {/* Coupon Section */}
           <div className="text-sm">
-            <button className="text-blue-500">Check for Coupons</button>
+            {showCouponInput ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Enter coupon code"
+                  className="flex-1 px-3 py-1.5 border border-gray-300 rounded-md text-sm"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  disabled={isCouponLoading}
+                  className="bg-blue-500 text-white px-3 py-1.5 rounded-md text-sm hover:bg-blue-600 disabled:opacity-50"
+                >
+                  {isCouponLoading ? 'Applying...' : 'Apply'}
+                </button>
+              </div>
+            ) : (
+              <button 
+                onClick={() => setShowCouponInput(true)}
+                className="text-blue-500 hover:underline"
+              >
+                Have a coupon code? Apply here
+              </button>
+            )}
+            {couponError && (
+              <p className="text-red-500 text-xs mt-1">{couponError}</p>
+            )}
+            {appliedCoupon && (
+              <div className="flex items-center justify-between mt-2 bg-green-50 p-2 rounded">
+                <span className="text-green-700 text-sm">
+                  Coupon Applied: {appliedCoupon.code} (-{appliedCoupon.discount}%)
+                </span>
+                <button 
+                  onClick={handleRemoveCoupon}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  ×
+                </button>
+              </div>
+            )}
           </div>
 
-          <div className="text-sm space-y-2">
+          {/* Order Summary */}
+          <div className="text-sm space-y-2 pt-2">
             <div className="flex justify-between">
-              <span>Cart Total</span>
-              <span>₹ {cartTotal}</span>
+              <span>Price ({cartTotals.totalItems} {cartTotals.totalItems === 1 ? 'item' : 'items'})</span>
+              <span>₹{cartTotals.subtotal.toFixed(2)}</span>
             </div>
+            
+            {cartTotals.productDiscount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>Product Discount</span>
+                <span>- ₹{cartTotals.productDiscount.toFixed(2)}</span>
+              </div>
+            )}
+            
+            {appliedCoupon && cartTotals.couponDiscount > 0 && (
+              <div className="flex justify-between text-green-600">
+                <span>Coupon Discount ({appliedCoupon.code})</span>
+                <span>- ₹{cartTotals.couponDiscount.toFixed(2)}</span>
+              </div>
+            )}
+            
+            <div className="flex justify-between">
+              <span>Delivery Fee</span>
+              <span>{cartTotals.deliveryCharge === 0 ? 'FREE' : `₹${cartTotals.deliveryCharge.toFixed(2)}`}</span>
+            </div>
+            
             <div className="flex justify-between">
               <span>Processing Fees</span>
-              <span>₹ 10.00</span>
+              <span>₹{cartTotals.processingFee.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>₹ {cartTotal + 10}</span>
-            </div>
-            <div className="flex justify-between text-green-600">
-              <span>Product Discount(s)</span>
-              <span>- ₹ 2000.00</span>
-            </div>
-            <div className="flex justify-between font-semibold text-lg">
-              <span>Total</span>
-              <span>₹ {cartTotal + 10 - 2000}</span>
+            
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <div className="flex justify-between font-semibold text-base">
+                <span>Total Amount</span>
+                <span>₹{cartTotals.total.toFixed(2)}</span>
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Inclusive of all taxes
+              </p>
             </div>
           </div>
-          <Link to="/checkout">
-          <button className="bg-[#292355] text-white w-full py-2 rounded-md hover:bg-[#482e5e]">
-            Checkout
+          
+          {/* Checkout Button */}
+          <button 
+            onClick={handleCheckout}
+            disabled={isCheckingOut || localItems.length === 0 || !shippingAddress}
+            className={`w-full bg-[#292355] text-white py-2 rounded-md hover:bg-[#482e5e] transition-colors ${
+              (isCheckingOut || localItems.length === 0 || !shippingAddress) ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {isCheckingOut ? (
+              <span className="flex items-center justify-center">
+                <FaSpinner className="animate-spin mr-2" />
+                Processing...
+              </span>
+            ) : (
+              `Proceed to Pay ₹${cartTotals.total.toFixed(2)}`
+            )}
           </button>
-          </Link>
 
           <div className="text-xs text-gray-500 mt-5">
             <p key="secure-payments">✅ Safe and secure payments</p>
