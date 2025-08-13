@@ -134,10 +134,10 @@ export default defineConfig(({ command, mode }) => {
     // Resolve aliases
     resolve: {
       alias: [
-        { find: '@', replacement: resolve(__dirname, 'src') },
-        { find: '@components', replacement: resolve(__dirname, 'src/components') },
-        { find: '@pages', replacement: resolve(__dirname, 'src/pages') },
-        { find: '@assets', replacement: resolve(__dirname, 'src/assets') },
+        { find: '@', replacement: pathResolve(__dirname, 'src') },
+        { find: '@components', replacement: pathResolve(__dirname, 'src/components') },
+        { find: '@pages', replacement: pathResolve(__dirname, 'src/pages') },
+        { find: '@assets', replacement: pathResolve(__dirname, 'src/assets') },
       ],
     },
   };
