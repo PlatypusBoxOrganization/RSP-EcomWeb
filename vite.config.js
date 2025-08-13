@@ -3,11 +3,11 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { compression } from 'vite-plugin-compression2';
-import path from 'path';
+import { resolve as pathResolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -65,7 +65,7 @@ export default defineConfig(({ command, mode }) => {
       cssMinify: isProduction,
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'),
+          main: pathResolve(__dirname, 'index.html'),
         },
         output: {
           manualChunks: {
