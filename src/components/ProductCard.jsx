@@ -57,10 +57,23 @@ const ProductCard = memo(({ product }) => {
     navigate(`/product/${productId}`);
   }, [navigate, productId]);
 
-  const handleWishlistToggle = useCallback((e) => {
+  const handleWishlistToggle = useCallback(async (e) => {
     e?.stopPropagation?.();
-    toggleWishlist(product);
-  }, [product, toggleWishlist]);
+    try {
+      const result = await toggleWishlist(product);
+      if (result.error) {
+        if (result.requiresAuth) {
+          // Redirect to login with a message
+          navigate(`/login?redirect=${encodeURIComponent(window.location.pathname)}&message=${encodeURIComponent('Please login to manage your wishlist')}`);
+        } else {
+          toast.error(result.error);
+        }
+      }
+    } catch (err) {
+      console.error('Wishlist error:', err);
+      toast.error('Failed to update wishlist');
+    }
+  }, [product, toggleWishlist, navigate]);
 
   const handleMouseEnter = useCallback(() => setIsHovered(true), []);
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
@@ -75,14 +88,14 @@ const ProductCard = memo(({ product }) => {
     >
       {/* Wishlist Button */}
       <button
-        className="absolute top-2 right-2 z-10 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:bg-white hover:scale-110 transition-all duration-200"
+        className={`absolute top-2 right-2 z-10 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:bg-white hover:scale-110 transition-all duration-200 ${isInWishlist ? 'text-pink-500' : 'text-gray-500 hover:text-pink-500'}`}
         onClick={handleWishlistToggle}
         aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
       >
         {isInWishlist ? (
-          <FaHeart className="text-pink-500 w-4 h-4" />
+          <FaHeart className="w-4 h-4" />
         ) : (
-          <FaRegHeart className="text-gray-500 w-4 h-4 group-hover:text-pink-500" />
+          <FaRegHeart className="w-4 h-4" />
         )}
       </button>
 

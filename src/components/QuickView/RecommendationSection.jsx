@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import products from '../../data/products.json';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard';
+import axios from 'axios';
 
 const Carousel = ({ title, productList }) => {
   const [scrollX, setScrollX] = useState(0);
@@ -35,7 +35,7 @@ const Carousel = ({ title, productList }) => {
           className="flex overflow-x-auto no-scrollbar space-x-4 px-6 py-4 scroll-smooth"
         >
           {productList.map((product) => (
-            <div key={product.id} className="w-54 flex-shrink-0">
+            <div key={product._id || product.id} className="w-54 flex-shrink-0">
               <ProductCard product={product} />
             </div>
           ))}
@@ -52,20 +52,100 @@ const Carousel = ({ title, productList }) => {
 };
 
 const RecommendationSection = ({ currentProduct }) => {
-  const category = currentProduct.category;
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const relatedProducts = products.filter(
-    (p) => p.category === category && p.id !== currentProduct.id
-  );
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      if (!currentProduct?._id) {
+        console.log('No current product ID available');
+        return;
+      }
+      
+      console.log('Fetching recommendations for product:', currentProduct._id);
+      
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const apiUrl = import.meta.env.VITE_API_URL;
+        
+        // Fetch related and suggested products in parallel
+        const [relatedResponse, suggestedResponse] = await Promise.all([
+          axios.get(`${apiUrl}/products/related/${currentProduct._id}`),
+          axios.get(`${apiUrl}/products/suggested`)
+        ]);
+        
+        console.log('Related products response:', relatedResponse.data);
+        console.log('Suggested products response:', suggestedResponse.data);
+        
+        setRelatedProducts(Array.isArray(relatedResponse.data) ? relatedResponse.data : []);
+        setSuggestedProducts(Array.isArray(suggestedResponse.data) ? suggestedResponse.data : []);
+        
+      } catch (err) {
+        console.error('Error fetching recommendations:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status
+        });
+        setError('Failed to load recommendations. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const suggestedProducts = products.filter(
-    (p) => p.category !== category
-  );
+    fetchRecommendations();
+  }, [currentProduct?._id]);
+
+  if (!currentProduct) {
+    return null;
+  }
+
+  // Show loading state only on initial load
+  if (loading && relatedProducts.length === 0 && suggestedProducts.length === 0) {
+    return (
+      <div className="px-4 py-8 flex justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  // Show error message if there was an error and no products are loaded
+  if (error && relatedProducts.length === 0 && suggestedProducts.length === 0) {
+    return (
+      <div className="px-4 py-6 text-center text-red-600">
+        {error}
+      </div>
+    );
+  }
 
   return (
-    <div className="px-4">
-      <Carousel title="You may also like" productList={suggestedProducts.slice(0, 6)} />
-      <Carousel title="Related Products" productList={relatedProducts.slice(0, 6)} />
+    <div className="px-4 mt-8">
+      {suggestedProducts.length > 0 && (
+        <div className="mb-10">
+          <Carousel 
+            title="You may also like" 
+            productList={suggestedProducts} 
+          />
+        </div>
+      )}
+      
+      {relatedProducts.length > 0 && (
+        <div className="mb-10">
+          <Carousel 
+            title="Related Products" 
+            productList={relatedProducts} 
+          />
+        </div>
+      )}
+      
+      {!loading && relatedProducts.length === 0 && suggestedProducts.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          No recommendations available at the moment.
+        </div>
+      )}
     </div>
   );
 };

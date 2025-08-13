@@ -1,53 +1,78 @@
 import jwt from 'jsonwebtoken';
+import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 
-// Protect routes
-export const protect = async (req, res, next) => {
+/**
+ * @desc    Protect routes with JWT authentication
+ * @access  Private
+ */
+export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    // Set token from Bearer token in header
-    token = req.headers.authorization.split(' ')[1];
-  }
-  // Set token from cookie
-  // else if (req.cookies.token) {
-  //   token = req.cookies.token;
-  // }
+  // Read the JWT from the cookie first
+  token = req.cookies?.jwt;
 
-  // Make sure token exists
+  // If no cookie, check Authorization header
+  if (!token && req.headers.authorization?.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+    } catch (error) {
+      res.status(401);
+      throw new Error('Not authorized, invalid token format');
+    }
+  }
+
   if (!token) {
-    return res.status(401).json({
-      success: false,
-      error: 'Not authorized to access this route',
-    });
+    res.status(401);
+    throw new Error('Not authorized, no token provided');
   }
 
   try {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await User.findById(decoded.id);
+    // Get user from the token and attach to request
+    req.user = await User.findById(decoded.id).select('-password');
+    
+    if (!req.user) {
+      res.status(401);
+      throw new Error('User not found');
+    }
+    
     next();
-  } catch (err) {
-    return res.status(401).json({
-      success: false,
-      error: 'Not authorized to access this route',
-    });
+  } catch (error) {
+    console.error('Authentication error:', error.message);
+    res.status(401);
+    throw new Error('Not authorized, token verification failed');
   }
-};
+});
 
-// Grant access to specific roles
+/**
+ * @desc    Grant access to specific roles
+ * @param   {...String} roles - Allowed roles
+ * @returns {Function} Middleware function
+ */
 export const authorize = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        success: false,
-        error: `User role ${req.user.role} is not authorized to access this route`,
-      });
+    if (!req.user || !roles.includes(req.user.role)) {
+      res.status(403);
+      throw new Error(
+        `User role ${req.user?.role} is not authorized to access this route`
+      );
     }
     next();
   };
+};
+
+/**
+ * @desc    Check if user is admin
+ * @access  Private/Admin
+ */
+export const admin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403);
+    throw new Error('Not authorized as an admin');
+  }
 };

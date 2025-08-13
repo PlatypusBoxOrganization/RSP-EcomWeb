@@ -1,19 +1,27 @@
 const errorHandler = (err, req, res, next) => {
-  // Skip logging for 404 errors to prevent log spam
-  if (err.status !== 404) {
-    console.error('Error Handler:', err);
-    
-    // Log the full error in development
-    if (process.env.NODE_ENV !== 'production') {
-      console.error('Error Stack:', err.stack);
-      console.error('Request Body:', req.body);
-      console.error('Request URL:', req.originalUrl);
-      console.error('Request Method:', req.method);
-    }
+  // Log all errors for debugging
+  console.error('\n===== ERROR HANDLER =====');
+  console.error('Timestamp:', new Date().toISOString());
+  console.error('Error:', err);
+  
+  // Always log the full error in development
+  if (process.env.NODE_ENV !== 'production' || err.status !== 404) {
+    console.error('Error Stack:', err.stack);
+    console.error('Request URL:', req.originalUrl);
+    console.error('Request Method:', req.method);
+    console.error('Request Headers:', req.headers);
+    console.error('Request Body:', req.body);
+    console.error('Request Query:', req.query);
+    console.error('Request Params:', req.params);
+  }
+  
+  // Log database connection status if this is a database error
+  if (err.name === 'MongoError' || err.name === 'MongooseError') {
+    console.error('MongoDB Connection State:', mongoose.connection.readyState);
   }
   
   // Default to 500 (Internal Server Error) if status code not set
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
 
   // Handle specific error types
   let message = err.message || 'Something went wrong';

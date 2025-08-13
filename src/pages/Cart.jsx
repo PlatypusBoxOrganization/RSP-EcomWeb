@@ -14,9 +14,11 @@ import {
   FaMinus,
   FaTicketAlt,
   FaCreditCard,
-  FaArrowRight
+  FaArrowRight,
+  FaHeart
 } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
@@ -36,6 +38,8 @@ const Cart = () => {
     refreshCart
   } = useCart();
   
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  
   const [localItems, setLocalItems] = useState([]);
   const [isUpdating, setIsUpdating] = useState({});
   const [couponCode, setCouponCode] = useState('');
@@ -43,6 +47,15 @@ const Cart = () => {
   const [isCouponLoading, setIsCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState('');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [showCouponInput, setShowCouponInput] = useState(false);
+
+  // Calculate delivery date (3 days from now)
+  const deliveryDate = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 3); // 3 days delivery time
+    return date;
+  }, []);
 
   // Check for cart messages in location state
   useEffect(() => {
@@ -131,10 +144,62 @@ const Cart = () => {
       console.error('Error removing item:', err);
       toast.error(err.message || 'Failed to remove item');
       refreshCart();
-    } finally {
-      setIsUpdating(prev => ({ ...prev, [productId]: false }));
     }
-  }, [removeFromCart, refreshCart]);
+  }, [removeFromCart]);
+
+  // Handle moving item to wishlist
+  const handleMoveToWishlist = async (item) => {
+    if (!user) {
+      toast.error('Please login to use your wishlist');
+      navigate('/login', { state: { from: '/cart' } });
+      return;
+    }
+
+    const product = item.product || item;
+    const productId = product?._id || item.productId;
+    
+    if (!productId) {
+      console.error('Invalid product data:', item);
+      toast.error('Invalid product data');
+      return;
+    }
+
+    setIsUpdating(prev => ({ ...prev, [item._id || item.id]: true }));
+
+    try {
+      // First check if the product is already in wishlist
+      const isInWishlist = isWishlisted(productId);
+      
+      if (!isInWishlist) {
+        // Add to wishlist if not already there
+        const wishlistResult = await toggleWishlist(product);
+        
+        if (!wishlistResult.success) {
+          if (wishlistResult.requiresAuth) {
+            navigate('/login', { state: { from: location.pathname } });
+            return;
+          }
+          throw new Error(wishlistResult.error || 'Failed to add to wishlist');
+        }
+      }
+      
+      // Then remove from cart
+      const cartResult = await removeFromCart(item._id || item.id);
+      
+      if (cartResult.success) {
+        toast.success('Moved to wishlist');
+        // Refresh both cart and wishlist to ensure consistency
+        await refreshCart();
+      } else {
+        throw new Error(cartResult.error || 'Failed to remove from cart');
+      }
+    } catch (error) {
+      console.error('Error moving to wishlist:', error);
+      toast.error(error.message || 'Failed to move to wishlist');
+    } finally {
+      setIsUpdating(prev => ({ ...prev, [item._id || item.id]: false }));
+    }
+  };
 
   // Handle clear cart
   const handleClearCart = useCallback(async () => {
@@ -274,6 +339,13 @@ const Cart = () => {
                 </button>
               </div>
             </div>
+          ) : !Array.isArray(localItems) ? (
+            <div className="container mx-auto p-4 text-center">
+              <FaExclamationTriangle className="text-yellow-500 text-4xl mx-auto mb-4" />
+              <h1 className="text-xl font-bold mb-2">Cart Data Loading</h1>
+              <p className="text-gray-600 mb-4">Please wait while we load your cart items...</p>
+              <FaSpinner className="animate-spin h-8 w-8 text-blue-500 mx-auto" />
+            </div>
           ) : localItems.length === 0 ? (
             <div className="container mx-auto p-4 text-center">
               <h1 className="text-2xl font-bold mb-4">Your Cart is Empty</h1>
@@ -286,31 +358,52 @@ const Cart = () => {
               </Link>
             </div>
           ) : (
-            localItems.map((item) => (
+            localItems.map((item, index) => (
               <div
-                key={item.id}
+                key={`cart-item-${item.id || item._id || index}`}
                 className="bg-white p-4 rounded-md shadow-sm flex items-start justify-between"
               >
                 <div className="flex items-start gap-4">
-                  <img
-                    src={item.product.images?.[0] || '/Images/placeholder.webp'}
-                    alt={item.product.name}
-                    className="w-20 h-20 object-contain"
-                  />
+                  {!item.product ? (
+                    <div className="w-20 h-20 bg-gray-100 rounded flex items-center justify-center">
+                      <FaSpinner className="animate-spin text-gray-400" />
+                    </div>
+                  ) : (
+                    <img
+                      src={item.product.images?.[0] || '/Images/placeholder.webp'}
+                      alt={item.product.name || 'Product image'}
+                      className="w-20 h-20 object-contain"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/Images/placeholder.webp';
+                      }}
+                    />
+                  )}
                   <div>
-                    <h3 className="font-medium text-md">{item.product.name}</h3>
-                    <p className="text-sm text-gray-600">₹ {item.product.price}</p>
-                    <p className="text-sm text-gray-400 line-through">
-                      MRP: ₹ {item.product.mrp}
-                    </p>
-                    {item.product.discount > 0 && (
-                      <p className="text-sm text-green-600">
-                        {item.product.discount}% off
-                      </p>
+                    {!item.product ? (
+                      <div className="space-y-2">
+                        <div className="h-5 w-40 bg-gray-200 animate-pulse rounded"></div>
+                        <div className="h-4 w-20 bg-gray-100 animate-pulse rounded"></div>
+                      </div>
+                    ) : (
+                      <>
+                        <h3 className="font-medium text-md">{item.product.name || 'Unnamed Product'}</h3>
+                        <p className="text-sm text-gray-600">₹ {item.product.price || '0.00'}</p>
+                        {item.product.mrp > 0 && (
+                          <p className="text-sm text-gray-400 line-through">
+                            MRP: ₹ {item.product.mrp}
+                          </p>
+                        )}
+                        {item.product.discount > 0 && (
+                          <p className="text-sm text-green-600">
+                            {item.product.discount}% off
+                          </p>
+                        )}
+                      </>
                     )}
                     <div className="mt-2 flex gap-2">
                       <select className="border px-2 py-1 text-sm rounded">
-                        <option>One Size</option>
+                        <option key="one-size" value="one-size">One Size</option>
                       </select>
                       <select
                         className="border px-2 py-1 text-sm rounded"
@@ -319,9 +412,9 @@ const Cart = () => {
                           updateQuantity(item.id, parseInt(e.target.value))
                         }
                       >
-                        {[...Array(10)].map((_, i) => (
-                          <option key={i + 1} value={i + 1}>
-                            {i + 1}
+                        {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                          <option key={`qty-${num}`} value={num}>
+                            {num}
                           </option>
                         ))}
                       </select>
@@ -332,14 +425,35 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-2">
-                  <button className="text-sm text-pink-600 hover:underline">
-                    Save to Wishlist
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleMoveToWishlist(item);
+                    }}
+                    className="text-sm text-pink-600 hover:underline flex items-center gap-1"
+                    disabled={isUpdating[item._id || item.id]}
+                  >
+                    {isUpdating[item._id || item.id] ? (
+                      <>
+                        <FaSpinner className="animate-spin h-3 w-3" /> Moving...
+                      </>
+                    ) : (
+                      <>
+                        <FaHeart className="inline mr-1" /> Save to Wishlist
+                      </>
+                    )}
                   </button>
                   <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-sm text-gray-600 hover:text-red-500"
+                    onClick={() => handleRemoveItem(item._id || item.id)}
+                    className="text-sm text-gray-600 hover:text-red-500 disabled:opacity-50"
+                    disabled={isUpdating[item._id || item.id]}
                   >
-                    Remove
+                    {isUpdating[item._id || item.id] ? (
+                      <FaSpinner className="animate-spin h-4 w-4 inline" />
+                    ) : (
+                      'Remove'
+                    )}
                   </button>
                 </div>
               </div>
@@ -391,9 +505,9 @@ const Cart = () => {
           </Link>
 
           <div className="text-xs text-gray-500 mt-5">
-            <p>✅ Safe and secure payments</p>
-            <p>🔁 Easy returns</p>
-            <p>📦 100% Authentic products</p>
+            <p key="secure-payments">✅ Safe and secure payments</p>
+            <p key="easy-returns">🔁 Easy returns</p>
+            <p key="authentic-products">📦 100% Authentic products</p>
           </div>
 
           <div className="text-xs text-gray-600 text-center">
