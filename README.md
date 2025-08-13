@@ -1,28 +1,127 @@
-# RSP-EcomWeb
+# ElectroHive E-commerce Platform
 
-This project was bootstrapped with React + Vite.
+A full-stack e-commerce platform built with React, Node.js, Express, and MongoDB.
+
+## Features
+
+- User authentication (register/login)
+- Product catalog with filtering and search
+- Shopping cart functionality
+- Wishlist management
+- Responsive design
+- Secure checkout process
+
+## Tech Stack
+
+- **Frontend**: React, Vite, Tailwind CSS
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Authentication**: JWT
+
+## Prerequisites
+
+- Node.js 16+ and npm
+- MongoDB Atlas account or local MongoDB instance
+- Git
 
 ## Getting Started
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 1. Clone the repository
 
-### Available Scripts
+```bash
+git clone https://github.com/yourusername/electrohive.git
+cd electrohive
+```
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
+### 2. Install dependencies
 
-### Technologies Used
+```bash
+# Install root dependencies
+npm install
 
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
+# Install server dependencies
+cd server
+npm install
+cd ..
+```
 
-### Development Plugins
+### 3. Set up environment variables
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) - Uses Babel for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) - Uses SWC for Fast Refresh
+Create a `.env` file in the `server` directory with the following variables:
 
-## Expanding the ESLint configuration
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_here
+JWT_EXPIRE=30d
+FRONTEND_URL=http://localhost:5173
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 4. Start the development server
+
+```bash
+# Start both frontend and backend
+tmux new-session -d 'cd server && npm run dev' 'cd client && npm run dev'
+
+# Or run in separate terminals
+# Terminal 1 (backend):
+cd server
+npm run dev
+
+# Terminal 2 (frontend):
+cd client
+npm run dev
+```
+
+## Deployment
+
+### Render.com (Recommended)
+
+1. Push your code to a GitHub repository
+2. Create a new Web Service on Render
+3. Connect your GitHub repository
+4. Configure the following settings:
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `node server.js`
+   - **Environment**: Node
+
+5. Add environment variables in the Render dashboard:
+   - `NODE_ENV=production`
+   - `PORT=10000`
+   - `MONGO_URI=your_mongodb_connection_string`
+   - `JWT_SECRET=your_jwt_secret_here`
+   - `JWT_EXPIRE=30d`
+   - `FRONTEND_URL=your_render_app_url`
+
+### Manual Deployment
+
+1. Build the frontend:
+   ```bash
+   npm run build
+   ```
+
+2. Start the production server:
+   ```bash
+   NODE_ENV=production node server/server.js
+   ```
+
+## Environment Variables
+
+See `.env.example` for all required environment variables.
+
+## API Documentation
+
+API documentation is available at `/api-docs` when running in development mode.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

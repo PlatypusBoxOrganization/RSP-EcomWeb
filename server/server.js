@@ -6,6 +6,12 @@ import morgan from 'morgan';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Route files
 import authRoutes from './routes/authRoutes.js';
@@ -59,12 +65,29 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Mount routers
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  const staticPath = path.join(path.dirname(__dirname), 'dist');
+  app.use(express.static(staticPath));
+  
+  // Handle SPA
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(staticPath, 'index.html'));
+  });
+}
 
 // Root route
 app.get('/', (req, res) => {

@@ -10,7 +10,7 @@ export default defineConfig(({ command, mode }) => {
   const isProduction = mode === 'production';
   
   return {
-    base: isProduction ? './' : '/',
+    base: isProduction ? '/' : '/',
     plugins: [
       react({
         babel: {
@@ -55,6 +55,8 @@ export default defineConfig(({ command, mode }) => {
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
+      sourcemap: isProduction ? false : true,
+      minify: isProduction ? 'terser' : false,
       target: 'esnext',
       sourcemap: !isProduction,
       minify: isProduction ? 'terser' : false,
