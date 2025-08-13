@@ -48,6 +48,37 @@ router.get(
   })
 );
 
+// @desc    Fetch multiple products by IDs
+// @route   GET /api/products/ids
+// @access  Public
+router.get(
+  '/ids',
+  asyncHandler(async (req, res) => {
+    const { ids } = req.query;
+    
+    if (!ids) {
+      res.status(400);
+      throw new Error('Product IDs are required');
+    }
+    
+    const idArray = ids.split(',').map(id => id.trim());
+    
+    // Validate that all IDs are valid MongoDB ObjectIds
+    const validIds = idArray.filter(id => mongoose.Types.ObjectId.isValid(id));
+    
+    if (validIds.length === 0) {
+      res.status(400);
+      throw new Error('No valid product IDs provided');
+    }
+    
+    const products = await Product.find({
+      _id: { $in: validIds }
+    });
+    
+    res.json(products);
+  })
+);
+
 // @desc    Get suggested products (random products from different categories)
 // @route   GET /api/products/suggested
 // @access  Public

@@ -19,6 +19,7 @@ const Team = lazy(() => import('./pages/Team'));
 const Faq = lazy(() => import('./pages/Faq'));
 const ComplaintBox = lazy(() => import('./pages/ComplaintBox'));
 const Wishlist = lazy(() => import('./pages/WishlistPage'));
+const SharedWishlist = lazy(() => import('./pages/SharedWishlistPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const ProtectedRoute = lazy(() => import('./components/common/ProtectedRoute'));
 
@@ -79,6 +80,12 @@ function App() {
                     <ProtectedRoute>
                       <Wishlist />
                     </ProtectedRoute>
+                  } />
+                  
+                  <Route path="/shared-wishlist" element={
+                    <Suspense fallback={<Loading />}>
+                      <SharedWishlist />
+                    </Suspense>
                   } />
                   
                   <Route path="/history" element={

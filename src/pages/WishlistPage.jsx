@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useWishlist } from '../context/WishlistContext.jsx';
 import { useCart } from '../context/CartContext';
 import ProductCard from '../components/ProductCard.jsx';
-import { FaHeart, FaArrowRight, FaShoppingCart, FaRegSadTear } from 'react-icons/fa';
+import { FaHeart, FaArrowRight, FaShoppingCart, FaRegSadTear, FaCopy, FaCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -19,6 +19,8 @@ const WishlistPage = () => {
   } = useWishlist();
   
   const { addToCart, refreshCart } = useCart();
+  const [isCopied, setIsCopied] = React.useState(false);
+  const [showShareTooltip, setShowShareTooltip] = React.useState(false);
 
   // Handle move to cart action
   const handleMoveToCart = async (product) => {
@@ -74,6 +76,30 @@ const WishlistPage = () => {
     if (result.success) {
       toast.success('Removed from wishlist');
     }
+  };
+
+  // Handle share wishlist
+  const handleShareWishlist = () => {
+    const wishlistIds = wishlist.map(item => {
+      const product = item.product || item;
+      return product._id || product.id;
+    });
+    
+    // Create a shareable link with wishlist item IDs
+    const baseUrl = window.location.origin;
+    const shareUrl = `${baseUrl}/shared-wishlist?items=${wishlistIds.join(',')}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => {
+        setIsCopied(true);
+        toast.success('Wishlist link copied to clipboard!');
+        setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch((err) => {
+        console.error('Failed to copy:', err);
+        toast.error('Failed to copy wishlist link');
+      });
   };
 
   // Show loading state
@@ -156,12 +182,32 @@ const WishlistPage = () => {
                 Continue Shopping
               </Link>
               
-              <button
-                type="button"
-                className="px-6 py-3 border rounded-md shadow-sm text-base font-medium text-[#292355] bg-white border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#292355] transition-colors"
-              >
-                Share Wishlist
-              </button>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={handleShareWishlist}
+                  onMouseEnter={() => setShowShareTooltip(true)}
+                  onMouseLeave={() => setShowShareTooltip(false)}
+                  className="px-6 py-3 border rounded-md shadow-sm text-base font-medium text-[#292355] bg-white border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#292355] transition-colors flex items-center justify-center gap-2"
+                >
+                  {isCopied ? (
+                    <>
+                      <FaCheck className="text-green-500" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <FaCopy />
+                      Share Wishlist
+                    </>
+                  )}
+                </button>
+                {showShareTooltip && !isCopied && (
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white bg-gray-800 rounded-md shadow-lg z-10 whitespace-nowrap">
+                    Copy wishlist link to share
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ) : (
