@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaSpinner } from 'react-icons/fa';
+import { CartContext } from '../context/CartContext';
+import { FaSpinner, FaCreditCard, FaMoneyBillWave } from 'react-icons/fa';
+import { createOrder as createRazorpayOrder, verifyPayment } from '../services/paymentService';
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
@@ -9,9 +12,10 @@ const Checkout = () => {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [address, setAddress] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { cart, cartTotal, clearCart } = useContext(CartContext);
 
   useEffect(() => {
     if (!user) {
@@ -19,7 +23,122 @@ const Checkout = () => {
     }
   }, [user, navigate]);
 
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const displayRazorpay = async () => {
+    if (!address) {
+      setError('Please enter a delivery address');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      // Load Razorpay script
+      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+      
+      if (!res) {
+        setError('Razorpay SDK failed to load. Are you online?');
+        setLoading(false);
+        return;
+      }
+
+      // Create order on backend
+      const { order } = await createRazorpayOrder(cartTotal);
+      
+      const options = {
+        key: 'rzp_test_RJgQjyW5DIRbPa',
+        amount: order.amount,
+        currency: order.currency,
+        name: 'ElectroHive',
+        description: 'Thank you for shopping with us',
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            // Verify payment on backend
+            await verifyPayment({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            // Create order in database
+            const orderResponse = await fetch('http://localhost:5000/api/orders', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user?.token}`
+              },
+              body: JSON.stringify({
+                address,
+                paymentMethod: 'razorpay',
+                paymentId: response.razorpay_payment_id,
+                items: cart,
+                totalAmount: cartTotal
+              })
+            });
+
+            const orderData = await orderResponse.json();
+
+            if (!orderResponse.ok) {
+              throw new Error(orderData.message || 'Failed to create order');
+            }
+
+            setOrderSuccess(true);
+            setOrderDetails(orderData);
+            clearCart();
+            toast.success('Order placed successfully!');
+          } catch (error) {
+            console.error('Payment verification/order creation failed:', error);
+            toast.error('Payment verification failed. Please contact support.');
+          }
+        },
+        prefill: {
+          name: user?.name || 'Customer',
+          email: user?.email || 'customer@example.com',
+          contact: '9999999999', // Ideally get this from user profile
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.on('payment.failed', function (response) {
+        setError(`Payment failed: ${response.error.description}`);
+        toast.error(`Payment failed: ${response.error.description}`);
+      });
+      
+      paymentObject.open();
+    } catch (error) {
+      console.error('Error:', error);
+      setError(error.message || 'Error processing payment');
+      toast.error(error.message || 'Error processing payment');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePlaceOrder = async () => {
+    if (paymentMethod === 'razorpay') {
+      await displayRazorpay();
+      return;
+    }
+
+    // Handle COD (Cash on Delivery)
     if (!address) {
       setError('Please enter a delivery address');
       return;
@@ -33,12 +152,13 @@ const Checkout = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${user?.token}`
         },
         body: JSON.stringify({
           address,
           paymentMethod,
-          // Add any additional order details here
+          items: cart,
+          totalAmount: cartTotal
         })
       });
 
@@ -113,104 +233,33 @@ const Checkout = () => {
           <FaShoppingCart className="text-xl" />
           <span>Cart</span>
         </div>
-      </header> */}
-
-      {/* Main Container */}
-      <div className="flex flex-col lg:flex-row gap-6 p-4 lg:p-10">
-
-        {/* Left - Main Checkout Area */}
-        <div className="w-full lg:w-2/3 space-y-6">
-
-          {/* Delivery Details */}
-          <section className="bg-white p-5 rounded shadow">
-            <h2 className="font-semibold mb-4">Delivery Address</h2>
-            <div className="mb-4">
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-                Delivery Address *
-              </label>
-              <textarea
-                id="address"
-                rows="3"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your complete delivery address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-              />
-            </div>
-            <div className="text-sm">
-              <button className="text-blue-600">+ Add delivery instructions (optional)</button>
-            </div>
-          </section>
-
-          {/* Payment Section */}
-          <section className="bg-white p-5 rounded shadow">
-            <h3 className="font-semibold mb-4">Your available balance</h3>
-
             <div className="space-y-4">
-              {/* UPI */}
-              <div className="border p-4 rounded">
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    name="payment" 
-                    id="upi" 
-                    className="mr-2" 
-                    checked={paymentMethod === 'upi'}
-                    onChange={() => setPaymentMethod('upi')}
-                  />
-                  <label htmlFor="upi" className="flex-1">UPI</label>
-                </div>
-                {paymentMethod === 'upi' && (
-                  <div className="mt-3 pl-6">
-                    <input
-                      type="text"
-                      placeholder="Enter UPI ID"
-                      className="border px-3 py-2 rounded w-full md:w-1/2"
-                    />
-                  </div>
-                )}
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="cod"
+                  name="payment"
+                  className="h-4 w-4 text-blue-600"
+                  checked={paymentMethod === 'cod'}
+                  onChange={() => setPaymentMethod('cod')}
+                />
+                <label htmlFor="cod" className="ml-2">
+                  Cash on Delivery
+                </label>
               </div>
-
-              {/* Cards */}
-              <div className="border p-4 rounded">
-                <div className="flex items-center">
-                  <input 
-                    type="radio" 
-                    name="payment" 
-                    id="card" 
-                    className="mr-2" 
-                    checked={paymentMethod === 'card'}
-                    onChange={() => setPaymentMethod('card')}
-                  />
-                  <label htmlFor="card" className="flex-1">Credit or debit card</label>
-                </div>
-                {paymentMethod === 'card' && (
-                  <div className="mt-3 pl-6 space-y-3">
-                    <input
-                      type="text"
-                      placeholder="Card number"
-                      className="border px-3 py-2 rounded w-full"
-                    />
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        placeholder="MM/YY"
-                        className="border px-3 py-2 rounded"
-                      />
-                      <input
-                        type="text"
-                        placeholder="CVV"
-                        className="border px-3 py-2 rounded"
-                      />
-                    </div>
-                  </div>
-                )}
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="razorpay"
+                  name="payment"
+                  className="h-4 w-4 text-blue-600"
+                  checked={paymentMethod === 'razorpay'}
+                  onChange={() => setPaymentMethod('razorpay')}
+                />
+                <label htmlFor="razorpay" className="ml-2">
+                  Credit/Debit Card (Razorpay)
+                </label>
               </div>
-
-              {/* Net Banking */}
-              <div className="border p-4 rounded">
-                <div className="flex items-center">
                   <input 
                     type="radio" 
                     name="payment" 

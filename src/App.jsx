@@ -10,7 +10,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const ProductQuickView = lazy(() => import('./components/QuickView/ProductOverview'));
 const Cart = lazy(() => import('./pages/Cart'));
-const Checkout = lazy(() => import('./pages/Checkout'));
+// const Checkout = lazy(() => import('./pages/Checkout'));
 const Login = lazy(() => import('./pages/LoginPage'));
 const Register = lazy(() => import('./pages/RegisterPage'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
@@ -70,11 +70,11 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   
                   {/* Protected routes */}
-                  <Route path="/checkout" element={
+                  {/* <Route path="/checkout" element={
                     <ProtectedRoute>
                       <Checkout />
                     </ProtectedRoute>
-                  } />
+                  } /> */}
                   
                   <Route path="/wishlist" element={
                     <ProtectedRoute>

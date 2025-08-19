@@ -22,6 +22,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { getProfile } from '../services/api/profileService';
+import { createRazorpayOrder, loadRazorpay, verifyPayment } from '../services/paymentService';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ const Cart = () => {
     clearCart,
     refreshCart
   } = useCart();
+
+  // Use the existing cartTotals calculation from below
   
   const { toggleWishlist, isWishlisted } = useWishlist();
   
@@ -48,6 +51,7 @@ const Cart = () => {
   const [isCouponLoading, setIsCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState('');
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [shippingAddress, setShippingAddress] = useState(null);
@@ -286,70 +290,191 @@ const Cart = () => {
     setCouponCode('');
     toast.info('Coupon removed');
   }, []);
-  
-  // Handle checkout
-  const handleCheckout = useCallback(() => {
-    if (!user) {
-      navigate('/login', { state: { from: '/checkout' } });
-      return;
-    }
-    
-    setIsCheckingOut(true);
-    try {
-      // TODO: Add any pre-checkout validation
-      navigate('/checkout');
-    } catch (err) {
-      console.error('Error during checkout:', err);
-      toast.error('Failed to proceed to checkout');
-    } finally {
-      setIsCheckingOut(false);
-    }
-  }, [user, navigate]);
-  
+
   // Calculate cart totals
   const cartTotals = useMemo(() => {
-    const subtotal = localItems.reduce((sum, item) => {
-      const itemPrice = item.product?.price || 0;
-      return sum + (itemPrice * item.quantity);
-    }, 0);
+    // Convert all values to numbers to ensure proper calculations
+    const subtotal = parseFloat(localItems.reduce((sum, item) => {
+      const itemPrice = parseFloat(item.product?.price) || 0;
+      return sum + (itemPrice * (parseInt(item.quantity) || 0));
+    }, 0).toFixed(2));
     
     // Calculate total discount from product discounts
-    const productDiscount = localItems.reduce((sum, item) => {
-      if (item.product?.discount) {
-        const discountAmount = (item.product.price * item.product.discount / 100) * item.quantity;
-        return sum + parseFloat(discountAmount.toFixed(2));
-      }
-      return sum;
-    }, 0);
+    const productDiscount = parseFloat(localItems.reduce((sum, item) => {
+      const discount = parseFloat(item.product?.discount) || 0;
+      return sum + (discount * (parseInt(item.quantity) || 0));
+    }, 0).toFixed(2));
     
-    // Apply coupon discount if available
+    // Calculate coupon discount if applied
     let couponDiscount = 0;
     if (appliedCoupon) {
-      const calculatedDiscount = (subtotal * appliedCoupon.discount) / 100;
-      couponDiscount = Math.min(calculatedDiscount, appliedCoupon.maxDiscount);
+      if (appliedCoupon.discountType === 'percentage') {
+        couponDiscount = parseFloat(((subtotal * parseFloat(appliedCoupon.discountValue || 0)) / 100).toFixed(2));
+      } else {
+        couponDiscount = parseFloat(parseFloat(appliedCoupon.discountValue || 0).toFixed(2));
+      }
     }
     
-    const totalDiscount = productDiscount + couponDiscount;
+    // Calculate total after discounts
+    const totalAfterDiscounts = Math.max(0, subtotal - productDiscount - couponDiscount);
     
-    // Calculate delivery charge (free for orders above ₹500 or if cart is empty)
-    const deliveryCharge = localItems.length === 0 ? 0 : (subtotal > 500 ? 0 : 50);
+    // Calculate delivery charge (free over ₹499)
+    const deliveryCharge = parseFloat((totalAfterDiscounts >= 499 ? 0 : 40).toFixed(2));
     
-    // Processing fee (fixed, but zero if cart is empty)
-    const processingFee = localItems.length === 0 ? 0 : 10;
+    // Calculate processing fee (2% of order value)
+    const processingFee = parseFloat((totalAfterDiscounts * 0.02).toFixed(2));
     
-    const total = Math.max(0, subtotal - totalDiscount + deliveryCharge + processingFee);
+    // Calculate final total
+    const total = parseFloat((totalAfterDiscounts + deliveryCharge + processingFee).toFixed(2));
     
     return {
       subtotal,
       productDiscount,
       couponDiscount,
-      totalDiscount,
       deliveryCharge,
       processingFee,
       total,
-      totalItems: localItems.reduce((sum, item) => sum + item.quantity, 0)
+      totalItems: localItems.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0)
     };
   }, [localItems, appliedCoupon]);
+
+  // Handle checkout with Razorpay
+  const handleCheckout = useCallback(async () => {
+    if (!user) {
+      navigate('/login', { state: { from: '/cart' } });
+      return;
+    }
+
+    if (itemCount === 0) {
+      toast.error('Your cart is empty');
+      return;
+    }
+
+    try {
+      setIsProcessingPayment(true);
+      // Create order on backend with amount in paise
+      const amountInPaise = Math.round(cartTotals.total * 100);
+      console.log('Processing payment for amount:', cartTotals.total, 'INR (', amountInPaise, 'paise )');
+      
+      console.log('Creating Razorpay order...');
+      const orderResponse = await createRazorpayOrder(amountInPaise);
+      console.log('Order created:', orderResponse);
+
+      if (!orderResponse || !orderResponse.order) {
+        throw new Error('Failed to create payment order');
+      }
+
+      // Load Razorpay script and get the Razorpay constructor
+      console.log('Loading Razorpay script...');
+      try {
+        await loadRazorpay();
+      } catch (error) {
+        console.error('Error loading Razorpay:', error);
+        throw new Error(`Payment gateway error: ${error.message}`);
+      }
+
+      if (typeof window.Razorpay !== 'function') {
+        console.error('Razorpay constructor not found');
+        throw new Error('Failed to initialize payment gateway. Please refresh and try again.');
+      }
+
+      // Use order details from backend response
+      const { order } = orderResponse;
+      
+      // Validate order data
+      if (!order.id || !order.amount) {
+        console.error('Invalid order data from backend:', order);
+        throw new Error('Invalid order data received from server');
+      }
+      
+      // Log order details for debugging
+      console.log('Preparing Razorpay options with order:', {
+        orderId: order.id,
+        amount: order.amount,
+        currency: order.currency || 'INR',
+        receipt: order.receipt
+      });
+
+      // Prepare Razorpay options with all required fields
+      const options = {
+        key: 'rzp_test_RJgQjyW5DIRbPa',
+        amount: order.amount.toString(), // Convert to string as required by Razorpay
+        currency: 'INR',
+        name: 'ElectroHive',
+        description: `Order #${order.receipt || 'WEB'}`,
+        order_id: order.id, // This is the Razorpay order ID
+        handler: async function(response) {
+          try {
+            console.log('Razorpay payment response:', response);
+            
+            if (!response.razorpay_payment_id || !response.razorpay_order_id || !response.razorpay_signature) {
+              throw new Error('Invalid payment response from Razorpay');
+            }
+            
+            // Verify payment on your server
+            const verification = await verifyPayment({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              order_id: order.id // Pass the original order ID for verification
+            });
+
+            if (verification.success) {
+              // Clear cart and show success message
+              clearCart();
+              toast.success('Payment successful! Your order has been placed.');
+              navigate('/orders');
+            } else {
+              throw new Error(verification.message || 'Payment verification failed');
+            }
+          } catch (error) {
+            console.error('Payment verification failed:', error);
+            toast.error(error.message || 'Payment verification failed. Please check your payment status or contact support.');
+          } finally {
+            setIsProcessingPayment(false);
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+          contact: user?.phone || ''
+        },
+        notes: {
+          order_from: 'ElectroHive Web',
+          order_total: `₹${(order.amount / 100).toFixed(2)}`,
+          order_id: order.id
+        },
+        theme: {
+          color: '#3399cc',
+          hide_topbar: false
+        },
+        modal: {
+          ondismiss: () => {
+            console.log('Razorpay modal dismissed');
+            setIsProcessingPayment(false);
+          },
+          escape: true,
+          backdropclose: false
+        }
+      };
+
+      // Open Razorpay payment popup
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+      // Cleanup function
+      return () => {
+        if (rzp && typeof rzp.close === 'function') {
+          rzp.close();
+        }
+      };
+
+    } catch (error) {
+      console.error('Checkout error:', error);
+      toast.error(error.message || 'Failed to process payment. Please try again.');
+      setIsProcessingPayment(false);
+    }
+  }, [user, itemCount, cartTotals.total, navigate, clearCart]);
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -361,7 +486,7 @@ const Cart = () => {
   // Use cartTotals for all calculations to avoid duplication
 
   return (
-    <div className=" bg-gray-50 p-10 px-2 lg:px-4 md:px-10">
+    <div className="bg-gray-50 p-10 px-2 lg:px-4 md:px-10">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">My Cart</h2>
       <div className="flex flex-col md:flex-row gap-4">
         {/* Cart Items */}
@@ -638,36 +763,55 @@ const Cart = () => {
                 Inclusive of all taxes
               </p>
             </div>
-          </div>
-          
-          {/* Checkout Button */}
-          <button 
-            onClick={handleCheckout}
-            disabled={isCheckingOut || localItems.length === 0 || !shippingAddress}
-            className={`w-full bg-[#292355] text-white py-2 rounded-md hover:bg-[#482e5e] transition-colors ${
-              (isCheckingOut || localItems.length === 0 || !shippingAddress) ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            {isCheckingOut ? (
-              <span className="flex items-center justify-center">
-                <FaSpinner className="animate-spin mr-2" />
-                Processing...
-              </span>
-            ) : (
-              `Proceed to Pay ₹${cartTotals.total.toFixed(2)}`
-            )}
-          </button>
 
-          <div className="text-xs text-gray-500 mt-5">
-            <p key="secure-payments">✅ Safe and secure payments</p>
-            <p key="easy-returns">🔁 Easy returns</p>
-            <p key="authentic-products">📦 100% Authentic products</p>
-          </div>
+            {/* Payment Buttons */}
+            <div className="mt-4 space-y-2">
+              <button
+                onClick={handleCheckout}
+                disabled={isProcessingPayment || itemCount === 0}
+                className="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isProcessingPayment ? (
+                  <>
+                    <FaSpinner className="animate-spin" /> Processing...
+                  </>
+                ) : (
+                  'Proceed to Payment'
+                )}
+              </button>
+              
+              {/* Test button for Razorpay order creation */}
+              <button
+                onClick={async () => {
+                  try {
+                    console.log('Testing Razorpay order creation...');
+                    const testAmount = 100; // 1.00 INR in paise
+                    const response = await createRazorpayOrder(testAmount);
+                    console.log('Test order created:', response);
+                    toast.success('Test order created successfully! Check console for details.');
+                  } catch (error) {
+                    console.error('Test order error:', error);
+                    toast.error(`Test failed: ${error.message}`);
+                  }
+                }}
+                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
+              >
+                Test Razorpay Order (₹1.00)
+              </button>
+            </div>
 
-          <div className="text-xs text-gray-600 text-center">
-            Need Help? <button className="text-blue-500"><Link to="/contact" className="hover:text-blue-400">
-              Contact Us
-            </Link></button>
+            {/* Payment Info */}
+            <div className="text-xs text-gray-500 mt-5">
+              <p key="secure-payments">✅ Safe and secure payments</p>
+              <p key="easy-returns">🔁 Easy returns</p>
+              <p key="authentic-products">📦 100% Authentic products</p>
+            </div>
+
+            <div className="text-xs text-gray-600 text-center mt-4">
+              Need Help? <Link to="/contact" className="text-blue-500 hover:text-blue-400">
+                Contact Us
+              </Link>
+            </div>
           </div>
         </div>
       </div>
