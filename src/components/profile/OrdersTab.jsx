@@ -335,10 +335,14 @@ const OrdersTab = () => {
                               <div className="flex justify-between">
                                 <h5 className="text-sm font-medium text-gray-900">{item.name}</h5>
                                 <p className="ml-4 text-sm font-medium text-gray-900">
-                                  {formatCurrency(item.price)}
+                                  {formatCurrency(item.price * item.quantity)}
                                 </p>
                               </div>
-                              <p className="mt-1 text-sm text-gray-500">Qty: {item.quantity}</p>
+                              <div className="flex justify-between mt-1">
+                                <p className="text-sm text-gray-500">
+                                  {item.quantity} × {formatCurrency(item.price)} each
+                                </p>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -369,7 +373,7 @@ const OrdersTab = () => {
                         <h5 className="mt-4 text-sm font-medium text-gray-900">Order Summary</h5>
                         <div className="mt-2 space-y-1">
                           <div className="flex justify-between text-sm">
-                            <span className="text-gray-500">Subtotal</span>
+                            <span className="text-gray-500">Items ({selectedOrder.items?.reduce((sum, item) => sum + (item.quantity || 1), 0)})</span>
                             <span>{formatCurrency(selectedOrder.itemsPrice || 0)}</span>
                           </div>
                           <div className="flex justify-between text-sm">

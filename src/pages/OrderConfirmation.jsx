@@ -74,7 +74,13 @@ const OrderConfirmation = () => {
     );
   }
 
-  const { orderItems, shippingAddress, totalPrice, status, createdAt, _id } = order;
+  // Ensure all prices are properly parsed and formatted
+  const formatPrice = (price) => {
+    const num = typeof price === 'string' ? parseFloat(price) : price;
+    return num.toFixed(2);
+  };
+
+  const { orderItems, shippingAddress, totalPrice, status, createdAt, _id, itemsPrice, taxPrice, shippingPrice } = order;
   const orderDate = new Date(createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -121,13 +127,13 @@ const OrderConfirmation = () => {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3 className="text-sm sm:text-base">{item.name}</h3>
-                          <p className="ml-4">₹{item.price.toLocaleString()}</p>
+                          <p className="ml-4">₹{formatPrice(item.price)}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">Qty: {item.quantity}</p>
                       </div>
                       <div className="flex-1 flex items-end justify-between text-sm">
                         <p className="text-gray-500">
-                          Subtotal: ₹{(item.price * item.quantity).toLocaleString()}
+                          Subtotal: ₹{formatPrice(item.price * item.quantity)}
                         </p>
                       </div>
                     </div>
@@ -138,8 +144,24 @@ const OrderConfirmation = () => {
 
             <div className="border-t border-gray-200 mt-6 pt-6">
               <div className="flex justify-between text-base font-medium text-gray-900 mb-4">
-                <p>Total</p>
-                <p>₹{totalPrice.toLocaleString()}</p>
+                <div className="space-y-2 w-full">
+                  <div className="flex justify-between">
+                    <span>Items Total:</span>
+                    <span>₹{formatPrice(itemsPrice)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Shipping:</span>
+                    <span>₹{formatPrice(shippingPrice)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tax (7%):</span>
+                    <span>₹{formatPrice(taxPrice)}</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-semibold border-t border-gray-200 pt-2 mt-2">
+                    <span>Order Total:</span>
+                    <span>₹{formatPrice(totalPrice)}</span>
+                  </div>
+                </div>
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
