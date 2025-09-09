@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import UserInfoTab from '../components/profile/UserInfoTab';
 import AddressTab from '../components/profile/AddressTab';
-import OrdersTab from '../components/profile/OrdersTab';
 import { getProfile } from '../services/api/profileService';
 
 const ProfilePage = () => {
@@ -19,9 +18,27 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
+        setLoading(true);
         const response = await getProfile();
-        setUserProfile(response.data);
-        setUser(response.data); // Update auth context
+        
+        // Update local user profile state
+        setUserProfile(prevUser => {
+          const newData = response.data || {};
+          if (JSON.stringify(prevUser) !== JSON.stringify(newData)) {
+            return newData;
+          }
+          return prevUser;
+        });
+        
+        // Update auth context if needed
+        if (authUser && response.data) {
+          setUser(prevUser => {
+            if (JSON.stringify(prevUser) !== JSON.stringify(response.data)) {
+              return response.data;
+            }
+            return prevUser;
+          });
+        }
       } catch (err) {
         console.error('Error fetching user profile:', err);
         setError('Failed to load profile data');
@@ -38,13 +55,6 @@ const ProfilePage = () => {
     }
   }, [authUser, navigate, setUser]);
 
-  // Update local state when auth user changes
-  useEffect(() => {
-    if (authUser) {
-      setUserProfile(authUser);
-    }
-  }, [authUser]);
-
   const handleProfileUpdate = (updatedUser) => {
     setUserProfile(updatedUser);
     setUser(updatedUser); // Update auth context
@@ -56,7 +66,7 @@ const ProfilePage = () => {
     navigate('/');
   };
 
-  if (loading) {
+  if (loading && !user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -87,8 +97,7 @@ const ProfilePage = () => {
             <nav className="-mb-px flex space-x-8 px-6">
               {[
                 { id: 'info', name: 'Personal Information' },
-                { id: 'address', name: 'Addresses' },
-                { id: 'orders', name: 'Orders' },
+                { id: 'address', name: 'Addresses' }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -133,7 +142,6 @@ const ProfilePage = () => {
                   />
                 )}
                 {activeTab === 'address' && <AddressTab />}
-                {activeTab === 'orders' && <OrdersTab />}
               </>
             )}
           </div>

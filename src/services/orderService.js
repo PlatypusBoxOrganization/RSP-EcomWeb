@@ -35,27 +35,35 @@ export const createOrder = async (orderData) => {
     console.log('Creating order with data:', orderData);
     const response = await axios.post(`${API_URL}/orders`, orderData, config);
     
-    // Ensure the response has the expected structure
-    if (!response.data) {
-      throw new Error('No data received from server');
-    }
+    // Log the full response for debugging
+    console.log('Raw order creation response:', {
+      status: response.status,
+      statusText: response.statusText,
+      data: response.data,
+      headers: response.headers
+    });
     
-    // If the response is already in the correct format, return it
-    if (response.data.order || response.data._id) {
+    // If the response is already in the expected format, return it
+    if (response.data && (response.data.order || response.data._id)) {
       console.log('Order created successfully:', response.data);
       return response.data;
     }
     
     // If the response is the order directly, wrap it in the expected format
-    const orderResponse = {
-      success: true,
-      message: 'Order created successfully',
-      order: response.data,
-      _id: response.data._id || null
-    };
+    if (response.data && response.data._id) {
+      const orderResponse = {
+        success: true,
+        message: 'Order created successfully',
+        order: response.data,
+        _id: response.data._id
+      };
+      console.log('Formatted order response:', orderResponse);
+      return orderResponse;
+    }
     
-    console.log('Order created successfully:', orderResponse);
-    return orderResponse;
+    // If we get here, the response format is unexpected
+    console.error('Unexpected response format:', response.data);
+    throw new Error('Unexpected response format from server');
     
   } catch (error) {
     console.error('Error creating order:', {
@@ -66,7 +74,8 @@ export const createOrder = async (orderData) => {
         url: error.config?.url,
         method: error.config?.method,
         data: error.config?.data
-      }
+      },
+      stack: error.stack
     });
     
     // Create a more descriptive error message

@@ -590,32 +590,50 @@ const Cart = () => {
             
             try {
               // Create the order in our database
-              const { data: createdOrder } = await createOrder(orderData);
-            
-              // Handle different response formats
-              const orderId = createdOrder?._id || createdOrder?.order?._id;
-            
-              if (!orderId) {
-                console.error('Invalid order creation response:', createdOrder);
-                throw new Error('Failed to create order. Please contact support with payment ID: ' + response.razorpay_payment_id);
-              }
-            
-              console.log('Order created successfully:', createdOrder);
-            
-              // Clear the cart after successful order
               try {
-                await clearCart();
-              } catch (cartError) {
-                console.error('Error clearing cart after order:', cartError);
-                // Don't fail the order if cart clearing fails
+                const response = await createOrder(orderData);
+                
+                // The response could be either the order directly or { data: order }
+                const responseData = response.data || response;
+                
+                // Log the full response for debugging
+                console.log('Order creation response:', responseData);
+                
+                // Handle different response formats
+                const orderId = responseData?._id || 
+                              (responseData.order && responseData.order._id) || 
+                              (responseData.data && responseData.data._id);
+                
+                if (!orderId) {
+                  console.error('Could not extract order ID from response:', responseData);
+                  throw new Error('Failed to process order. Please contact support with payment ID: ' + response.razorpay_payment_id);
+                }
+                
+                console.log('Order created successfully with ID:', orderId);
+                
+                // Clear the cart after successful order
+                try {
+                  await clearCart();
+                } catch (cartError) {
+                  console.error('Error clearing cart after order:', cartError);
+                  // Don't fail the order if cart clearing fails
+                }
+                
+                // Show success message
+                toast.success('Order placed successfully!');
+                
+                // Redirect to order success page
+                navigate(`/order/${orderId}`);
+                return; // Exit the function after successful order creation
+                
+              } catch (createError) {
+                console.error('Error in createOrder call:', {
+                  message: createError.message,
+                  response: createError.response?.data,
+                  stack: createError.stack
+                });
+                throw createError;
               }
-            
-              // Show success message
-              toast.success('Order placed successfully!');
-            
-              // Redirect to order success page
-              navigate(`/order/${orderId}`);
-              return; // Exit the function after successful order creation
               
             } catch (orderError) {
               console.error('Order creation error:', {
