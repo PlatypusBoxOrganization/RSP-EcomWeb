@@ -590,42 +590,31 @@ const Cart = () => {
             
             try {
               // Create the order in our database
-              const orderResponse = await createOrder(orderData);
-              console.log('Order creation response:', orderResponse);
-              
-              // Extract order ID from the response
-              const orderId = orderResponse?._id || 
-                            orderResponse?.order?._id || 
-                            (orderResponse.data && (orderResponse.data._id || orderResponse.data.orderId));
-              
+              const { data: createdOrder } = await createOrder(orderData);
+            
+              // Handle different response formats
+              const orderId = createdOrder?._id || createdOrder?.order?._id;
+            
               if (!orderId) {
-                console.error('Invalid order creation response:', orderResponse);
+                console.error('Invalid order creation response:', createdOrder);
                 throw new Error('Failed to create order. Please contact support with payment ID: ' + response.razorpay_payment_id);
               }
-              
-              console.log('Order created successfully with ID:', orderId);
-              
+            
+              console.log('Order created successfully:', createdOrder);
+            
               // Clear the cart after successful order
               try {
                 await clearCart();
-                console.log('Cart cleared successfully');
               } catch (cartError) {
                 console.error('Error clearing cart after order:', cartError);
                 // Don't fail the order if cart clearing fails
               }
-              
+            
               // Show success message
               toast.success('Order placed successfully!');
-              
-              // Redirect to order success page with the correct order ID
-              navigate(`/order/${orderId}`, { 
-                state: { 
-                  orderId,
-                  isNewOrder: true 
-                },
-                replace: true 
-              });
-              
+            
+              // Redirect to order success page
+              navigate(`/order/${orderId}`);
               return; // Exit the function after successful order creation
               
             } catch (orderError) {
