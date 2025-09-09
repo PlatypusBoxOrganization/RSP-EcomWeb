@@ -109,5 +109,19 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  // Add isAdmin check to the context value
+  const isAdmin = context.user?.role === 'admin';
+  const currentUser = context.user ? { ...context.user, isAdmin } : null;
+  
+  return {
+    ...context,
+    currentUser,
+    isAdmin
+  };
 };

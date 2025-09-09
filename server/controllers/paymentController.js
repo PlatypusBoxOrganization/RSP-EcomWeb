@@ -1,7 +1,7 @@
 import { createRazorpayRequest, verifyPaymentSignature } from '../utils/razorpay.js';
 import asyncHandler from '../middleware/async.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import Order from '../models/orderModel.js';
+import { Order, orderStatus } from '../models/orderModel.js';
 
 // @desc    Create Razorpay order
 // @route   POST /api/payments/create-order

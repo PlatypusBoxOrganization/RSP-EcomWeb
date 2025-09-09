@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { items: cartItems } = useCart();
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const location = useLocation();
@@ -233,41 +233,71 @@ const Navbar = () => {
               
               {user && (
                 <div className="pt-2 space-y-2 border-t border-gray-800">
-                  <div className="px-4 py-2">
-                    <p className="text-sm text-gray-300">
-                      {user.phone ? `+91 ${user.phone}` : 'Welcome'}
-                    </p>
+                  <div className="px-4 py-2 space-y-1">
+                    <Link
+                      to="/profile"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        setIsOpen(false);
+                      }}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <FaUser />
+                      <span>My Profile</span>
+                    </Link>
+                    <Link
+                      to="/orders"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        setIsOpen(false);
+                      }}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <FaShoppingBag />
+                      <span>My Orders</span>
+                    </Link>
+                    {isAdmin && (
+                      <>
+                        <div className="border-t border-gray-100 my-1"></div>
+                        <div className="px-4 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          Admin
+                        </div>
+                        <Link
+                          to="/admin/orders"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                          onClick={() => {
+                            setIsUserMenuOpen(false);
+                            setIsOpen(false);
+                          }}
+                        >
+                          <FaShoppingBag />
+                          <span>Manage Orders</span>
+                        </Link>
+                      </>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <FaSignOutAlt />
+                      <span>Logout</span>
+                    </button>
                   </div>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <FaUser className="inline mr-2" /> Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
-                  >
-                    <FaSignOutAlt className="inline mr-2" /> Logout
-                  </button>
                 </div>
               )}
-              
-              {/* <div className="pt-4 mt-4 border-t border-gray-800">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="w-full bg-gray-900 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <FaSearch className="absolute right-3 top-3 text-gray-400" />
+              {!user && (
+                <div className="pt-2">
+                  <Link
+                    to={loginLink.to}
+                    className="block w-full text-center px-4 py-2 rounded-md hover:bg-gray-800 hover:text-blue-400"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {loginLink.text}
+                  </Link>
                 </div>
-              </div> */}
+              )}
             </nav>
+            {/* Search functionality can be added back later if needed */}
           </div>
         </div>
       </nav>

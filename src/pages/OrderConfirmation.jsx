@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaCheckCircle, FaShoppingBag, FaHome, FaTruck } from 'react-icons/fa';
+import { FaCheckCircle, FaShoppingBag, FaHome, FaTruck, FaExclamationCircle } from 'react-icons/fa';
 import { getOrderDetails } from '../services/orderService';
 
 const OrderConfirmation = () => {

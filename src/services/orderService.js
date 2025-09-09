@@ -34,8 +34,29 @@ export const createOrder = async (orderData) => {
   try {
     console.log('Creating order with data:', orderData);
     const response = await axios.post(`${API_URL}/orders`, orderData, config);
-    console.log('Order created successfully:', response.data);
-    return response.data;
+    
+    // Ensure the response has the expected structure
+    if (!response.data) {
+      throw new Error('No data received from server');
+    }
+    
+    // If the response is already in the correct format, return it
+    if (response.data.order || response.data._id) {
+      console.log('Order created successfully:', response.data);
+      return response.data;
+    }
+    
+    // If the response is the order directly, wrap it in the expected format
+    const orderResponse = {
+      success: true,
+      message: 'Order created successfully',
+      order: response.data,
+      _id: response.data._id || null
+    };
+    
+    console.log('Order created successfully:', orderResponse);
+    return orderResponse;
+    
   } catch (error) {
     console.error('Error creating order:', {
       message: error.message,
@@ -47,7 +68,15 @@ export const createOrder = async (orderData) => {
         data: error.config?.data
       }
     });
-    throw error;
+    
+    // Create a more descriptive error message
+    const errorMessage = error.response?.data?.message || 
+                        error.message || 
+                        'Failed to create order. Please try again.';
+    
+    const orderError = new Error(errorMessage);
+    orderError.response = error.response;
+    throw orderError;
   }
 };
 
@@ -71,8 +100,19 @@ export const getMyOrders = async () => {
     },
   };
 
-  const response = await axios.get(`${API_URL}/orders/myorders`, config);
-  return response.data;
+  try {
+    console.log('Fetching orders from:', `${API_URL}/orders/myorders`);
+    const response = await axios.get(`${API_URL}/orders/myorders`, config);
+    console.log('Orders API response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error in getMyOrders:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+    });
+    throw error;
+  }
 };
 
 // Update order status (admin only)
@@ -105,16 +145,40 @@ export const getAllOrders = async () => {
 };
 
 export const getEstimatedDeliveryDate = (orderDate) => {
-  if (!orderDate) return 'Calculating...';
-  
-  const deliveryDays = 3 + Math.floor(Math.random() * 5); // 3-7 days
   const date = new Date(orderDate);
-  date.setDate(date.getDate() + deliveryDays);
+  // Add 7 days for standard delivery
+  date.setDate(date.getDate() + 7);
   
+  // Return formatted date (e.g., "May 15, 2023")
   return date.toLocaleDateString('en-US', {
-    weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
+};
+
+// Cancel an order
+export const cancelOrder = async (orderId, reason = '') => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authService.getToken()}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(
+      `${API_URL}/orders/${orderId}/cancel`,
+      { reason },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error cancelling order:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+    });
+    throw error;
+  }
 };

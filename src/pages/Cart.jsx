@@ -510,82 +510,136 @@ const Cart = () => {
             
             console.log('Payment verified successfully with Razorpay');
             
-            // Create order data with all required fields
-            console.log('Local items in cart:', localItems);
+            // Validate local items
+            if (!localItems || !Array.isArray(localItems) || localItems.length === 0) {
+              throw new Error('No items found in cart');
+            }
             
-            const orderItems = localItems.map(item => ({
-              product: item.product?._id || item._id, // Try both product._id and _id
-              name: item.product?.name || item.name,
-              image: item.product?.images?.[0] || item.images?.[0] || '/images/default-product.png',
-              price: item.product?.price || item.price,
-              quantity: item.quantity,
-            }));
+            // Process order items with validation
+            const orderItems = localItems.map(item => {
+              const productId = item.product?._id || item._id;
+              const name = item.product?.name || item.name || 'Unknown Product';
+              const price = Number(item.product?.price || item.price || 0);
+              const quantity = Number(item.quantity) || 1;
+              
+              if (!productId) {
+                throw new Error(`Invalid product ID for item: ${name}`);
+              }
+              
+              if (price <= 0) {
+                throw new Error(`Invalid price for item: ${name}`);
+              }
+              
+              if (quantity <= 0) {
+                throw new Error(`Invalid quantity for item: ${name}`);
+              }
+              
+              return {
+                product: productId,
+                name,
+                image: item.product?.images?.[0] || item.images?.[0] || '/images/default-product.png',
+                price,
+                quantity,
+                total: price * quantity
+              };
+            });
             
             console.log('Processed order items:', orderItems);
             
-            // Map shipping address to match the required schema
-            const mappedShippingAddress = shippingAddress ? {
-              address: shippingAddress.street || '',
-              city: shippingAddress.city || '',
-              postalCode: shippingAddress.postalCode || '',
-              country: shippingAddress.country || 'India'
-            } : {
-              address: '',
-              city: '',
-              postalCode: '',
-              country: 'India'
+            // Validate shipping address
+            if (!shippingAddress || !shippingAddress.street || !shippingAddress.city || 
+                !shippingAddress.postalCode || !shippingAddress.country) {
+              throw new Error('Please provide complete shipping address');
+            }
+            
+            const mappedShippingAddress = {
+              address: shippingAddress.street.trim(),
+              city: shippingAddress.city.trim(),
+              postalCode: shippingAddress.postalCode.trim(),
+              country: shippingAddress.country.trim()
             };
             
-            // Ensure all required fields have values
+            // Calculate totals
+            const itemsPrice = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shippingPrice = itemsPrice > 1000 ? 0 : 100; // Free shipping for orders over 1000
+            const taxPrice = Number((itemsPrice * 0.02).toFixed(2)); // 2% tax
+            const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
+            
+            // Prepare order data
             const orderData = {
-              orderItems,
+              user: user?._id || null,
+              orderItems: orderItems.map(({ product, quantity }) => ({
+                product,
+                quantity
+              })),
               shippingAddress: mappedShippingAddress,
               paymentMethod: 'Razorpay',
-              itemsPrice: cartTotals.subtotal,
-              taxPrice: cartTotals.tax || 0,
-              shippingPrice: cartTotals.shipping || 0,
-              totalPrice: cartTotals.total,
+              itemsPrice,
+              taxPrice,
+              shippingPrice,
+              totalPrice,
               isPaid: true,
               paidAt: new Date().toISOString(),
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpaySignature: response.razorpay_signature,
-              status: 'processing' // Set initial status
+              status: 'processing'
             };
-            
-            // Add user ID if available
-            if (user?._id) {
-              orderData.user = user._id;
-            }
-            
-            console.log('Order data with calculated totals:', {
-              subtotal: cartTotals.subtotal,
-              tax: cartTotals.tax,
-              shipping: cartTotals.shipping,
-              total: cartTotals.total
-            });
             
             console.log('Final order data being sent to server:', JSON.stringify(orderData, null, 2));
             
-            console.log('Creating order with data:', orderData);
-            
-            // Create the order in our database
-            const { data: createdOrder } = await createOrder(orderData);
-            
-            if (!createdOrder || !createdOrder._id) {
-              throw new Error('Failed to create order. Please contact support with payment ID: ' + response.razorpay_payment_id);
+            try {
+              // Create the order in our database
+              const orderResponse = await createOrder(orderData);
+              console.log('Order creation response:', orderResponse);
+              
+              // Extract order ID from the response
+              const orderId = orderResponse?._id || 
+                            orderResponse?.order?._id || 
+                            (orderResponse.data && (orderResponse.data._id || orderResponse.data.orderId));
+              
+              if (!orderId) {
+                console.error('Invalid order creation response:', orderResponse);
+                throw new Error('Failed to create order. Please contact support with payment ID: ' + response.razorpay_payment_id);
+              }
+              
+              console.log('Order created successfully with ID:', orderId);
+              
+              // Clear the cart after successful order
+              try {
+                await clearCart();
+                console.log('Cart cleared successfully');
+              } catch (cartError) {
+                console.error('Error clearing cart after order:', cartError);
+                // Don't fail the order if cart clearing fails
+              }
+              
+              // Show success message
+              toast.success('Order placed successfully!');
+              
+              // Redirect to order success page with the correct order ID
+              navigate(`/order/${orderId}`, { 
+                state: { 
+                  orderId,
+                  isNewOrder: true 
+                },
+                replace: true 
+              });
+              
+              return; // Exit the function after successful order creation
+              
+            } catch (orderError) {
+              console.error('Order creation error:', {
+                message: orderError.message,
+                response: orderError.response?.data,
+                stack: orderError.stack
+              });
+              
+              // If order creation fails but payment was successful, we need to handle this carefully
+              // In a production environment, you would want to implement a retry mechanism or manual review
+              throw new Error(`Order creation failed: ${orderError.message}. Your payment was successful. Please contact support with payment ID: ${response.razorpay_payment_id}`);
             }
             
-            console.log('Order created successfully:', createdOrder);
-            
-            // Clear the cart after successful order
-            clearCart();
-            
-            // Show success message
-            toast.success('Order placed successfully!');
-            
-            // Redirect to order success page
-            navigate(`/order/${createdOrder._id}`);
           } catch (error) {
             console.error('Payment processing error:', {
               message: error.message,
@@ -597,6 +651,17 @@ const Cart = () => {
             
             // Handle specific error cases
             let errorMessage = error.message || 'Error processing payment';
+            
+            // Handle specific error cases
+            if (error.response?.data?.error?.code === 'OUT_OF_STOCK') {
+              // Refresh cart to get latest stock information
+              await refreshCart();
+              errorMessage = 'Some items in your cart are out of stock. Please review your cart and try again.';
+            } else if (error.response?.data?.error?.code === 'INVALID_ITEMS') {
+              // Refresh cart to get latest product information
+              await refreshCart();
+              errorMessage = 'Some items in your cart are no longer available. Your cart has been updated.';
+            }
             
             if (error.response?.data?.message) {
               errorMessage = error.response.data.message;

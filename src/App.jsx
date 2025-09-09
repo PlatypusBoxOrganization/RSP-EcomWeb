@@ -23,7 +23,9 @@ const SharedWishlist = lazy(() => import('./pages/SharedWishlistPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 const OrderHistory = lazy(() => import('./pages/OrderHistory'));
+const AdminOrders = lazy(() => import('./pages/admin/orders/AdminOrders'));
 const ProtectedRoute = lazy(() => import('./components/common/ProtectedRoute'));
+const AdminRoute = lazy(() => import('./components/common/AdminRoute'));
 const PaymentTest = lazy(() => import('./pages/PaymentTest'));
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
 
@@ -132,6 +134,15 @@ function App() {
                   <Route path="/orders" element={
                     <ProtectedRoute>
                       <OrderHistory />
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin/orders" element={
+                    <ProtectedRoute>
+                      <AdminRoute>
+                        <AdminOrders />
+                      </AdminRoute>
                     </ProtectedRoute>
                   } />
                   
