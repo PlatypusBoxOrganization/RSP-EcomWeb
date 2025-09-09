@@ -559,18 +559,29 @@ const Cart = () => {
               country: shippingAddress.country.trim()
             };
             
-            // Calculate totals
-            const itemsPrice = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shippingPrice = itemsPrice > 1000 ? 0 : 100; // Free shipping for orders over 1000
-            const taxPrice = Number((itemsPrice * 0.02).toFixed(2)); // 2% tax
+            // Calculate totals with proper decimal precision
+            const itemsPrice = Number(orderItems.reduce((sum, item) => {
+              return sum + (Number(item.price) * Number(item.quantity));
+            }, 0).toFixed(2));
+            
+            // Calculate shipping (free for orders over 1000, otherwise 40)
+            const shippingPrice = itemsPrice > 1000 ? 0 : 40; // 40 INR shipping fee for orders under 1000
+            
+            // Calculate tax (7% of items price)
+            const taxPrice = Number((itemsPrice * 0.07).toFixed(2)); // 7% tax
+            
+            // Calculate total with all fees
             const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
             
             // Prepare order data
             const orderData = {
               user: user?._id || null,
-              orderItems: orderItems.map(({ product, quantity }) => ({
+              orderItems: orderItems.map(({ product, quantity, price, name, image }) => ({
                 product,
-                quantity
+                quantity,
+                price: Number(price).toFixed(2), // Ensure price is stored with 2 decimal places
+                name,
+                image
               })),
               shippingAddress: mappedShippingAddress,
               paymentMethod: 'Razorpay',

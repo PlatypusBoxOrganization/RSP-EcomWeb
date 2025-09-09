@@ -160,11 +160,14 @@ const OrdersTab = () => {
   };
 
   const formatCurrency = (amount) => {
+    // Ensure amount is a number and handle any potential string inputs
+    const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(amount);
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(numAmount || 0);
   };
 
   const getStatusBadge = (status) => {
