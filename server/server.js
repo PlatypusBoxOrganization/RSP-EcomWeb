@@ -20,6 +20,7 @@ import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -77,13 +78,74 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Direct test endpoint
+app.get('/api/test/direct', (req, res) => {
+  res.json({ message: 'Direct test endpoint is working' });
+});
+
+// List all routes
+app.get('/api/routes', (req, res) => {
+  const routes = [];
+  
+  app._router.stack.forEach((middleware) => {
+    if (middleware.name === 'router') {
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          const methods = Object.keys(handler.route.methods).join(',').toUpperCase();
+          routes.push({
+            path: middleware.regexp.toString().replace(/^\/\^\\(\?\^\$\=\(\))?/g, '').replace(/\/i\?\^\$$/g, '') + handler.route.path,
+            methods: methods
+          });
+        }
+      });
+    } else if (middleware.route) {
+      const methods = Object.keys(middleware.route.methods).join(',').toUpperCase();
+      routes.push({
+        path: middleware.route.path,
+        methods: methods
+      });
+    }
+  });
+
+  res.json({ routes });
+});
+
+// Log all incoming requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // Mount routers
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
+
+// Test route for debugging
+import testRoutes from './routes/testRoutes.js';
+app.use('/api/test', testRoutes);
+
+// Log all routes
+console.log('\n=== ROUTE REGISTRATION ===');
+app._router.stack.forEach((middleware) => {
+  if (middleware.name === 'router') {
+    console.log(`\nRoutes for ${middleware.regexp}:`);
+    middleware.handle.stack.forEach((handler) => {
+      if (handler.route) {
+        const methods = Object.keys(handler.route.methods).join(',').toUpperCase();
+        console.log(`- ${methods} ${handler.route.path}`);
+      }
+    });
+  } else if (middleware.route) {
+    const methods = Object.keys(middleware.route.methods).join(',').toUpperCase();
+    console.log(`- ${methods} ${middleware.route.path}`);
+  }
+});
+console.log('=== END ROUTE REGISTRATION ===\n');
 
 // In production, redirect to Netlify frontend
 if (process.env.NODE_ENV === 'production') {
@@ -182,16 +244,27 @@ async function startServer(port) {
 }
 
 // Start the server with retry logic
+console.log('Starting server initialization...'.blue);
 startServer(PORT)
   .then(server => {
+    console.log('Server started successfully!'.green);
+    
     // Handle unhandled promise rejections
     process.on('unhandledRejection', (err, promise) => {
-      console.log(`Error: ${err.message}`.red);
+      console.error('Unhandled Rejection at:'.red, promise);
+      console.error('Reason:'.red, err);
       // Close server & exit process
+      server.close(() => process.exit(1));
+    });
+    
+    // Handle uncaught exceptions
+    process.on('uncaughtException', (err) => {
+      console.error('Uncaught Exception:'.red, err);
       server.close(() => process.exit(1));
     });
   })
   .catch(err => {
     console.error('Failed to start server:'.red, err);
+    console.error('Error stack:'.red, err.stack);
     process.exit(1);
   });

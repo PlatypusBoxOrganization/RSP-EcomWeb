@@ -33,9 +33,54 @@ export const createRazorpayOrder = async (amount) => {
   }
 };
 
+/**
+ * Verify Razorpay payment on the client side (additional server-side verification is required)
+ * @param {Object} paymentData - Payment data from Razorpay
+ * @param {string} paymentData.razorpay_order_id - Razorpay order ID
+ * @param {string} paymentData.razorpay_payment_id - Razorpay payment ID
+ * @param {string} paymentData.razorpay_signature - Razorpay signature
+ * @returns {Promise<Object>} - Verification result
+ */
 export const verifyPayment = async (paymentData) => {
-  const response = await api.post('/payments/verify', paymentData);
-  return response.data;
+  try {
+    // Client-side verification (basic validation)
+    if (!paymentData.razorpay_order_id || !paymentData.razorpay_payment_id || !paymentData.razorpay_signature) {
+      throw new Error('Missing required payment verification data');
+    }
+
+    // Send to server for HMAC verification and order processing
+    const response = await api.post('/payments/verify', {
+      razorpay_order_id: paymentData.razorpay_order_id,
+      razorpay_payment_id: paymentData.razorpay_payment_id,
+      razorpay_signature: paymentData.razorpay_signature
+    });
+
+    return {
+      success: true,
+      data: response.data,
+      message: 'Payment verified successfully'
+    };
+  } catch (error) {
+    console.error('Payment verification failed:', {
+      error: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+
+    // Return a more user-friendly error message
+    let errorMessage = 'Payment verification failed';
+    if (error.response?.data?.message) {
+      errorMessage = error.response.data.message;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
+    return {
+      success: false,
+      error: errorMessage,
+      code: error.response?.status || 500
+    };
+  }
 };
 
 // Load Razorpay script with retry mechanism
@@ -61,11 +106,12 @@ export const loadRazorpay = (retryCount = 0, maxRetries = 2) => {
     
     window.__rzpLoading = true;
     
-    // Create script element with cache buster
+    // Create script element
     const script = document.createElement('script');
-    const cacheBuster = `v=${new Date().getTime()}`;
-    script.src = `https://checkout.razorpay.com/v1/checkout.js?${cacheBuster}`;
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
+    script.defer = true;
+    script.id = 'razorpay-script';
     script.crossOrigin = 'anonymous';
     
     // Handle script load
@@ -94,14 +140,20 @@ export const loadRazorpay = (retryCount = 0, maxRetries = 2) => {
     };
     
     // Handle script error
-    const onError = (error) => {
-      console.error('Failed to load Razorpay script:', error);
+    script.onerror = (error) => {
+      console.error('Error loading Razorpay script:', error);
+      const existingScript = document.getElementById('razorpay-script');
+      if (existingScript) {
+        existingScript.onload = null;
+        existingScript.onerror = null;
+        document.head.removeChild(existingScript);
+      }
+      
       if (retryCount < maxRetries) {
-        console.log(`Retrying Razorpay load (${retryCount + 1}/${maxRetries})`);
-        cleanup();
-        loadRazorpay(retryCount + 1, maxRetries).then(resolve).catch(reject);
+        console.log(`Retrying to load Razorpay (${retryCount + 1}/${maxRetries})...`);
+        setTimeout(() => loadRazorpay(retryCount + 1, maxRetries).then(resolve).catch(reject), 1000 * (retryCount + 1));
       } else {
-        reject(new Error('Failed to load payment gateway. Please check your internet connection and try again.'));
+        reject(new Error(`Failed to load Razorpay after ${maxRetries} attempts. Please check your internet connection and try again.`));
       }
     };
     

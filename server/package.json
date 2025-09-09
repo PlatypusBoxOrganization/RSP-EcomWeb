@@ -38,7 +38,10 @@
     "@babel/preset-env": "^7.28.0",
     "@babel/register": "^7.27.1",
     "chai": "^5.2.1",
+    "chai-http": "^5.1.2",
     "mocha": "^11.7.1",
-    "nodemon": "^3.1.10"
+    "nock": "^14.0.10",
+    "nodemon": "^3.1.10",
+    "sinon": "^21.0.0"
   }
 }

@@ -1,7 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getOrders, getOrder as getOrderApi } from '../../services/api/profileService';
+import { 
+  getOrders, 
+  getOrder as getOrderApi, 
+  cancelOrder 
+} from '../../services/api/profileService';
+import { 
+  FaChevronDown, 
+  FaChevronUp, 
+  FaTimes, 
+  FaCheck, 
+  FaTruck, 
+  FaBoxOpen, 
+  FaUndo,
+  FaSearch,
+  FaFilter
+} from 'react-icons/fa';
 
 const OrdersTab = () => {
   const [orders, setOrders] = useState([]);
@@ -9,26 +24,116 @@ const OrdersTab = () => {
   const [error, setError] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [loadingOrderDetails, setLoadingOrderDetails] = useState(false);
+  
+  // Pagination state
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 5,
+    total: 0,
+    totalPages: 1
+  });
+  
+  // Filters state
+  const [filters, setFilters] = useState({
+    status: '',
+    search: ''
+  });
+  
+  const statusOptions = [
+    { value: '', label: 'All Status' },
+    { value: 'pending', label: 'Pending' },
+    { value: 'processing', label: 'Processing' },
+    { value: 'shipped', label: 'Shipped' },
+    { value: 'delivered', label: 'Delivered' },
+    { value: 'cancelled', label: 'Cancelled' }
+  ];
 
-  // Fetch orders from API
-  useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const response = await getOrders();
-        setOrders(response.data || []);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-        setError('Failed to load orders. Please try again.');
-        toast.error('Failed to load orders');
-      } finally {
-        setLoading(false);
+  // Fetch orders from API with pagination and filters
+  const fetchOrders = async (page = 1, status = filters.status, search = filters.search) => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await getOrders(page, pagination.limit, status);
+      
+      // Handle error response
+      if (response.error) {
+        throw new Error(response.error);
       }
-    };
+      
+      // Filter by search term if provided
+      let filteredOrders = response.orders || [];
+      if (search) {
+        const searchTerm = search.toLowerCase();
+        filteredOrders = filteredOrders.filter(order => 
+          (order._id && order._id.toLowerCase().includes(searchTerm)) ||
+          (order.orderItems && order.orderItems.some(item => 
+            item.name && item.name.toLowerCase().includes(searchTerm)
+          ))
+        );
+      }
+      
+      setOrders(filteredOrders);
+      
+      // Update pagination with values from the response
+      setPagination({
+        ...pagination,
+        page: response.page || page,
+        limit: response.limit || pagination.limit,
+        total: response.total || filteredOrders.length,
+        totalPages: response.totalPages || Math.ceil(filteredOrders.length / (response.limit || pagination.limit)) || 1
+      });
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      setError(error.message || 'Failed to load orders. Please try again.');
+      toast.error(error.message || 'Failed to load orders');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchOrders();
-  }, []);
+  // Initial fetch and on filter change
+  useEffect(() => {
+    fetchOrders(1, filters.status, filters.search);
+  }, [filters.status]);
+  
+  // Handle page change
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages) {
+      fetchOrders(newPage);
+    }
+  };
+  
+  // Handle filter change
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  // Handle search
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchOrders(1, filters.status, filters.search);
+  };
+  
+  // Handle order cancellation
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm('Are you sure you want to cancel this order?')) return;
+    
+    try {
+      await cancelOrder(orderId);
+      toast.success('Order cancelled successfully');
+      // Refresh orders
+      fetchOrders(pagination.page, filters.status, filters.search);
+      // Clear selected order
+      setSelectedOrder(null);
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      toast.error(error.message || 'Failed to cancel order');
+    }
+  };
 
   const fetchOrderDetails = async (orderId) => {
     if (selectedOrder?._id === orderId) {
@@ -80,48 +185,62 @@ const OrdersTab = () => {
 
   if (loading && orders.length === 0) {
     return (
-      <div className="flex justify-center py-12">
+      <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
-  if (error || orders.length === 0) {
+  if (error) {
+    return (
+      <div className="bg-red-50 border-l-4 border-red-400 p-4">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <FaTimes className="h-5 w-5 text-red-400" />
+          </div>
+          <div className="ml-3">
+            <p className="text-sm text-red-700">{error}</p>
+            <button
+              onClick={() => fetchOrders()}
+              className="mt-2 text-sm font-medium text-red-700 hover:text-red-600"
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (orders.length === 0) {
     return (
       <div className="text-center py-12">
-        <svg
-          className="mx-auto h-12 w-12 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-        </svg>
-        <h3 className="mt-2 text-sm font-medium text-gray-900">
+        <FaBoxOpen className="mx-auto h-12 w-12 text-gray-400" />
+        <h3 className="mt-2 text-lg font-medium text-gray-900">
           {error ? 'Error loading orders' : 'No orders found'}
         </h3>
         <p className="mt-1 text-sm text-gray-500">
-          {error || "You haven't placed any orders yet."}
+          {error || (filters.status || filters.search ? 'Try adjusting your filters' : "You haven't placed any orders yet.")}
         </p>
         <div className="mt-6">
-          <Link
-            to="/shop"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            {error ? 'Try Again' : 'Continue Shopping'}
-          </Link>
+          {filters.status || filters.search ? (
+            <button
+              onClick={() => {
+                setFilters({ status: '', search: '' });
+                fetchOrders(1, '', '');
+              }}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <FaUndo className="mr-2" /> Reset filters
+            </button>
+          ) : (
+            <Link
+              to="/shop"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              {error ? 'Try Again' : 'Start Shopping'}
+            </Link>
+          )}
         </div>
       </div>
     );

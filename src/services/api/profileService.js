@@ -69,24 +69,81 @@ export const deleteAddress = async (addressId) => {
   }
 };
 
-// Get user orders
-export const getOrders = async () => {
+// Get user orders with pagination and filtering
+export const getOrders = async (page = 1, limit = 10, status = '') => {
   try {
-    const response = await axiosInstance.get('/profile/orders');
-    return response.data;
+    const response = await axiosInstance.get('/orders/myorders', {
+      params: { page, limit, status }
+    });
+    
+    // Ensure we always return a consistent structure
+    const data = response.data || [];
+    return {
+      orders: Array.isArray(data) ? data : [data],
+      page: page,
+      limit: limit,
+      total: Array.isArray(data) ? data.length : 1,
+      totalPages: Math.ceil((Array.isArray(data) ? data.length : 1) / limit) || 1
+    };
   } catch (error) {
     console.error('Error fetching orders:', error);
-    throw error.response?.data || { message: 'Failed to fetch orders' };
+    // Return an empty structure with error information
+    return {
+      orders: [],
+      page: 1,
+      limit: limit,
+      total: 0,
+      totalPages: 1,
+      error: error.response?.data?.message || 'Failed to fetch orders'
+    };
   }
 };
 
-// Get single order
+// Get single order with detailed information
 export const getOrder = async (orderId) => {
   try {
-    const response = await axiosInstance.get(`/profile/orders/${orderId}`);
+    const response = await axiosInstance.get(`/orders/${orderId}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching order:', error);
     throw error.response?.data || { message: 'Failed to fetch order' };
   }
 };
+
+// Cancel an order
+export const cancelOrder = async (orderId) => {
+  try {
+    const response = await axiosInstance.put(`/orders/${orderId}/status`, {
+      status: 'cancelled'
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error cancelling order:', error);
+    throw error.response?.data || { message: 'Failed to cancel order' };
+  }
+};
+
+// Request order return
+// export const requestReturn = async (orderId, reason, comment = '') => {
+//   try {
+//     const response = await axiosInstance.post(`/orders/${orderId}/return`, {
+//       reason,
+//       comment
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error requesting return:', error);
+//     throw error.response?.data || { message: 'Failed to request return' };
+//   }
+// };
+
+// Track order
+// export const trackOrder = async (orderId) => {
+//   try {
+//     const response = await axiosInstance.get(`/orders/${orderId}/track`);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error tracking order:', error);
+//     throw error.response?.data || { message: 'Failed to track order' };
+//   }
+// };

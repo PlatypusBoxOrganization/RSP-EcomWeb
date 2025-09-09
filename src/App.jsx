@@ -21,7 +21,11 @@ const ComplaintBox = lazy(() => import('./pages/ComplaintBox'));
 const Wishlist = lazy(() => import('./pages/WishlistPage'));
 const SharedWishlist = lazy(() => import('./pages/SharedWishlistPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
+const OrderHistory = lazy(() => import('./pages/OrderHistory'));
 const ProtectedRoute = lazy(() => import('./components/common/ProtectedRoute'));
+const PaymentTest = lazy(() => import('./pages/PaymentTest'));
+const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
 
 // Loading component
 const Loading = () => (
@@ -100,9 +104,34 @@ function App() {
                     </ProtectedRoute>
                   } />
                   
+                  <Route path="/wishlist/shared/:token" element={<SharedWishlist />} />
+                  
                   <Route path="/profile" element={
                     <ProtectedRoute>
                       <ProfilePage />
+                    </ProtectedRoute>
+                  } />
+                  
+                  <Route path="/order-confirmation/:orderId" element={
+                    <ProtectedRoute>
+                      <OrderConfirmation />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/test-payment" element={
+                    <Suspense fallback={<Loading />}>
+                      <PaymentTest />
+                    </Suspense>
+                  } />
+                  
+                  <Route path="/payment/success" element={
+                    <Suspense fallback={<Loading />}>
+                      <PaymentSuccess />
+                    </Suspense>
+                  } />
+                  
+                  <Route path="/orders" element={
+                    <ProtectedRoute>
+                      <OrderHistory />
                     </ProtectedRoute>
                   } />
                   

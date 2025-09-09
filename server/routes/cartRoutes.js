@@ -5,7 +5,8 @@ import {
   getCart,
   updateCartItem,
   removeFromCart,
-  clearCart
+  clearCart,
+  validateCart
 } from '../controllers/cartController.js';
 
 const router = express.Router();
@@ -27,5 +28,8 @@ router.delete('/:itemId', removeFromCart);
 
 // DELETE /api/cart - Clear cart
 router.delete('/', clearCart);
+
+// GET /api/cart/validate - Validate cart items before checkout
+router.get('/validate', validateCart);
 
 export default router;

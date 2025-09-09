@@ -178,3 +178,126 @@ export const clearCart = asyncHandler(async (req, res) => {
     message: 'Cart cleared successfully'
   });
 });
+
+// @desc    Validate cart before checkout
+// @route   GET /api/cart/validate
+// @access  Private
+export const validateCart = asyncHandler(async (req, res) => {
+  // Populate the cart with product details
+  const user = await User.findById(req.user._id).populate({
+    path: 'cart.items.product',
+    select: 'name price image countInStock isActive',
+    match: { isActive: true }  // Only match active products
+  });
+  
+  const invalidItems = [];
+  const validItems = [];
+  let hasChanges = false;
+  
+  // Check each item in cart
+  for (const item of user.cart.items) {
+    if (!item.product || !item.product.isActive) {
+      // Remove invalid product from cart
+      user.cart.items = user.cart.items.filter(
+        i => i._id.toString() !== item._id.toString()
+      );
+      hasChanges = true;
+      
+      invalidItems.push({
+        itemId: item._id,
+        productId: item.product?._id || 'unknown',
+        reason: 'Product no longer available'
+      });
+    } else if (item.product.countInStock < item.quantity) {
+      // Adjust quantity if more than available stock
+      const originalQty = item.quantity;
+      item.quantity = Math.min(item.quantity, item.product.countInStock);
+      hasChanges = true;
+      
+      invalidItems.push({
+        itemId: item._id,
+        productId: item.product._id,
+        name: item.product.name,
+        reason: 'Insufficient stock',
+        available: item.product.countInStock,
+        requested: originalQty,
+        adjusted: item.quantity
+      });
+      
+      // If quantity was adjusted to 0, remove from cart
+      if (item.quantity === 0) {
+        user.cart.items = user.cart.items.filter(
+          i => i._id.toString() !== item._id.toString()
+        );
+        continue;
+      }
+      
+      validItems.push({
+        itemId: item._id,
+        productId: item.product._id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+        image: item.product.image,
+        stock: item.product.countInStock,
+        adjusted: true
+      });
+    } else {
+      validItems.push({
+        itemId: item._id,
+        productId: item.product._id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+        image: item.product.image,
+        stock: item.product.countInStock
+      });
+    }
+  }
+  
+  // If there were changes, save the updated cart
+  if (hasChanges) {
+    // Recalculate cart totals
+    user.cart.totalPrice = validItems.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+    
+    user.cart.totalItems = validItems.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+    
+    await user.save();
+  }
+  
+  // Calculate totals for valid items
+  const itemsPrice = validItems.reduce((total, item) => {
+    return total + (item.price * item.quantity);
+  }, 0);
+  
+  // Add shipping price (example: $5.99 flat rate)
+  const shippingPrice = itemsPrice > 0 ? 5.99 : 0;
+  
+  // Calculate tax (example: 10% of items price)
+  const taxPrice = Number((0.1 * itemsPrice).toFixed(2));
+  
+  // Calculate total price
+  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  
+  res.json({
+    success: true,
+    hasChanges,
+    valid: invalidItems.length === 0,
+    invalidItems,
+    validItems,
+    summary: {
+      itemsPrice: Number(itemsPrice.toFixed(2)),
+      shippingPrice,
+      taxPrice,
+      totalPrice: Number(totalPrice.toFixed(2))
+    },
+    cart: {
+      totalItems: user.cart.totalItems,
+      totalPrice: user.cart.totalPrice
+    }
+  });
+});

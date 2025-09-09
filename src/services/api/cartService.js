@@ -64,10 +64,26 @@ export const clearCart = async () => {
   }
 };
 
+// Validate cart items before checkout
+export const validateCartItems = async () => {
+  try {
+    const response = await api.get('/cart/validate');
+    return {
+      ...response.data,
+      valid: response.data.valid || false,
+      invalidItems: response.data.invalidItems || []
+    };
+  } catch (error) {
+    console.error('Error validating cart:', error.response?.data?.message || error.message);
+    throw error.response?.data?.message || 'Failed to validate cart';
+  }
+};
+
 export default {
   addToCart,
   getCart,
   updateCartItem,
   removeFromCart,
-  clearCart
+  clearCart,
+  validateCartItems
 };

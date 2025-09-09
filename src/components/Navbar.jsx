@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaSearch, FaTimes, FaBars, FaShoppingCart, FaHeart, FaUser, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaTimes, FaBars, FaShoppingCart, FaHeart, FaUser, FaSignOutAlt, FaUserCircle, FaShoppingBag } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -130,6 +130,14 @@ const Navbar = () => {
                     >
                       <FaUser />
                       <span>My Profile</span>
+                    </Link>
+                    <Link
+                      to="/orders"
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <FaShoppingBag />
+                      <span>My Orders</span>
                     </Link>
                     <button
                       onClick={handleLogout}

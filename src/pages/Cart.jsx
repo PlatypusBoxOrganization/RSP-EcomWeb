@@ -22,7 +22,15 @@ import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { getProfile } from '../services/api/profileService';
-import { createRazorpayOrder, loadRazorpay, verifyPayment } from '../services/paymentService';
+import axios from 'axios';
+import authService from '../services/api/authService';
+import { 
+  loadRazorpay, 
+  createRazorpayOrder, 
+  verifyPayment 
+} from '../services/paymentService';
+import { validateCartItems } from '../services/api/cartService';
+import { createOrder, testOrderEndpoint } from '../services/orderService';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -53,6 +61,7 @@ const Cart = () => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [paymentError, setPaymentError] = useState(null);
   const [showCouponInput, setShowCouponInput] = useState(false);
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isLoadingAddress, setIsLoadingAddress] = useState(true);
@@ -293,78 +302,135 @@ const Cart = () => {
 
   // Calculate cart totals
   const cartTotals = useMemo(() => {
-    // Convert all values to numbers to ensure proper calculations
-    const subtotal = parseFloat(localItems.reduce((sum, item) => {
-      const itemPrice = parseFloat(item.product?.price) || 0;
-      return sum + (itemPrice * (parseInt(item.quantity) || 0));
-    }, 0).toFixed(2));
-    
-    // Calculate total discount from product discounts
-    const productDiscount = parseFloat(localItems.reduce((sum, item) => {
-      const discount = parseFloat(item.product?.discount) || 0;
-      return sum + (discount * (parseInt(item.quantity) || 0));
-    }, 0).toFixed(2));
-    
-    // Calculate coupon discount if applied
-    let couponDiscount = 0;
-    if (appliedCoupon) {
-      if (appliedCoupon.discountType === 'percentage') {
-        couponDiscount = parseFloat(((subtotal * parseFloat(appliedCoupon.discountValue || 0)) / 100).toFixed(2));
-      } else {
-        couponDiscount = parseFloat(parseFloat(appliedCoupon.discountValue || 0).toFixed(2));
-      }
+    // Default values for empty cart
+    if (!localItems || localItems.length === 0) {
+      return {
+        subtotal: 0,
+        productDiscount: 0,
+        couponDiscount: 0,
+        deliveryCharge: 0,
+        processingFee: 0,
+        total: 0,
+        totalItems: 0
+      };
     }
-    
-    // Calculate total after discounts
-    const totalAfterDiscounts = Math.max(0, subtotal - productDiscount - couponDiscount);
-    
-    // Calculate delivery charge (free over ₹499)
-    const deliveryCharge = parseFloat((totalAfterDiscounts >= 499 ? 0 : 40).toFixed(2));
-    
-    // Calculate processing fee (2% of order value)
-    const processingFee = parseFloat((totalAfterDiscounts * 0.02).toFixed(2));
-    
-    // Calculate final total
-    const total = parseFloat((totalAfterDiscounts + deliveryCharge + processingFee).toFixed(2));
-    
-    return {
-      subtotal,
-      productDiscount,
-      couponDiscount,
-      deliveryCharge,
-      processingFee,
-      total,
-      totalItems: localItems.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0)
-    };
+
+    try {
+      // Convert all values to numbers to ensure proper calculations
+      const subtotal = parseFloat(localItems.reduce((sum, item) => {
+        if (!item || !item.product) return sum;
+        const itemPrice = parseFloat(item.product.price) || 0;
+        const quantity = parseInt(item.quantity) || 0;
+        return sum + (itemPrice * quantity);
+      }, 0).toFixed(2)) || 0;
+      
+      // Calculate total discount from product discounts
+      const productDiscount = parseFloat(localItems.reduce((sum, item) => {
+        if (!item || !item.product) return sum;
+        const discount = parseFloat(item.product.discount) || 0;
+        const quantity = parseInt(item.quantity) || 0;
+        return sum + (discount * quantity);
+      }, 0).toFixed(2)) || 0;
+      
+      // Calculate coupon discount if applied
+      let couponDiscount = 0;
+      if (appliedCoupon && appliedCoupon.discountValue) {
+        if (appliedCoupon.discountType === 'percentage') {
+          const discountValue = parseFloat(appliedCoupon.discountValue) || 0;
+          couponDiscount = parseFloat(((subtotal * discountValue) / 100).toFixed(2)) || 0;
+        } else {
+          couponDiscount = parseFloat(parseFloat(appliedCoupon.discountValue).toFixed(2)) || 0;
+        }
+      }
+      
+      // Calculate total after discounts (ensure it doesn't go below 0)
+      const totalAfterDiscounts = Math.max(0, subtotal - productDiscount - couponDiscount);
+      
+      // Calculate delivery charge (free over ₹499)
+      const deliveryCharge = parseFloat((totalAfterDiscounts >= 499 ? 0 : 40).toFixed(2)) || 0;
+      
+      // Calculate processing fee (2% of order value, minimum ₹5)
+      const processingFee = Math.max(5, parseFloat((totalAfterDiscounts * 0.02).toFixed(2)) || 0);
+      
+      // Calculate final total (ensure it's a valid number)
+      const total = parseFloat((totalAfterDiscounts + deliveryCharge + processingFee).toFixed(2)) || 0;
+      
+      return {
+        subtotal: isNaN(subtotal) ? 0 : subtotal,
+        productDiscount: isNaN(productDiscount) ? 0 : productDiscount,
+        couponDiscount: isNaN(couponDiscount) ? 0 : couponDiscount,
+        deliveryCharge: isNaN(deliveryCharge) ? 0 : deliveryCharge,
+        processingFee: isNaN(processingFee) ? 0 : processingFee,
+        total: isNaN(total) ? 0 : total,
+        totalItems: localItems.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0)
+      };
+    } catch (error) {
+      console.error('Error calculating cart totals:', error);
+      // Return default values in case of error
+      return {
+        subtotal: 0,
+        productDiscount: 0,
+        couponDiscount: 0,
+        deliveryCharge: 0,
+        processingFee: 0,
+        total: 0,
+        totalItems: 0
+      };
+    }
   }, [localItems, appliedCoupon]);
 
   // Handle checkout with Razorpay
+  const validateCartBeforeCheckout = useCallback(async () => {
+    try {
+      const validation = await validateCartItems();
+      if (!validation.valid) {
+        // Remove invalid items from cart
+        if (validation.invalidItems?.length > 0) {
+          // Show error message about removed items
+          const errorMsg = `Some items in your cart are no longer available. We've removed them from your cart.`;
+          setPaymentError(errorMsg);
+          
+          // Remove invalid items using the removeFromCart function
+          await Promise.all(
+            validation.invalidItems.map(item => 
+              removeFromCart(item.productId)
+            )
+          );
+          
+          throw new Error(errorMsg);
+        }
+        throw new Error('Your cart contains invalid items. Please refresh your cart and try again.');
+      }
+      return true;
+    } catch (error) {
+      console.error('Cart validation error:', error);
+      setPaymentError(error.message);
+      setIsProcessingPayment(false);
+      return false;
+    }
+  }, [removeFromCart, setPaymentError, setIsProcessingPayment]);
+
   const handleCheckout = useCallback(async () => {
+    // Validate user is logged in
     if (!user) {
       navigate('/login', { state: { from: '/cart' } });
       return;
     }
 
+    // Validate cart is not empty
     if (itemCount === 0) {
-      toast.error('Your cart is empty');
+      setPaymentError('Your cart is empty');
       return;
     }
 
     try {
-      setIsProcessingPayment(true);
-      // Create order on backend with amount in paise
-      const amountInPaise = Math.round(cartTotals.total * 100);
-      console.log('Processing payment for amount:', cartTotals.total, 'INR (', amountInPaise, 'paise )');
+      // First validate cart items
+      const isValid = await validateCartBeforeCheckout();
+      if (!isValid) return;
       
-      console.log('Creating Razorpay order...');
-      const orderResponse = await createRazorpayOrder(amountInPaise);
-      console.log('Order created:', orderResponse);
-
-      if (!orderResponse || !orderResponse.order) {
-        throw new Error('Failed to create payment order');
-      }
-
-      // Load Razorpay script and get the Razorpay constructor
+      setIsProcessingPayment(true);
+      
+      // 1. Load Razorpay script first
       console.log('Loading Razorpay script...');
       try {
         await loadRazorpay();
@@ -374,9 +440,21 @@ const Cart = () => {
       }
 
       if (typeof window.Razorpay !== 'function') {
-        console.error('Razorpay constructor not found');
-        throw new Error('Failed to initialize payment gateway. Please refresh and try again.');
+        throw new Error('Payment gateway not available. Please refresh and try again.');
       }
+
+      // 2. Create order on backend with amount in paise
+      const amountInPaise = Math.round(cartTotals.total * 100);
+      console.log('Processing payment for amount:', cartTotals.total, 'INR (', amountInPaise, 'paise )');
+      
+      console.log('Creating Razorpay order...');
+      const orderResponse = await createRazorpayOrder(amountInPaise);
+      console.log('Order created:', orderResponse);
+
+      if (!orderResponse?.order?.id) {
+        throw new Error('Failed to create payment order. Please try again.');
+      }
+
 
       // Use order details from backend response
       const { order } = orderResponse;
@@ -411,25 +489,134 @@ const Cart = () => {
               throw new Error('Invalid payment response from Razorpay');
             }
             
-            // Verify payment on your server
-            const verification = await verifyPayment({
+            // First verify the payment with Razorpay
+            console.log('Verifying payment with Razorpay...');
+            const verificationData = {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
               razorpay_signature: response.razorpay_signature,
-              order_id: order.id // Pass the original order ID for verification
-            });
-
-            if (verification.success) {
-              // Clear cart and show success message
-              clearCart();
-              toast.success('Payment successful! Your order has been placed.');
-              navigate('/orders');
-            } else {
-              throw new Error(verification.message || 'Payment verification failed');
+              amount: order.amount,
+              currency: 'INR'
+            };
+            
+            // Verify payment with our backend
+            console.log('Sending verification request to server...');
+            const verification = await verifyPayment(verificationData);
+            console.log('Payment verification response:', verification);
+            
+            if (!verification.success) {
+              throw new Error(verification.error || 'Payment verification failed');
             }
+            
+            console.log('Payment verified successfully with Razorpay');
+            
+            // Create order data with all required fields
+            console.log('Local items in cart:', localItems);
+            
+            const orderItems = localItems.map(item => ({
+              product: item.product?._id || item._id, // Try both product._id and _id
+              name: item.product?.name || item.name,
+              image: item.product?.images?.[0] || item.images?.[0] || '/images/default-product.png',
+              price: item.product?.price || item.price,
+              quantity: item.quantity,
+            }));
+            
+            console.log('Processed order items:', orderItems);
+            
+            // Map shipping address to match the required schema
+            const mappedShippingAddress = shippingAddress ? {
+              address: shippingAddress.street || '',
+              city: shippingAddress.city || '',
+              postalCode: shippingAddress.postalCode || '',
+              country: shippingAddress.country || 'India'
+            } : {
+              address: '',
+              city: '',
+              postalCode: '',
+              country: 'India'
+            };
+            
+            // Ensure all required fields have values
+            const orderData = {
+              orderItems,
+              shippingAddress: mappedShippingAddress,
+              paymentMethod: 'Razorpay',
+              itemsPrice: cartTotals.subtotal,
+              taxPrice: cartTotals.tax || 0,
+              shippingPrice: cartTotals.shipping || 0,
+              totalPrice: cartTotals.total,
+              isPaid: true,
+              paidAt: new Date().toISOString(),
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+              status: 'processing' // Set initial status
+            };
+            
+            // Add user ID if available
+            if (user?._id) {
+              orderData.user = user._id;
+            }
+            
+            console.log('Order data with calculated totals:', {
+              subtotal: cartTotals.subtotal,
+              tax: cartTotals.tax,
+              shipping: cartTotals.shipping,
+              total: cartTotals.total
+            });
+            
+            console.log('Final order data being sent to server:', JSON.stringify(orderData, null, 2));
+            
+            console.log('Creating order with data:', orderData);
+            
+            // Create the order in our database
+            const { data: createdOrder } = await createOrder(orderData);
+            
+            if (!createdOrder || !createdOrder._id) {
+              throw new Error('Failed to create order. Please contact support with payment ID: ' + response.razorpay_payment_id);
+            }
+            
+            console.log('Order created successfully:', createdOrder);
+            
+            // Clear the cart after successful order
+            clearCart();
+            
+            // Show success message
+            toast.success('Order placed successfully!');
+            
+            // Redirect to order success page
+            navigate(`/order/${createdOrder._id}`);
           } catch (error) {
-            console.error('Payment verification failed:', error);
-            toast.error(error.message || 'Payment verification failed. Please check your payment status or contact support.');
+            console.error('Payment processing error:', {
+              message: error.message,
+              response: error.response?.data,
+              stack: error.stack
+            });
+            
+            setIsProcessingPayment(false);
+            
+            // Handle specific error cases
+            let errorMessage = error.message || 'Error processing payment';
+            
+            if (error.response?.data?.message) {
+              errorMessage = error.response.data.message;
+            } else if (error.message?.includes('network')) {
+              errorMessage = 'Network error. Please check your connection and try again.';
+            } else if (error.message?.includes('timeout')) {
+              errorMessage = 'Request timed out. Please try again.';
+            }
+            
+            setPaymentError(errorMessage);
+            toast.error(errorMessage);
+            
+            // If payment was successful but order creation failed, show special message
+            if (error.message?.includes('payment was successful') || 
+                error.response?.data?.paymentSuccess) {
+              toast.warning(
+                'Payment was successful but there was an issue with your order. ' +
+                'Please contact support with your payment ID.'
+              );
+            }
           } finally {
             setIsProcessingPayment(false);
           }
@@ -459,22 +646,33 @@ const Cart = () => {
       };
 
       // Open Razorpay payment popup
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-
-      // Cleanup function
-      return () => {
-        if (rzp && typeof rzp.close === 'function') {
+      try {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+        
+        // Handle modal close event
+        rzp.on('payment.failed', function(response) {
+          console.error('Payment failed:', response.error);
+          setPaymentError(
+            response.error.description || 'Payment was not completed. Please try again.'
+          );
+        });
+        
+        // Cleanup function
+        return () => {
           rzp.close();
-        }
-      };
-
+        };
+      } catch (error) {
+        console.error('Error initializing Razorpay:', error);
+        throw new Error('Failed to initialize payment. Please try again.');
+      }
     } catch (error) {
       console.error('Checkout error:', error);
-      toast.error(error.message || 'Failed to process payment. Please try again.');
+      setPaymentError(error.message || 'Failed to process payment. Please try again.');
+    } finally {
       setIsProcessingPayment(false);
     }
-  }, [user, itemCount, cartTotals.total, navigate, clearCart]);
+  }, [user, itemCount, cartTotals, navigate, clearCart, items, shippingAddress]);
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -765,38 +963,66 @@ const Cart = () => {
             </div>
 
             {/* Payment Buttons */}
-            <div className="mt-4 space-y-2">
-              <button
-                onClick={handleCheckout}
-                disabled={isProcessingPayment || itemCount === 0}
-                className="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isProcessingPayment ? (
-                  <>
-                    <FaSpinner className="animate-spin" /> Processing...
-                  </>
-                ) : (
-                  'Proceed to Payment'
-                )}
-              </button>
-              
-              {/* Test button for Razorpay order creation */}
+            <div className="mt-6 flex justify-end space-x-4">
               <button
                 onClick={async () => {
                   try {
-                    console.log('Testing Razorpay order creation...');
-                    const testAmount = 100; // 1.00 INR in paise
-                    const response = await createRazorpayOrder(testAmount);
-                    console.log('Test order created:', response);
-                    toast.success('Test order created successfully! Check console for details.');
+                    console.log('Testing order endpoint...');
+                    const result = await testOrderEndpoint();
+                    console.log('Test result:', result);
+                    toast.success('Test endpoint working! Check console for details.');
                   } catch (error) {
-                    console.error('Test order error:', error);
+                    console.error('Test failed:', error);
+                    toast.error('Test failed. Check console for details.');
+                  }
+                }}
+                className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+              >
+                Test Order Endpoint
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    console.log('Testing order creation with auth...');
+                    const response = await axios.post(
+                      `${import.meta.env.VITE_API_URL}/test/create-test-order`,
+                      { test: 'data' },
+                      {
+                        headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${authService.getToken()}`
+                        }
+                      }
+                    );
+                    console.log('Test order creation result:', response.data);
+                    toast.success('Test order created! Check console for details.');
+                  } catch (error) {
+                    console.error('Test order creation failed:', error);
                     toast.error(`Test failed: ${error.message}`);
                   }
                 }}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
+                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
               >
-                Test Razorpay Order (₹1.00)
+                Test Order Creation
+              </button>
+              {paymentError && (
+                <div className="w-full mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
+                  {paymentError}
+                </div>
+              )}
+              <button
+                onClick={handleCheckout}
+                disabled={isProcessingPayment || itemCount === 0}
+                className={`w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white ${isProcessingPayment || itemCount === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+              >
+                {isProcessingPayment ? (
+                  <>
+                    <FaSpinner className="animate-spin -ml-1 mr-2 h-4 w-4" />
+                    Processing...
+                  </>
+                ) : (
+                  `Pay ₹${(cartTotals?.total || 0).toFixed(2)}`
+                )}
               </button>
             </div>
 

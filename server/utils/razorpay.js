@@ -1,4 +1,5 @@
 import Razorpay from 'razorpay';
+import crypto from 'crypto';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -17,6 +18,47 @@ const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET
 });
+
+/**
+ * Verify Razorpay payment signature
+ * @param {string} razorpayOrderId - The Razorpay order ID
+ * @param {string} razorpayPaymentId - The Razorpay payment ID
+ * @param {string} razorpaySignature - The signature to verify
+ * @returns {boolean} - Returns true if the signature is valid
+ */
+const verifyPaymentSignature = (razorpayOrderId, razorpayPaymentId, razorpaySignature) => {
+  try {
+    if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
+      console.error('Missing required parameters for signature verification');
+      return false;
+    }
+
+    // Create the expected signature
+    const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
+    hmac.update(`${razorpayOrderId}|${razorpayPaymentId}`);
+    const generatedSignature = hmac.digest('hex');
+
+    // Compare the signatures
+    const isValid = crypto.timingSafeEqual(
+      Buffer.from(generatedSignature, 'utf8'),
+      Buffer.from(razorpaySignature, 'utf8')
+    );
+
+    if (!isValid) {
+      console.error('Invalid signature:', {
+        expected: generatedSignature,
+        received: razorpaySignature,
+        orderId: razorpayOrderId,
+        paymentId: razorpayPaymentId
+      });
+    }
+
+    return isValid;
+  } catch (error) {
+    console.error('Error verifying Razorpay signature:', error);
+    return false;
+  }
+};
 
 // Enhanced Razorpay request handler
 const createRazorpayRequest = async (methodPath, ...args) => {
@@ -72,5 +114,6 @@ const createRazorpayRequest = async (methodPath, ...args) => {
   }
 };
 
+// Export the Razorpay instance, request handler, and verification function
 export default razorpay;
-export { createRazorpayRequest };
+export { createRazorpayRequest, verifyPaymentSignature };
