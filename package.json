@@ -23,8 +23,10 @@
     "axios": "^1.11.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
     "compression": "^1.8.1",
+    "date-fns": "^4.1.0",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "framer-motion": "^12.23.12",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "mongodb": "^6.18.0",
@@ -41,6 +43,7 @@
     "react-toastify": "^11.0.5",
     "react-virtualized-auto-sizer": "^1.0.26",
     "react-window": "^1.8.11",
+    "socket.io-client": "^4.8.1",
     "vite-plugin-compression2": "^2.2.0",
     "vite-plugin-image-optimizer": "^2.0.2"
   },
