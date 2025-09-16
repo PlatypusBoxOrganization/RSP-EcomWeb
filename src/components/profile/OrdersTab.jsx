@@ -314,7 +314,7 @@ const OrdersTab = () => {
                     <div>
                       <h4 className="text-sm font-medium text-gray-900 mb-3">Order Items</h4>
                       <div className="space-y-4">
-                        {selectedOrder.items?.map((item, index) => (
+                        {selectedOrder.orderItems?.map((item, index) => (
                           <div key={index} className="flex items-start">
                             <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
                               {item.image ? (
@@ -334,14 +334,12 @@ const OrdersTab = () => {
                             <div className="ml-4 flex-1">
                               <div className="flex justify-between">
                                 <h5 className="text-sm font-medium text-gray-900">{item.name}</h5>
-                                <p className="ml-4 text-sm font-medium text-gray-900">
-                                  {formatCurrency(item.price * item.quantity)}
-                                </p>
-                              </div>
-                              <div className="flex justify-between mt-1">
-                                <p className="text-sm text-gray-500">
-                                  {item.quantity} × {formatCurrency(item.price)} each
-                                </p>
+                                <div className="text-sm text-gray-900">
+                                  <p className="font-medium">{formatCurrency(item.price * item.quantity)}</p>
+                                  <p className="text-xs text-gray-500">
+                                    {item.quantity} × {formatCurrency(item.price)} each
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -373,8 +371,8 @@ const OrdersTab = () => {
                         <h5 className="mt-4 text-sm font-medium text-gray-900">Order Summary</h5>
                         <div className="mt-2 space-y-1">
                           <div className="flex justify-between text-sm">
-                            <span className="text-gray-500">Items ({selectedOrder.items?.reduce((sum, item) => sum + (item.quantity || 1), 0)})</span>
-                            <span>{formatCurrency(selectedOrder.itemsPrice || 0)}</span>
+                            <span className="text-gray-500">Items ({selectedOrder.orderItems.reduce((sum, item) => sum + item.quantity, 0)})</span>
+                            <span className="font-medium">{formatCurrency(selectedOrder.itemsPrice)}</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-gray-500">Shipping</span>

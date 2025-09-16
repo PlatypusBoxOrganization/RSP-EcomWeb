@@ -74,10 +74,15 @@ const OrderConfirmation = () => {
     );
   }
 
-  // Ensure all prices are properly parsed and formatted
+  // Format price with consistent 2 decimal places and handle edge cases
   const formatPrice = (price) => {
-    const num = typeof price === 'string' ? parseFloat(price) : price;
-    return num.toFixed(2);
+    if (price === null || price === undefined) return '0.00';
+    const num = typeof price === 'string' ? parseFloat(price) : Number(price);
+    if (isNaN(num)) return '0.00';
+    return num.toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
   };
 
   const { orderItems, shippingAddress, totalPrice, status, createdAt, _id, itemsPrice, taxPrice, shippingPrice } = order;
@@ -113,32 +118,37 @@ const OrderConfirmation = () => {
           <div className="px-4 py-5 sm:p-6">
             <div className="flow-root">
               <ul className="-my-6 divide-y divide-gray-200">
-                {orderItems.map((item, index) => (
-                  <li key={`${item._id || 'item'}-${index}`} className="py-6 flex">
-                    <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-center object-cover"
-                      />
-                    </div>
+                {orderItems.map((item, index) => {
+                  // Calculate price per item from the order data
+                  const itemTotal = (item.price * item.quantity).toFixed(2);
+                  const unitPrice = (item.price).toFixed(2);
+                  
+                  return (
+                    <li key={`${item._id || 'item'}-${index}`} className="py-6 flex">
+                      <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
 
-                    <div className="ml-4 flex-1 flex flex-col">
-                      <div>
-                        <div className="flex justify-between text-base font-medium text-gray-900">
-                          <h3 className="text-sm sm:text-base">{item.name}</h3>
-                          <p className="ml-4">₹{formatPrice(item.price)}</p>
+                      <div className="ml-4 flex-1 flex flex-col">
+                        <div>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <h3 className="text-sm sm:text-base">{item.name}</h3>
+                            <div className="text-right">
+                              <p>₹{formatPrice(itemTotal)}</p>
+                              <p className="text-xs text-gray-500">
+                                {item.quantity} × ₹{formatPrice(unitPrice)} each
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="mt-1 text-sm text-gray-500">Qty: {item.quantity}</p>
                       </div>
-                      <div className="flex-1 flex items-end justify-between text-sm">
-                        <p className="text-gray-500">
-                          Subtotal: ₹{formatPrice(item.price * item.quantity)}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -146,19 +156,19 @@ const OrderConfirmation = () => {
               <div className="flex justify-between text-base font-medium text-gray-900 mb-4">
                 <div className="space-y-2 w-full">
                   <div className="flex justify-between">
-                    <span>Items Total:</span>
+                    <span>Items ({orderItems.reduce((sum, item) => sum + item.quantity, 0)})</span>
                     <span>₹{formatPrice(itemsPrice)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Shipping:</span>
-                    <span>₹{formatPrice(shippingPrice)}</span>
+                    <span>Shipping</span>
+                    <span>{shippingPrice > 0 ? `₹${formatPrice(shippingPrice)}` : 'FREE'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Tax (7%):</span>
+                    <span>Tax</span>
                     <span>₹{formatPrice(taxPrice)}</span>
                   </div>
                   <div className="flex justify-between text-lg font-semibold border-t border-gray-200 pt-2 mt-2">
-                    <span>Order Total:</span>
+                    <span>Total</span>
                     <span>₹{formatPrice(totalPrice)}</span>
                   </div>
                 </div>
