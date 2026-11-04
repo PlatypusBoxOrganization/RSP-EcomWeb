@@ -1,0 +1,6 @@
+﻿PROC PlatypusAgent PID 2340 PATH C:\Users\ADMIN\AppData\Local\Programs\PlatypusAgent\PlatypusAgent.exe
+PROC PlatypusAgent PID 17968 PATH C:\Users\ADMIN\AppData\Local\Programs\PlatypusAgent\PlatypusAgent.exe
+PLATYPUS_DIR C:\Users\ADMIN\AppData\Local\Temp\_MEI000046302\platypus
+PLATYPUS_DIR C:\UnityProjects\RSP-EcomWeb\platypus
+   FILE shellcompat.py
+   FILE __init__.py

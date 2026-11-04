@@ -28,8 +28,9 @@ import orderRoutes from './routes/orderRoutes.js';
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
+// NOTE: MongoDB is connected once below (in the connectDB().then(startServer) chain).
+// Do NOT call connectDB() here: a failed connection would call process.exit(1)
+// and kill the server before it even listens.
 
 // Initialize Express app
 const app = express();

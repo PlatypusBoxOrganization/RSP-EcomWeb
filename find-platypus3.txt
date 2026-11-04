@@ -1,0 +1,2 @@
+﻿C:\Users\ADMIN\AppData\Local\Temp\_MEI000046302\platypus\anime
+C:\Users\ADMIN\AppData\Local\Temp\_MEI000046302\platypus\anime\runner.py

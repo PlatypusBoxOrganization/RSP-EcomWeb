@@ -1,0 +1,119 @@
+
+=== ROUTE REGISTRATION ===
+- OPTIONS *
+- GET /api/health
+- GET /api/test/direct
+- GET /api/routes
+
+Routes for /^\/api\/auth\/?(?=\/|$)/i:
+- POST /register
+- POST /login
+- GET /me
+
+Routes for /^\/api\/profile\/?(?=\/|$)/i:
+- GET /me
+- PUT /update
+- POST /addresses
+- PUT /addresses/:addressId
+- DELETE /addresses/:addressId
+- GET /orders
+- GET /orders/:orderId
+
+Routes for /^\/api\/products\/?(?=\/|$)/i:
+- GET /
+- GET /ids
+- GET /suggested
+- GET /test-db
+- GET /test
+- GET /related/:id
+- GET /:id
+
+Routes for /^\/api\/cart\/?(?=\/|$)/i:
+- POST /
+- GET /
+- PUT /:itemId
+- DELETE /:itemId
+- DELETE /
+- GET /validate
+
+Routes for /^\/api\/wishlist\/?(?=\/|$)/i:
+- POST /
+- GET /
+- DELETE /:productId
+- POST /:productId/move-to-cart
+
+Routes for /^\/api\/orders\/?(?=\/|$)/i:
+- GET /myorders
+- POST /
+- GET /:id
+- PUT /:id/pay
+- PUT /:id/cancel
+- GET /
+- PUT /:id/status
+- PUT /:id/deliver
+
+Routes for /^\/api\/payments\/?(?=\/|$)/i:
+- POST /create-order
+- POST /verify
+
+Routes for /^\/api\/test\/?(?=\/|$)/i:
+- GET /status
+- POST /test-order
+- POST /create-test-order
+=== END ROUTE REGISTRATION ===
+
+[34mStarting server initialization...[39m
+[4m[33mMongoDB connection failed (continuing without DB): querySrv ENOTFOUND _mongodb._tcp.cluster0.mwzev2h.mongodb.net[39m[24m
+Error killing process: execSync is not defined
+[1m[32mServer started successfully[39m[22m
+[1m[33mServer running in development mode on port 5002[39m[22m
+[1m[36mWebSocket server running on port 5002[39m[22m
+[2026-11-04T11:36:38.040Z] POST /api/auth/login
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:36:48.053Z
+Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/auth/login
+Request Method: POST
+Request Headers: {
+  host: '127.0.0.1:5002',
+  'user-agent': 'curl/8.21.0',
+  accept: '*/*',
+  'content-type': 'application/json',
+  'content-length': '46'
+}
+Request Body: { email: 'test@test.com', password: 'test123' }
+Request Query: {}
+Request Params: {}
+MongoDB Connection State: 0
+[0mPOST /api/auth/login [31m500[0m 10015.437 ms - 439[0m
+[2026-11-04T11:50:28.919Z] GET /api/wishlist
+Authentication error: Operation `users.findOne()` buffering timed out after 10000ms
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:50:38.928Z
+Error: Error: Not authorized, token verification failed
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:46:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+Error Stack: Error: Not authorized, token verification failed
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:46:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+Request URL: /api/wishlist
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5002',
+  'user-agent': 'curl/8.21.0',
+  accept: '*/*',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVlYzQ5ZTFiMGRjMmM0YzhkOGY5OSIsImlhdCI6MTc5Mzc5Mjc2OSwiZXhwIjoxNzk2Mzg0NzY5fQ.BNUCI5D_4G-p6jjh_MadBwanmwqIJRl5UIHS6Meeh4s'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/wishlist [33m401[0m 10008.746 ms - 291[0m

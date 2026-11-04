@@ -1,0 +1,2439 @@
+
+=== ROUTE REGISTRATION ===
+- OPTIONS *
+- GET /api/health
+- GET /api/test/direct
+- GET /api/routes
+
+Routes for /^\/api\/auth\/?(?=\/|$)/i:
+- POST /register
+- POST /login
+- GET /me
+
+Routes for /^\/api\/profile\/?(?=\/|$)/i:
+- GET /me
+- PUT /update
+- POST /addresses
+- PUT /addresses/:addressId
+- DELETE /addresses/:addressId
+- GET /orders
+- GET /orders/:orderId
+
+Routes for /^\/api\/products\/?(?=\/|$)/i:
+- GET /
+- GET /ids
+- GET /suggested
+- GET /test-db
+- GET /test
+- GET /related/:id
+- GET /:id
+
+Routes for /^\/api\/cart\/?(?=\/|$)/i:
+- POST /
+- GET /
+- PUT /:itemId
+- DELETE /:itemId
+- DELETE /
+- GET /validate
+
+Routes for /^\/api\/wishlist\/?(?=\/|$)/i:
+- POST /
+- GET /
+- DELETE /:productId
+- POST /:productId/move-to-cart
+
+Routes for /^\/api\/orders\/?(?=\/|$)/i:
+- GET /myorders
+- POST /
+- GET /:id
+- PUT /:id/pay
+- PUT /:id/cancel
+- GET /
+- PUT /:id/status
+- PUT /:id/deliver
+
+Routes for /^\/api\/payments\/?(?=\/|$)/i:
+- POST /create-order
+- POST /verify
+
+Routes for /^\/api\/test\/?(?=\/|$)/i:
+- GET /status
+- POST /test-order
+- POST /create-test-order
+=== END ROUTE REGISTRATION ===
+
+[34mStarting server initialization...[39m
+[4m[33mMongoDB connection failed (continuing without DB): querySrv ENOTFOUND _mongodb._tcp.cluster0.mwzev2h.mongodb.net[39m[24m
+Error killing process: execSync is not defined
+[1m[32mServer started successfully[39m[22m
+[1m[33mServer running in development mode on port 5004[39m[22m
+[1m[36mWebSocket server running on port 5004[39m[22m
+[0mGET /api/health [32m200[0m 1.559 ms - 54[0m
+[2026-11-04T12:00:13.894Z] POST /api/auth/login
+[0mPOST /api/auth/login [32m200[0m 10016.765 ms - 320[0m
+[2026-11-04T12:01:29.385Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10011.847 ms - 30[0m
+[2026-11-04T12:01:39.416Z] POST /api/wishlist
+[0mPOST /api/wishlist [32m201[0m 10005.442 ms - 247[0m
+[2026-11-04T12:01:49.441Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10011.336 ms - 209[0m
+[2026-11-04T12:03:35.524Z] DELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1b
+[0mDELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1b [32m200[0m 10004.688 ms - 72[0m
+Blocked CORS request from: http://localhost:5174
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T12:10:42.659Z
+Error: Error: Not allowed by CORS
+    at origin (file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:74:16)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:219:13
+    at optionsCallback (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:199:9)
+    at corsMiddleware (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:204:7)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at jsonParser (C:\UnityProjects\RSP-EcomWeb\server\node_modules\body-parser\lib\types\json.js:113:7)
+Error Stack: Error: Not allowed by CORS
+    at origin (file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:74:16)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:219:13
+    at optionsCallback (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:199:9)
+    at corsMiddleware (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:204:7)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at jsonParser (C:\UnityProjects\RSP-EcomWeb\server\node_modules\body-parser\lib\types\json.js:113:7)
+Request URL: /api/products
+Request Method: GET
+Request Headers: {
+  host: 'localhost:5004',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  origin: 'http://localhost:5174',
+  'sec-fetch-site': 'same-site',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'http://localhost:5174/',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9',
+  cookie: 'rzp_unified_session_id=Tw5qmpPQzet6ap'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+Blocked CORS request from: http://localhost:5174
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T12:10:42.661Z
+Error: Error: Not allowed by CORS
+    at origin (file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:74:16)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:219:13
+    at optionsCallback (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:199:9)
+    at corsMiddleware (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:204:7)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at jsonParser (C:\UnityProjects\RSP-EcomWeb\server\node_modules\body-parser\lib\types\json.js:113:7)
+Error Stack: Error: Not allowed by CORS
+    at origin (file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:74:16)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:219:13
+    at optionsCallback (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:199:9)
+    at corsMiddleware (C:\UnityProjects\RSP-EcomWeb\server\node_modules\cors\lib\index.js:204:7)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at jsonParser (C:\UnityProjects\RSP-EcomWeb\server\node_modules\body-parser\lib\types\json.js:113:7)
+Request URL: /api/products
+Request Method: GET
+Request Headers: {
+  host: 'localhost:5004',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  origin: 'http://localhost:5174',
+  'sec-fetch-site': 'same-site',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'http://localhost:5174/',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9',
+  cookie: 'rzp_unified_session_id=Tw5qmpPQzet6ap'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[2026-11-04T12:11:55.476Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:11:56.397Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.989 ms - 1630[0m
+[2026-11-04T12:12:06.412Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:12:15.632Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.923 ms - 1630[0m
+[2026-11-04T12:12:25.640Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:12:31.456Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.551 ms - 1630[0m
+[2026-11-04T12:12:41.474Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.132 ms - -[0m
+[2026-11-04T12:13:26.062Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.029 ms - -[0m
+[2026-11-04T12:13:36.079Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:13:44.449Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:13:45.377Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.357 ms - 1630[0m
+[2026-11-04T12:13:55.386Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.833 ms - -[0m
+[2026-11-04T12:14:24.770Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:14:25.691Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.293 ms - 1630[0m
+[2026-11-04T12:14:35.697Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.767 ms - -[0m
+[2026-11-04T12:16:29.441Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:16:37.489Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10012.222 ms - 1630[0m
+[2026-11-04T12:16:47.503Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.010 ms - -[0m
+[2026-11-04T12:16:58.179Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:16:59.513Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.066 ms - 1630[0m
+[2026-11-04T12:17:09.523Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:10.350Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:16.422Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:17.313Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T12:17:20.894Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:26.847Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:27.379Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:27.792Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T12:17:31.270Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:34.246Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:38.405Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:17:40.924Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.407 ms - 1630[0m
+[2026-11-04T12:17:50.942Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.188 ms - -[0m
+[2026-11-04T12:18:52.954Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.307 ms - -[0m
+[2026-11-04T12:19:02.967Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.259 ms - -[0m
+[2026-11-04T12:20:12.505Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.164 ms - -[0m
+[2026-11-04T12:20:22.519Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.686 ms - -[0m
+[2026-11-04T12:20:56.589Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:20:57.479Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.921 ms - 1630[0m
+[2026-11-04T12:21:07.494Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.392 ms - -[0m
+[2026-11-04T12:21:57.231Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.834 ms - -[0m
+[2026-11-04T12:22:07.239Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10016.250 ms - -[0m
+[2026-11-04T12:24:54.131Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.869 ms - -[0m
+[2026-11-04T12:25:04.141Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.595 ms - -[0m
+[2026-11-04T12:27:27.922Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.666 ms - -[0m
+[2026-11-04T12:27:37.934Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.610 ms - -[0m
+[2026-11-04T12:27:53.109Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.884 ms - -[0m
+[2026-11-04T12:28:03.112Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.480 ms - -[0m
+[2026-11-04T12:28:14.912Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.785 ms - -[0m
+[2026-11-04T12:28:24.916Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.417 ms - -[0m
+[2026-11-04T12:31:23.586Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:31:24.519Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10004.410 ms - 1630[0m
+[2026-11-04T12:31:34.525Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.426 ms - -[0m
+[2026-11-04T12:32:10.918Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:32:11.833Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.327 ms - 1630[0m
+[2026-11-04T12:32:21.846Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.234 ms - -[0m
+[2026-11-04T12:34:57.855Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:34:58.752Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:02.461Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:10.503Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10012.698 ms - 1630[0m
+[2026-11-04T12:35:20.517Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:21.655Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:25.151Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:29.801Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:39.588Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T12:35:40.012Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:40.927Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:35:46.140Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.657 ms - 1630[0m
+[2026-11-04T12:35:56.143Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.072 ms - -[0m
+[2026-11-04T12:38:25.016Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:28.770Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:34.651Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:37.834Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:46.785Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:52.179Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:38:53.100Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:00.955Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:01.912Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:06.493Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:06.907Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:07.852Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:13.852Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:17.832Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:39:22.628Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.003 ms - 1630[0m
+[2026-11-04T12:39:32.645Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.088 ms - -[0m
+[2026-11-04T12:41:18.590Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.571 ms - -[0m
+[2026-11-04T12:41:28.596Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.090 ms - -[0m
+[2026-11-04T12:42:37.843Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.300 ms - -[0m
+[2026-11-04T12:42:47.847Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.908 ms - -[0m
+[2026-11-04T12:44:06.254Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:07.187Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.220 ms - 1630[0m
+[2026-11-04T12:44:17.198Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:27.005Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.561 ms - 1630[0m
+[2026-11-04T12:44:37.007Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:46.387Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:50.228Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:57.194Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:44:57.611Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:01.002Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:04.737Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:08.083Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:11.719Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:17.544Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:17.981Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T12:45:21.834Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:26.907Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:33.058Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:40.186Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:41.086Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:48.579Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:53.186Z] GET /api/products
+[0mGET /api/health [32m200[0m 0.122 ms - 54[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:45:56.713Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.914 ms - 1630[0m
+[2026-11-04T12:46:06.716Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10016.190 ms - -[0m
+[2026-11-04T12:53:12.816Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.392 ms - 1630[0m
+[2026-11-04T12:53:24.228Z] GET /api/products
+[2026-11-04T12:53:26.177Z] GET /api/test/status
+Test status endpoint hit
+[0mGET /api/test/status [32m200[0m 0.192 ms - 87[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:53:27.633Z] GET /api/products
+[0mGET /api/test/direct [32m200[0m 0.113 ms - 45[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:53:33.657Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T12:53:36.356Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1a
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.662 ms - 1630[0m
+[2026-11-04T12:53:43.673Z] GET /api/products
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1a [32m200[0m 10000.587 ms - 269[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:53:47.809Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.835 ms - 1630[0m
+[2026-11-04T12:53:57.812Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.955 ms - -[0m
+[2026-11-04T12:55:31.152Z] POST /api/auth/login
+[0mPOST /api/auth/login [32m200[0m 10001.023 ms - 320[0m
+[2026-11-04T12:55:42.613Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.014 ms - -[0m
+[2026-11-04T12:55:52.622Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.805 ms - -[0m
+[2026-11-04T12:56:53.268Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.046 ms - -[0m
+[2026-11-04T12:57:03.284Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.691 ms - -[0m
+[2026-11-04T12:57:37.530Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10013.094 ms - 30[0m
+[2026-11-04T12:57:47.563Z] POST /api/wishlist
+[0mPOST /api/wishlist [32m201[0m 10003.407 ms - 251[0m
+[2026-11-04T12:57:57.586Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10011.316 ms - 213[0m
+[2026-11-04T12:58:07.618Z] DELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c
+[0mDELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c [32m200[0m 10011.985 ms - 72[0m
+[2026-11-04T12:58:19.309Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.640 ms - -[0m
+[2026-11-04T12:58:29.324Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.686 ms - -[0m
+[2026-11-04T12:58:47.769Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.189 ms - -[0m
+[2026-11-04T12:58:57.780Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.608 ms - -[0m
+[2026-11-04T12:59:52.888Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T12:59:53.786Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10007.471 ms - 1630[0m
+[2026-11-04T13:00:03.796Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.885 ms - -[0m
+[2026-11-04T13:00:31.439Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.652 ms - -[0m
+[2026-11-04T13:00:41.451Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.864 ms - -[0m
+[2026-11-04T13:01:50.179Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:01:51.068Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.071 ms - 1630[0m
+[2026-11-04T13:02:01.071Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.858 ms - -[0m
+[2026-11-04T13:02:16.245Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:02:17.188Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.860 ms - 1630[0m
+[2026-11-04T13:02:27.199Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.345 ms - -[0m
+[2026-11-04T13:02:40.207Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:02:40.710Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:02:41.140Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.058 ms - 1630[0m
+[2026-11-04T13:02:51.142Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.336 ms - -[0m
+[2026-11-04T13:03:15.854Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:03:16.759Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.597 ms - 1630[0m
+[2026-11-04T13:03:26.772Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.947 ms - -[0m
+[2026-11-04T13:04:29.365Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:04:30.316Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.658 ms - 1630[0m
+[2026-11-04T13:04:40.332Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.250 ms - -[0m
+[2026-11-04T13:05:05.315Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:05:06.229Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.738 ms - 1630[0m
+[2026-11-04T13:05:16.233Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.545 ms - -[0m
+[2026-11-04T13:06:21.075Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:06:22.034Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.988 ms - 1630[0m
+[2026-11-04T13:06:32.049Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.562 ms - -[0m
+[2026-11-04T13:07:41.088Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:07:42.003Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.172 ms - 1630[0m
+[2026-11-04T13:07:52.014Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.663 ms - -[0m
+[2026-11-04T13:08:38.208Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.430 ms - -[0m
+[2026-11-04T13:08:48.218Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.211 ms - -[0m
+[2026-11-04T13:08:58.917Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.594 ms - -[0m
+[2026-11-04T13:09:08.920Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:09:13.099Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10002.171 ms - 1630[0m
+[2026-11-04T13:09:23.103Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.726 ms - -[0m
+[2026-11-04T13:10:01.516Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:10:02.455Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.100 ms - 1630[0m
+[2026-11-04T13:10:12.467Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.348 ms - -[0m
+[2026-11-04T13:10:49.449Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.007 ms - -[0m
+[2026-11-04T13:10:59.451Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.677 ms - -[0m
+[2026-11-04T13:11:13.866Z] POST /api/test/test-order
+Test order endpoint hit with body: { sample: 'data' }
+[0mPOST /api/test/test-order [32m200[0m 0.215 ms - 81[0m
+[2026-11-04T13:11:17.751Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.648 ms - -[0m
+[2026-11-04T13:11:27.757Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.914 ms - -[0m
+[2026-11-04T13:12:33.623Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.822 ms - -[0m
+[2026-11-04T13:12:43.629Z] GET /api/products
+[0mGET /api/health [32m200[0m 0.123 ms - 54[0m
+[2026-11-04T13:12:52.418Z] POST /api/auth/login
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.216 ms - -[0m
+[0mPOST /api/auth/login [32m200[0m 10014.480 ms - 320[0m
+[2026-11-04T13:13:02.435Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10004.797 ms - 30[0m
+[2026-11-04T13:13:12.448Z] POST /api/wishlist
+[0mPOST /api/wishlist [32m201[0m 10003.938 ms - 251[0m
+[2026-11-04T13:13:22.460Z] GET /api/wishlist
+[0mGET /api/wishlist [32m200[0m 10004.298 ms - 213[0m
+[2026-11-04T13:13:32.473Z] DELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c
+[2026-11-04T13:13:34.185Z] GET /api/products
+[0mDELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c [32m200[0m 10012.887 ms - 72[0m
+[2026-11-04T13:13:42.489Z] GET /api/wishlist
+[0mGET /api/health [32m200[0m 0.106 ms - 54[0m
+[2026-11-04T13:13:43.469Z] POST /api/auth/login
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:13:43.980Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/wishlist [32m200[0m 10002.304 ms - 30[0m
+[0mPOST /api/auth/login [32m200[0m 10002.261 ms - 320[0m
+[2026-11-04T13:13:53.474Z] GET /api/wishlist
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:13:54.004Z] GET /api/products
+[0mGET /api/wishlist [32m200[0m 10013.460 ms - 30[0m
+[2026-11-04T13:14:03.491Z] POST /api/wishlist
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:14:03.998Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mPOST /api/wishlist [32m201[0m 10003.006 ms - 251[0m
+[2026-11-04T13:14:13.496Z] GET /api/wishlist
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:14:14.006Z] GET /api/products
+[0mGET /api/wishlist [32m200[0m 10003.900 ms - 213[0m
+[2026-11-04T13:14:23.503Z] DELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:14:24.022Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:14:25.446Z] GET /api/products
+[0mDELETE /api/wishlist/60d5ec49e1b0dc2c4c8d8f1c [32m200[0m 10016.375 ms - 72[0m
+[2026-11-04T13:14:33.521Z] GET /api/wishlist
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:14:34.064Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:14:39.621Z] GET /api/products
+[0mGET /api/wishlist [32m200[0m 10011.654 ms - 30[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:14:44.046Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.353 ms - 1630[0m
+[2026-11-04T13:14:54.048Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.352 ms - -[0m
+[2026-11-04T13:16:27.735Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.111 ms - -[0m
+[2026-11-04T13:16:37.741Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.506 ms - -[0m
+[2026-11-04T13:17:57.837Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:17:58.727Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.093 ms - 1630[0m
+[2026-11-04T13:18:08.740Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:18:11.764Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.022 ms - 1630[0m
+[2026-11-04T13:18:21.775Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.318 ms - -[0m
+[2026-11-04T13:20:49.387Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:20:50.295Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.688 ms - 1630[0m
+[2026-11-04T13:21:00.312Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.446 ms - -[0m
+[2026-11-04T13:23:32.032Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:23:35.610Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:23:39.826Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:23:44.492Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:23:52.661Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:23:57.334Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:24:02.710Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:07.953Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:12.383Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:16.905Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:21.886Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:24:22.794Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:31.580Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:32.043Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:24:32.486Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.019 ms - 1630[0m
+[2026-11-04T13:24:42.493Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.756 ms - -[0m
+[2026-11-04T13:27:09.883Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:19.665Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:23.010Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:23.924Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:32.429Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:32.883Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:33.804Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:27:43.929Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:49.677Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:50.574Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:54.319Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:54.766Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:27:58.670Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:28:04.270Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:28:08.986Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.468 ms - 1630[0m
+[2026-11-04T13:28:19.003Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.072 ms - -[0m
+[2026-11-04T13:29:17.779Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.481 ms - -[0m
+[2026-11-04T13:29:27.784Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.100 ms - -[0m
+[2026-11-04T13:30:14.790Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:30:15.257Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:30:15.714Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.918 ms - 1630[0m
+[2026-11-04T13:30:25.730Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.459 ms - -[0m
+[2026-11-04T13:32:46.624Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:32:47.515Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.429 ms - 1630[0m
+[2026-11-04T13:32:57.530Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.633 ms - -[0m
+[2026-11-04T13:35:13.052Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.683 ms - -[0m
+[2026-11-04T13:35:23.066Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.316 ms - -[0m
+[2026-11-04T13:35:41.421Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.854 ms - -[0m
+[2026-11-04T13:35:51.432Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.003 ms - -[0m
+[2026-11-04T13:36:19.354Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:36:20.275Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.290 ms - 1630[0m
+[2026-11-04T13:36:30.293Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.438 ms - -[0m
+[2026-11-04T13:37:05.343Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.679 ms - -[0m
+[2026-11-04T13:37:15.346Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.758 ms - -[0m
+[2026-11-04T13:38:29.808Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.217 ms - -[0m
+[2026-11-04T13:38:39.820Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.430 ms - -[0m
+[2026-11-04T13:39:46.977Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:39:52.618Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.589 ms - 1630[0m
+[2026-11-04T13:40:02.630Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.674 ms - -[0m
+[2026-11-04T13:40:55.478Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.892 ms - -[0m
+[2026-11-04T13:41:05.481Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.596 ms - -[0m
+[2026-11-04T13:42:49.040Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.225 ms - -[0m
+[2026-11-04T13:42:59.047Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.048 ms - -[0m
+[2026-11-04T13:44:04.711Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.500 ms - -[0m
+[2026-11-04T13:44:14.718Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.828 ms - -[0m
+[2026-11-04T13:45:40.119Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.381 ms - -[0m
+[2026-11-04T13:45:50.133Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:45:51.935Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:45:56.086Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:05.686Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:10.305Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:16.632Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:20.146Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:26.565Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:46:30.449Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:35.020Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:39.813Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:43.577Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:47.789Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:46:53.677Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:58.382Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:58.867Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:46:59.776Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:47:03.722Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:47:04.655Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.442 ms - 1630[0m
+[2026-11-04T13:47:14.668Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.297 ms - -[0m
+[2026-11-04T13:48:48.756Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:48:49.683Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.683 ms - 1630[0m
+[2026-11-04T13:48:59.695Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.257 ms - -[0m
+[2026-11-04T13:49:55.989Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:49:56.900Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.660 ms - 1630[0m
+[2026-11-04T13:50:06.917Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:50:14.452Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:50:15.361Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.031 ms - 1630[0m
+[2026-11-04T13:50:25.375Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.787 ms - -[0m
+[2026-11-04T13:50:37.536Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:50:38.463Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.377 ms - 1630[0m
+[2026-11-04T13:50:48.471Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.105 ms - -[0m
+[2026-11-04T13:51:11.789Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:51:12.696Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.707 ms - 1630[0m
+[2026-11-04T13:51:22.704Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:51:28.360Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:51:36.747Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:51:37.662Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10004.594 ms - 1630[0m
+[2026-11-04T13:51:47.670Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.051 ms - -[0m
+[2026-11-04T13:53:26.152Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.321 ms - -[0m
+[2026-11-04T13:53:36.160Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.182 ms - -[0m
+[2026-11-04T13:57:12.948Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:18.394Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:19.288Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:25.313Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:26.209Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:30.878Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:31.803Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:35.821Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:40.214Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:57:41.173Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T13:57:46.111Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T13:57:47.021Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.780 ms - 1630[0m
+[2026-11-04T13:57:57.040Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.225 ms - -[0m
+[2026-11-04T14:00:56.388Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:00:57.289Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.856 ms - 1630[0m
+[2026-11-04T14:01:07.296Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.391 ms - -[0m
+[2026-11-04T14:03:40.908Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:03:45.160Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:03:45.634Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:03:49.455Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:03:52.882Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:03:57.348Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:02.336Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:04:07.349Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:11.136Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:16.203Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:17.136Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:19.960Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:20.421Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:20.875Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:28.416Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:28.863Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:04:29.324Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.499 ms - 1630[0m
+[2026-11-04T14:04:39.336Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.752 ms - -[0m
+[2026-11-04T14:05:21.876Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.385 ms - -[0m
+[2026-11-04T14:05:31.881Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.619 ms - -[0m
+[2026-11-04T14:06:58.704Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.211 ms - -[0m
+[2026-11-04T14:07:08.710Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.962 ms - -[0m
+[2026-11-04T14:08:05.888Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.358 ms - -[0m
+[2026-11-04T14:08:15.891Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.823 ms - -[0m
+[2026-11-04T14:09:25.993Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:09:26.892Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.410 ms - 1630[0m
+[2026-11-04T14:09:36.895Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.525 ms - -[0m
+[2026-11-04T14:10:58.919Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.031 ms - -[0m
+[2026-11-04T14:11:08.924Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.184 ms - -[0m
+[2026-11-04T14:11:56.130Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.575 ms - -[0m
+[2026-11-04T14:12:06.134Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.472 ms - -[0m
+[0mGET /api/health [32m200[0m 0.074 ms - 54[0m
+[2026-11-04T14:14:10.086Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.202 ms - -[0m
+[2026-11-04T14:14:20.095Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:14:24.237Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:14:25.152Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10002.969 ms - 1630[0m
+[2026-11-04T14:14:35.157Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.272 ms - -[0m
+[2026-11-04T14:16:09.258Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.458 ms - -[0m
+[2026-11-04T14:16:19.265Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.668 ms - -[0m
+[2026-11-04T14:19:08.414Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:19:09.317Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.912 ms - 1630[0m
+[2026-11-04T14:19:19.320Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.780 ms - -[0m
+[2026-11-04T14:21:46.994Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:21:49.934Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:21:50.418Z] GET /api/products
+[0mGET /api/health [32m200[0m 0.089 ms - 54[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:21:55.625Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:21:59.048Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:03.327Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:07.059Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:07.539Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:12.206Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:18.351Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:21.975Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:26.503Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:31.439Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:22:36.545Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:22:41.991Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:22:42.739Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.144 ms - 1630[0m
+[2026-11-04T14:22:52.746Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.008 ms - -[0m
+[2026-11-04T14:26:51.779Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:26:52.651Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.084 ms - 1630[0m
+[2026-11-04T14:27:02.665Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.098 ms - -[0m
+[2026-11-04T14:29:34.594Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10016.602 ms - -[0m
+[2026-11-04T14:29:44.613Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.323 ms - -[0m
+[2026-11-04T14:32:09.670Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:14.301Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:19.094Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:32:24.395Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:25.300Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:29.345Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:29.833Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:30.751Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:35.028Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:36.003Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:44.815Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:32:45.730Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:32:56.288Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:33:00.464Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:33:01.366Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:33:05.881Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:33:06.778Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10004.752 ms - 1630[0m
+[2026-11-04T14:33:16.784Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.930 ms - -[0m
+[2026-11-04T14:36:56.133Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:36:57.048Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:00.739Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:01.664Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:10.332Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:11.236Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:15.236Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:19.726Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:37:20.638Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:27.950Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:28.847Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:32.337Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:33.265Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:37.849Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:38.787Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:44.550Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:45.453Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:51.416Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:51.889Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:37:52.362Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.334 ms - 1630[0m
+[2026-11-04T14:38:02.376Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.439 ms - -[0m
+[2026-11-04T14:40:31.963Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:37.391Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:38.305Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:44.681Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:45.178Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:46.093Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:53.384Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:54.286Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:58.351Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:40:59.281Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:41:04.578Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:05.511Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:10.487Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:11.390Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:15.282Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:16.208Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:41:20.705Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:41:21.632Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:27.420Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:41:28.365Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.416 ms - 1630[0m
+[2026-11-04T14:41:38.377Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.337 ms - -[0m
+[2026-11-04T14:44:04.745Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:05.641Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:09.521Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:10.024Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:10.927Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:44:15.041Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:44:15.950Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:44:21.041Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:21.981Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:25.362Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:25.854Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:26.768Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:30.853Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:31.787Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:44:37.005Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:37.944Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:43.405Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:44.344Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:48.708Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:49.623Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:53.978Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:44:54.477Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:55.422Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:44:59.515Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:45:00.186Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:45:00.434Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:45:00.943Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.352 ms - 1630[0m
+[2026-11-04T14:45:10.956Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.343 ms - -[0m
+[2026-11-04T14:49:25.898Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:49:30.201Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:49:30.717Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:49:31.642Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10012.415 ms - 1630[0m
+[2026-11-04T14:49:41.656Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.414 ms - -[0m
+[2026-11-04T14:53:23.113Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:24.034Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:31.101Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:31.991Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:35.828Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:36.736Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:53:41.179Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:53:42.113Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:48.045Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:48.985Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:52.845Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:53.778Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:53:57.386Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:53:58.312Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:54:03.069Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:54:04.015Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:54:08.108Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:54:09.028Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:54:13.785Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T14:54:14.300Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:54:14.718Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:54:15.233Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.703 ms - 1630[0m
+[2026-11-04T14:54:25.245Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.128 ms - -[0m
+[2026-11-04T14:55:33.318Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:55:34.226Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.836 ms - 1630[0m
+[2026-11-04T14:55:44.237Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.701 ms - -[0m
+[2026-11-04T14:58:15.418Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:16.302Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:20.260Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:21.174Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:27.998Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:28.899Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:35.696Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:36.641Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:40.592Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:41.520Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:46.380Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:47.283Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:53.296Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:58:54.235Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:59:00.100Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:59:00.617Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:59:01.514Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.007 ms - 1630[0m
+[2026-11-04T14:59:11.516Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:59:16.387Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T14:59:17.296Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.925 ms - 1630[0m
+[2026-11-04T14:59:27.308Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.902 ms - -[0m
+[2026-11-04T15:01:55.311Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:01:56.190Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:03.219Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:04.135Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:09.367Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:09.893Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:10.796Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:16.131Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:17.086Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:02:21.086Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:21.989Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:02:27.213Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:28.161Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:31.947Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:02:32.468Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:33.384Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:37.929Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:38.825Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:02:43.692Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:44.619Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:49.552Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:50.455Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:57.316Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:02:58.280Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.194 ms - 1630[0m
+[2026-11-04T15:03:08.297Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.002 ms - -[0m
+[2026-11-04T15:05:35.206Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:36.103Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:41.424Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:41.832Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:42.346Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:46.966Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:47.897Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:53.502Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:54.441Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:05:59.334Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:00.229Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:04.902Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:05.817Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:09.885Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:10.787Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:14.492Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:15.030Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:15.439Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:16.023Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:06:20.799Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:21.331Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:22.302Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:27.926Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:28.325Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:28.844Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:33.678Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:34.074Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:06:34.599Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.286 ms - 1630[0m
+[2026-11-04T15:06:44.600Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.717 ms - -[0m
+[2026-11-04T15:07:57.907Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:07:58.813Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.220 ms - 1630[0m
+[2026-11-04T15:08:08.821Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.311 ms - -[0m
+[2026-11-04T15:10:46.334Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:10:47.249Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:10:51.460Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:10:55.152Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:10:55.685Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:10:56.600Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:01.243Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:02.166Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:11:06.777Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:07.177Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:07.709Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:11.909Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:12.818Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:11:17.485Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:18.387Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:21.873Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:11:22.399Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:11:23.308Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:29.854Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:11:30.788Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.596 ms - 1630[0m
+[2026-11-04T15:11:40.797Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.205 ms - -[0m
+[2026-11-04T15:12:58.011Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.007 ms - -[0m
+[2026-11-04T15:13:08.022Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.864 ms - -[0m
+[2026-11-04T15:13:21.652Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.617 ms - -[0m
+[2026-11-04T15:13:31.655Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.232 ms - -[0m
+[2026-11-04T15:24:50.274Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:24:50.663Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:24:51.195Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:24:56.741Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:24:57.656Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:02.729Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:03.657Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:25:07.844Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:08.256Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:08.784Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:25:12.910Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:25:13.861Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:25:18.922Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:19.849Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:23.653Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:24.571Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:28.667Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:29.576Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:34.449Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:35.382Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:40.149Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:40.693Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:41.625Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:25:45.437Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:25:46.340Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.411 ms - 1630[0m
+[2026-11-04T15:25:56.351Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.129 ms - -[0m
+[2026-11-04T15:27:43.331Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.219 ms - -[0m
+[2026-11-04T15:27:53.342Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.508 ms - -[0m
+[2026-11-04T15:29:52.566Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.363 ms - -[0m
+[2026-11-04T15:30:02.569Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.272 ms - -[0m
+[2026-11-04T15:32:31.958Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:32:37.055Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10002.685 ms - 1630[0m
+[2026-11-04T15:32:47.059Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:32:48.134Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:32:49.074Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.269 ms - 1630[0m
+[2026-11-04T15:32:59.091Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:00.024Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:00.915Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:05.296Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:06.242Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:33:10.205Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:33:11.127Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:33:16.327Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:17.229Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:20.321Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:20.854Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:21.250Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:21.794Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:27.963Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:33:28.872Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.593 ms - 1630[0m
+[2026-11-04T15:33:38.889Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.031 ms - -[0m
+[2026-11-04T15:36:00.894Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:36:01.773Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10007.926 ms - 1630[0m
+[2026-11-04T15:36:11.782Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.090 ms - -[0m
+[2026-11-04T15:38:40.701Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:38:41.578Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:38:45.427Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:38:45.971Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:38:46.886Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:38:50.965Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:38:52.117Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:38:55.715Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:38:56.631Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:02.050Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:02.953Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:07.323Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:08.231Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:39:13.171Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:14.122Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:18.086Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:19.005Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:22.541Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:23.098Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:24.006Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:28.940Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:29.897Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:36.425Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:36.982Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:39:37.922Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.164 ms - 1630[0m
+[2026-11-04T15:39:47.937Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.442 ms - -[0m
+[2026-11-04T15:42:17.361Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:18.228Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:21.622Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:22.185Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:22.555Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:23.089Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:27.384Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:28.301Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:32.317Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:32.712Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:33.258Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:38.549Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:39.476Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:43.295Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:43.688Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:44.233Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:48.152Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:49.051Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:53.870Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:42:54.403Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:42:55.367Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:01.718Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:02.640Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:08.465Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:09.397Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:13.209Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:13.598Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:43:14.147Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.263 ms - 1630[0m
+[2026-11-04T15:43:24.163Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.859 ms - -[0m
+[2026-11-04T15:44:47.390Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.684 ms - -[0m
+[2026-11-04T15:44:57.395Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.701 ms - -[0m
+[2026-11-04T15:45:43.516Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.134 ms - -[0m
+[2026-11-04T15:45:53.524Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.527 ms - -[0m
+[2026-11-04T15:46:34.420Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.884 ms - -[0m
+[2026-11-04T15:46:44.433Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.926 ms - -[0m
+[2026-11-04T15:49:10.926Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.243 ms - -[0m
+[2026-11-04T15:49:20.933Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:24.417Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:25.302Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:30.410Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:35.022Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:49:35.562Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:36.502Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:44.737Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:49:45.653Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:49.821Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:50.731Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:54.610Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:55.518Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:49:59.725Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:50:00.604Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:50:04.769Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:50:05.683Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:50:10.289Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T15:50:11.223Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.414 ms - 1630[0m
+[2026-11-04T15:50:21.231Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.899 ms - -[0m
+[2026-11-04T15:51:05.402Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10001.154 ms - -[0m
+[2026-11-04T15:51:15.405Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.225 ms - -[0m
+[2026-11-04T15:53:44.553Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.291 ms - -[0m
+[2026-11-04T15:53:54.564Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:53:56.102Z] GET /api/products

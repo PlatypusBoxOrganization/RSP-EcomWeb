@@ -1,0 +1,828 @@
+
+=== ROUTE REGISTRATION ===
+- OPTIONS *
+- GET /api/health
+- GET /api/test/direct
+- GET /api/routes
+
+Routes for /^\/api\/auth\/?(?=\/|$)/i:
+- POST /register
+- POST /login
+- GET /me
+
+Routes for /^\/api\/profile\/?(?=\/|$)/i:
+- GET /me
+- PUT /update
+- POST /addresses
+- PUT /addresses/:addressId
+- DELETE /addresses/:addressId
+- GET /orders
+- GET /orders/:orderId
+
+Routes for /^\/api\/products\/?(?=\/|$)/i:
+- GET /
+- GET /ids
+- GET /suggested
+- GET /test-db
+- GET /test
+- GET /related/:id
+- GET /:id
+
+Routes for /^\/api\/cart\/?(?=\/|$)/i:
+- POST /
+- GET /
+- PUT /:itemId
+- DELETE /:itemId
+- DELETE /
+- GET /validate
+
+Routes for /^\/api\/wishlist\/?(?=\/|$)/i:
+- POST /
+- GET /
+- DELETE /:productId
+- POST /:productId/move-to-cart
+
+Routes for /^\/api\/orders\/?(?=\/|$)/i:
+- GET /myorders
+- POST /
+- GET /:id
+- PUT /:id/pay
+- PUT /:id/cancel
+- GET /
+- PUT /:id/status
+- PUT /:id/deliver
+
+Routes for /^\/api\/payments\/?(?=\/|$)/i:
+- POST /create-order
+- POST /verify
+
+Routes for /^\/api\/test\/?(?=\/|$)/i:
+- GET /status
+- POST /test-order
+- POST /create-test-order
+=== END ROUTE REGISTRATION ===
+
+[34mStarting server initialization...[39m
+[4m[33mMongoDB connection failed (continuing without DB): querySrv ENOTFOUND _mongodb._tcp.cluster0.mwzev2h.mongodb.net[39m[24m
+Error killing process: execSync is not defined
+[1m[32mServer started successfully[39m[22m
+[1m[33mServer running in development mode on port 5000[39m[22m
+[1m[36mWebSocket server running on port 5000[39m[22m
+[2026-11-04T11:11:30.814Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10013.952 ms - 1630[0m
+[2026-11-04T11:11:40.830Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:11:48.418Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:11:49.325Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/health [32m200[0m 0.220 ms - 54[0m
+[2026-11-04T11:11:55.667Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:11:55.667Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.780 ms - 1183[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.952 ms - 1630[0m
+[2026-11-04T11:11:59.334Z] GET /api/products
+[2026-11-04T11:12:05.927Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:12:07.099Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10007.329 ms - 1630[0m
+[2026-11-04T11:12:15.964Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:12:15.964Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9,en-IN;q=0.8'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.500 ms - 1183[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.048 ms - 1630[0m
+[2026-11-04T11:12:17.102Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.708 ms - -[0m
+[2026-11-04T11:12:48.144Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.053 ms - -[0m
+[2026-11-04T11:12:58.157Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:13:02.743Z] GET /api/products
+[2026-11-04T11:13:02.811Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.110 ms - 1630[0m
+[2026-11-04T11:13:12.751Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.084 ms - 1630[0m
+[2026-11-04T11:13:12.828Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.075 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.974 ms - -[0m
+[2026-11-04T11:13:29.713Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.398 ms - -[0m
+[2026-11-04T11:13:39.723Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:13:43.147Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:13:51.931Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10007.921 ms - 1630[0m
+[2026-11-04T11:14:01.941Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.100 ms - -[0m
+[2026-11-04T11:14:33.470Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.103 ms - -[0m
+[2026-11-04T11:14:43.477Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.856 ms - -[0m
+[2026-11-04T11:14:56.063Z] GET /api/products
+[2026-11-04T11:14:56.076Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.280 ms - -[0m
+[2026-11-04T11:15:06.071Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.334 ms - 1630[0m
+[2026-11-04T11:15:06.087Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.219 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.541 ms - -[0m
+[2026-11-04T11:15:28.717Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.195 ms - -[0m
+[2026-11-04T11:15:38.733Z] GET /api/products
+[0mGET /api/test/direct [32m200[0m 0.160 ms - 45[0m
+[2026-11-04T11:15:47.832Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:15:47.832Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.464 ms - 1183[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.988 ms - -[0m
+[2026-11-04T11:15:57.039Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:04.869Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.402 ms - 1630[0m
+[2026-11-04T11:16:14.879Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.862 ms - -[0m
+[2026-11-04T11:16:26.941Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:32.196Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:33.056Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:38.055Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:42.765Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:47.056Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:47.463Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:48.529Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:48.928Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:54.140Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:16:55.068Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/health [32m200[0m 0.119 ms - 54[0m
+[2026-11-04T11:16:57.977Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:16:57.977Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.406 ms - 1183[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.276 ms - 1630[0m
+[2026-11-04T11:17:05.079Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.992 ms - -[0m
+[2026-11-04T11:17:18.309Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.003 ms - -[0m
+[2026-11-04T11:17:28.323Z] GET /api/products
+[2026-11-04T11:17:33.607Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T11:17:33.608Z
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.621 ms - -[0m
+Error in /suggested endpoint: {
+  message: 'Operation `products.countDocuments()` buffering timed out after 10000ms',
+  name: 'MongooseError',
+  stack: 'MongooseError: Operation `products.countDocuments()` buffering timed out after 10000ms\n' +
+    '    at Timeout.<anonymous> (C:\\UnityProjects\\RSP-EcomWeb\\server\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\collection.js:187:23)\n' +
+    '    at listOnTimeout (node:internal/timers:685:17)\n' +
+    '    at process.processTimers (node:internal/timers:618:7)'
+}
+[0mGET /api/products/suggested [32m200[0m 10014.049 ms - 2[0m
+[2026-11-04T11:17:43.649Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:17:43.649Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9,en-IN;q=0.8'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.406 ms - 1183[0m
+[2026-11-04T11:17:55.928Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:18:04.854Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10004.658 ms - 1630[0m
+[2026-11-04T11:18:14.860Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.498 ms - -[0m
+[2026-11-04T11:18:37.778Z] GET /api/products/test
+
+===== TEST ENDPOINT HIT =====
+Request received at: 2026-11-04T11:18:37.778Z
+Request headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  'sec-ch-ua-platform': '"Windows"',
+  'upgrade-insecure-requests': '1',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-user': '?1',
+  'sec-fetch-dest': 'document',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9'
+}
+[0mGET /api/products/test [32m200[0m 0.448 ms - 287[0m
+[2026-11-04T11:18:37.803Z] GET /favicon.ico
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:18:37.803Z
+Error: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9 {
+  status: 404
+}
+Error Stack: Error: Not Found - /favicon.ico
+    at notFound (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:67:17)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/server.js:136:3
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+Request URL: /favicon.ico
+Request Method: GET
+Request Headers: {
+  host: '127.0.0.1:5000',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+  'sec-fetch-site': 'same-origin',
+  'sec-fetch-mode': 'no-cors',
+  'sec-fetch-dest': 'image',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /favicon.ico [33m404[0m 0.383 ms - 1183[0m
+[2026-11-04T11:19:30.174Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:19:30.829Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:19:39.896Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10007.482 ms - 1630[0m
+[2026-11-04T11:19:49.905Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:19:57.714Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:19:58.629Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:20:02.209Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.237 ms - 1630[0m
+[2026-11-04T11:20:12.220Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:20:18.137Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.692 ms - 1630[0m
+[2026-11-04T11:20:28.140Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:20:32.010Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10002.208 ms - 1630[0m
+[2026-11-04T11:20:42.015Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10011.085 ms - -[0m
+[0mGET /api/health [32m200[0m 0.084 ms - 54[0m
+[2026-11-04T11:21:09.610Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.024 ms - -[0m
+[2026-11-04T11:21:19.621Z] GET /api/products
+[2026-11-04T11:21:29.216Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.036 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.236 ms - 1630[0m
+[0mGET /api/test/direct [32m200[0m 0.080 ms - 45[0m
+[2026-11-04T11:21:39.289Z] GET /api/products/test
+
+===== TEST ENDPOINT HIT =====
+Request received at: 2026-11-04T11:21:39.289Z
+Request headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5000',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+[0mGET /api/products/test [32m200[0m 0.218 ms - 287[0m
+[2026-11-04T11:21:39.736Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:21:40.723Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.631 ms - 1630[0m
+[2026-11-04T11:21:50.736Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.219 ms - -[0m
+[2026-11-04T11:22:02.739Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T11:22:02.739Z
+Error in /suggested endpoint: {
+  message: 'Operation `products.countDocuments()` buffering timed out after 10000ms',
+  name: 'MongooseError',
+  stack: 'MongooseError: Operation `products.countDocuments()` buffering timed out after 10000ms\n' +
+    '    at Timeout.<anonymous> (C:\\UnityProjects\\RSP-EcomWeb\\server\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\collection.js:187:23)\n' +
+    '    at listOnTimeout (node:internal/timers:685:17)\n' +
+    '    at process.processTimers (node:internal/timers:618:7)'
+}
+[0mGET /api/products/suggested [32m200[0m 10008.352 ms - 2[0m
+[2026-11-04T11:22:12.779Z] GET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a
+[2026-11-04T11:22:14.130Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:22:22.793Z
+Error: MongooseError: Operation `products.find()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `products.find()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5000',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: { ids: '60d5ec49e1b0dc2c4c8d8f1a' }
+Request Params: {}
+[0mGET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a [31m500[0m 10014.933 ms - 1334[0m
+ReferenceError: mongoose is not defined
+    at errorHandler (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:20:48)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:71:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:67:12)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+[2026-11-04T11:22:22.824Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1a
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T11:22:24.214Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:22:32.830Z
+Error: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/products/60d5ec49e1b0dc2c4c8d8f1a
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5000',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1a [31m500[0m 10005.527 ms - 1334[0m
+ReferenceError: mongoose is not defined
+    at errorHandler (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:20:48)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:71:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:67:12)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+[2026-11-04T11:22:32.861Z] GET /api/test/status
+Test status endpoint hit
+[0mGET /api/test/status [32m200[0m 0.422 ms - 87[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T11:22:34.257Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.460 ms - 1630[0m
+[2026-11-04T11:22:44.267Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.884 ms - -[0m
+[2026-11-04T11:22:58.132Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:22:59.044Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.030 ms - 1630[0m
+[2026-11-04T11:23:09.062Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:23:14.881Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:23:18.790Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10011.608 ms - 1630[0m
+[2026-11-04T11:23:28.803Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10017.116 ms - -[0m
+[2026-11-04T11:23:52.189Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.254 ms - -[0m
+[2026-11-04T11:24:02.203Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:02.952Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:03.873Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:06.322Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:07.237Z] GET /api/products
+[2026-11-04T11:24:10.993Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1a
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10004.606 ms - 1630[0m
+[2026-11-04T11:24:17.244Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:24:21.005Z
+Error: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/products/60d5ec49e1b0dc2c4c8d8f1a
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5000',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1a [31m500[0m 10012.197 ms - 1334[0m
+ReferenceError: mongoose is not defined
+    at errorHandler (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:20:48)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:71:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:67:12)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+[2026-11-04T11:24:21.013Z] GET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:22.425Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:24:31.015Z
+Error: MongooseError: Operation `products.find()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `products.find()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5000',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: { ids: '60d5ec49e1b0dc2c4c8d8f1a' }
+Request Params: {}
+[0mGET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a [31m500[0m 10001.904 ms - 1334[0m
+ReferenceError: mongoose is not defined
+    at errorHandler (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:20:48)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:71:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:67:12)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:32.424Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:34.998Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:35.950Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10016.080 ms - 1630[0m
+[2026-11-04T11:24:45.969Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:24:52.364Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms

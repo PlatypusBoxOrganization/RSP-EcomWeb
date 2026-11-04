@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
+import { DEMO_USER } from '../controllers/authController.js';
 
 /**
  * @desc    Protect routes with JWT authentication
@@ -32,13 +33,31 @@ export const protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Get user from the token and attach to request
-    req.user = await User.findById(decoded.id).select('-password');
-    
+    try {
+      req.user = await User.findById(decoded.id).select('-password');
+    } catch (dbError) {
+      // Fallback to demo user when MongoDB is unreachable
+      if (String(decoded.id) === String(DEMO_USER._id)) {
+        req.user = {
+          _id: DEMO_USER._id,
+          id: DEMO_USER._id,
+          name: DEMO_USER.name,
+          email: DEMO_USER.email,
+          phone: DEMO_USER.phone,
+          role: DEMO_USER.role,
+          wishlist: [],
+          cart: { items: [], totalPrice: 0, totalItems: 0 },
+        };
+      } else {
+        throw dbError;
+      }
+    }
+
     if (!req.user) {
       res.status(401);
       throw new Error('User not found');
     }
-    
+
     next();
   } catch (error) {
     console.error('Authentication error:', error.message);

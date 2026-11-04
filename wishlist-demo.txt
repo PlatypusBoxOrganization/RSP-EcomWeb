@@ -1,0 +1,1 @@
+{"success":false,"message":"Not authorized, token verification failed","stack":"Error: Not authorized, token verification failed\n    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:46:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}

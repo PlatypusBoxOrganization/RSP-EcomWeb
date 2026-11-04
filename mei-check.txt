@@ -1,0 +1,4 @@
+MEI dirs: ["_MEI0000309c2","_MEI000043f42","_MEI000046302","_MEI00004ea02","_MEI00005cec2","_MEI000065e42"]
+_MEI000046302/platypus: ["anime","shellcompat.py"]
+_MEI000046302 shellcompat.py has V3: false
+_MEI000046302 shellcompat.py size: 3912

@@ -37,14 +37,100 @@ const getRandomProducts = async (count) => {
   }
 };
 
+// Mock data fallback
+const mockProducts = [
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1a',
+    name: 'Arduino Uno R3',
+    description: 'Microcontroller board based on ATmega328P',
+    price: 25.99,
+    category: 'Microcontrollers',
+    brand: 'Arduino',
+    countInStock: 50,
+    rating: 4.5,
+    numReviews: 120,
+    image: '/Images/products/arduino-uno.jpg'
+  },
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1b',
+    name: 'Raspberry Pi 4 Model B',
+    description: 'Single-board computer with 4GB RAM',
+    price: 55.00,
+    category: 'Single Board Computers',
+    brand: 'Raspberry Pi',
+    countInStock: 30,
+    rating: 4.8,
+    numReviews: 200,
+    image: '/Images/products/raspberry-pi-4.jpg'
+  },
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1c',
+    name: 'ESP32 Development Board',
+    description: 'WiFi + Bluetooth module for IoT projects',
+    price: 12.50,
+    category: 'IoT Modules',
+    brand: 'Espressif',
+    countInStock: 100,
+    rating: 4.6,
+    numReviews: 85,
+    image: '/Images/products/esp32.jpg'
+  },
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1d',
+    name: 'Breadboard 830 Points',
+    description: 'Solderless breadboard for prototyping',
+    price: 8.99,
+    category: 'Prototyping',
+    brand: 'Generic',
+    countInStock: 200,
+    rating: 4.3,
+    numReviews: 45,
+    image: '/Images/products/breadboard.jpg'
+  },
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1e',
+    name: 'Jumper Wires Kit',
+    description: 'Male-to-male, male-to-female, female-to-female wires',
+    price: 6.99,
+    category: 'Prototyping',
+    brand: 'Generic',
+    countInStock: 150,
+    rating: 4.4,
+    numReviews: 60,
+    image: '/Images/products/jumper-wires.jpg'
+  },
+  {
+    _id: '60d5ec49e1b0dc2c4c8d8f1f',
+    name: 'Servo Motor SG90',
+    description: '9g micro servo for robotics and RC projects',
+    price: 3.99,
+    category: 'Motors',
+    brand: 'Tower Pro',
+    countInStock: 300,
+    rating: 4.2,
+    numReviews: 150,
+    image: '/Images/products/servo-sg90.jpg'
+  }
+];
+
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const products = await Product.find({});
-    res.json(products);
+    try {
+      const products = await Product.find({});
+      if (products && products.length > 0) {
+        res.json(products);
+      } else {
+        console.log('No products in DB, returning mock data');
+        res.json(mockProducts);
+      }
+    } catch (error) {
+      console.error('DB error, returning mock products:', error.message);
+      res.json(mockProducts);
+    }
   })
 );
 
@@ -55,27 +141,37 @@ router.get(
   '/ids',
   asyncHandler(async (req, res) => {
     const { ids } = req.query;
-    
+
     if (!ids) {
       res.status(400);
       throw new Error('Product IDs are required');
     }
-    
+
     const idArray = ids.split(',').map(id => id.trim());
-    
+
     // Validate that all IDs are valid MongoDB ObjectIds
     const validIds = idArray.filter(id => mongoose.Types.ObjectId.isValid(id));
-    
+
     if (validIds.length === 0) {
       res.status(400);
       throw new Error('No valid product IDs provided');
     }
-    
-    const products = await Product.find({
-      _id: { $in: validIds }
-    });
-    
-    res.json(products);
+
+    try {
+      const products = await Product.find({
+        _id: { $in: validIds }
+      });
+      if (products && products.length > 0) {
+        return res.json(products);
+      }
+      // Fallback: match mock products by id
+      const mockMatch = mockProducts.filter(p => validIds.includes(String(p._id)));
+      res.json(mockMatch);
+    } catch (error) {
+      console.error('DB error in /ids, returning mock data:', error.message);
+      const mockMatch = mockProducts.filter(p => validIds.includes(String(p._id)));
+      res.json(mockMatch);
+    }
   })
 );
 
@@ -213,10 +309,23 @@ router.get(
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      res.json(product);
-    } else {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (product) {
+        return res.json(product);
+      }
+      // Fallback to mock data
+      const mockProduct = mockProducts.find(p => String(p._id) === String(req.params.id));
+      if (mockProduct) {
+        return res.json(mockProduct);
+      }
+      res.status(404);
+      throw new Error('Product not found');
+    } catch (error) {
+      const mockProduct = mockProducts.find(p => String(p._id) === String(req.params.id));
+      if (mockProduct) {
+        return res.json(mockProduct);
+      }
       res.status(404);
       throw new Error('Product not found');
     }

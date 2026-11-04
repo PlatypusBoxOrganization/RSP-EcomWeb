@@ -1,0 +1,1 @@
+{"_id":"60d5ec49e1b0dc2c4c8d8f1a","name":"Arduino Uno R3","description":"Microcontroller board based on ATmega328P","price":25.99,"category":"Microcontrollers","brand":"Arduino","countInStock":50,"rating":4.5,"numReviews":120,"image":"/Images/products/arduino-uno.jpg"}

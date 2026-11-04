@@ -1,0 +1,1 @@
+{"success":true,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVlYzQ5ZTFiMGRjMmM0YzhkOGY5OSIsImlhdCI6MTc5Mzc5Njk0MSwiZXhwIjoxNzk2Mzg4OTQxfQ.DC9pCzNtFyUdzTMIYgb2QfQQzOsRXySjUY5zHuNqHaA","user":{"id":"60d5ec49e1b0dc2c4c8d8f99","name":"Demo User","email":"demo@example.com","phone":"9999999999","role":"user"}}

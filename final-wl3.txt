@@ -1,0 +1,1 @@
+{"success":true,"wishlist":[{"product":{"_id":"60d5ec49e1b0dc2c4c8d8f1c","name":"ESP32 Development Board","price":12.5,"image":"/Images/placeholder.webp","countInStock":100},"addedAt":"2026-11-04T12:58:07.598Z"}]}

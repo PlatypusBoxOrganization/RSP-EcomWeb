@@ -1,0 +1,1 @@
+{"success":true,"message":"Product added to wishlist","wishlist":[{"product":{"_id":"60d5ec49e1b0dc2c4c8d8f1b","name":"Raspberry Pi 4 Model B","price":55,"image":"/Images/placeholder.webp","countInStock":30},"addedAt":"2026-11-04T12:01:49.422Z"}]}

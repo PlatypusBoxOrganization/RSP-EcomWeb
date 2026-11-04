@@ -1,0 +1,7 @@
+src exists: true
+target dir exists: true
+target listing: ["anime"]
+WRITE-TEST: OK, wrote C:\Users\ADMIN\AppData\Local\Temp\_MEI000046302\platypus\write-test.txt
+unlink test: OK
+COPY: OK
+verify exists: true

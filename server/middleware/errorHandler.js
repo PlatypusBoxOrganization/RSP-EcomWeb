@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const errorHandler = (err, req, res, next) => {
   // Log all errors for debugging
   console.error('\n===== ERROR HANDLER =====');

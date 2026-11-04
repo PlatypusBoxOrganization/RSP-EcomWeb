@@ -1,0 +1,425 @@
+
+=== ROUTE REGISTRATION ===
+- OPTIONS *
+- GET /api/health
+- GET /api/test/direct
+- GET /api/routes
+
+Routes for /^\/api\/auth\/?(?=\/|$)/i:
+- POST /register
+- POST /login
+- GET /me
+
+Routes for /^\/api\/profile\/?(?=\/|$)/i:
+- GET /me
+- PUT /update
+- POST /addresses
+- PUT /addresses/:addressId
+- DELETE /addresses/:addressId
+- GET /orders
+- GET /orders/:orderId
+
+Routes for /^\/api\/products\/?(?=\/|$)/i:
+- GET /
+- GET /ids
+- GET /suggested
+- GET /test-db
+- GET /test
+- GET /related/:id
+- GET /:id
+
+Routes for /^\/api\/cart\/?(?=\/|$)/i:
+- POST /
+- GET /
+- PUT /:itemId
+- DELETE /:itemId
+- DELETE /
+- GET /validate
+
+Routes for /^\/api\/wishlist\/?(?=\/|$)/i:
+- POST /
+- GET /
+- DELETE /:productId
+- POST /:productId/move-to-cart
+
+Routes for /^\/api\/orders\/?(?=\/|$)/i:
+- GET /myorders
+- POST /
+- GET /:id
+- PUT /:id/pay
+- PUT /:id/cancel
+- GET /
+- PUT /:id/status
+- PUT /:id/deliver
+
+Routes for /^\/api\/payments\/?(?=\/|$)/i:
+- POST /create-order
+- POST /verify
+
+Routes for /^\/api\/test\/?(?=\/|$)/i:
+- GET /status
+- POST /test-order
+- POST /create-test-order
+=== END ROUTE REGISTRATION ===
+
+[34mStarting server initialization...[39m
+[4m[33mMongoDB connection failed (continuing without DB): querySrv ENOTFOUND _mongodb._tcp.cluster0.mwzev2h.mongodb.net[39m[24m
+Error killing process: execSync is not defined
+[1m[32mServer started successfully[39m[22m
+[1m[33mServer running in development mode on port 5001[39m[22m
+[1m[36mWebSocket server running on port 5001[39m[22m
+[2026-11-04T11:25:01.177Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10019.060 ms - 1630[0m
+[2026-11-04T11:25:11.199Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.705 ms - -[0m
+[2026-11-04T11:26:43.235Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.392 ms - -[0m
+[2026-11-04T11:26:53.247Z] GET /api/products
+[2026-11-04T11:26:56.378Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1a
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.929 ms - -[0m
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1a [32m200[0m 10003.825 ms - 269[0m
+[2026-11-04T11:27:07.771Z] GET /api/products
+[2026-11-04T11:27:13.897Z] GET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10004.244 ms - -[0m
+[2026-11-04T11:27:17.777Z] GET /api/products
+DB error in /ids, returning mock data: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products/ids?ids=60d5ec49e1b0dc2c4c8d8f1a [32m200[0m 10014.784 ms - 271[0m
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:27:25.341Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:27:35.077Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:27:40.264Z] GET /api/products
+[2026-11-04T11:27:40.293Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10006.590 ms - 1630[0m
+[2026-11-04T11:27:50.272Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.332 ms - 1630[0m
+[2026-11-04T11:27:50.303Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.194 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10003.676 ms - -[0m
+[2026-11-04T11:28:13.427Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.245 ms - -[0m
+[2026-11-04T11:28:23.442Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10016.488 ms - -[0m
+[2026-11-04T11:29:12.605Z] GET /api/wishlist
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:29:12.607Z
+Error: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Error Stack: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Request URL: /api/wishlist
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5001',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/wishlist [33m401[0m 2.294 ms - 1239[0m
+[2026-11-04T11:29:13.990Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10006.810 ms - -[0m
+[2026-11-04T11:29:23.999Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.075 ms - -[0m
+[2026-11-04T11:29:52.420Z] GET /api/cart
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:29:52.420Z
+Error: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Error Stack: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Request URL: /api/cart
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5001',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/cart [33m401[0m 0.573 ms - 1239[0m
+[2026-11-04T11:29:52.429Z] GET /api/orders/myorders
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:29:52.429Z
+Error: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Error Stack: Error: Not authorized, no token provided
+    at file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/auth.js:27:11
+    at asyncUtilWrap (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express-async-handler\index.js:3:20)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:328:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:95:5)
+Request URL: /api/orders/myorders
+Request Method: GET
+Request Headers: {
+  'accept-encoding': 'identity',
+  host: '127.0.0.1:5001',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) PlatypusAgent',
+  connection: 'close'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+[0mGET /api/orders/myorders [33m401[0m 0.360 ms - 1239[0m
+[2026-11-04T11:29:53.256Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:29:53.419Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:29:53.881Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.187 ms - 1630[0m
+[2026-11-04T11:30:03.888Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:30:06.693Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10012.189 ms - 1630[0m
+[2026-11-04T11:30:16.707Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:30:21.724Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10015.958 ms - 1630[0m
+[2026-11-04T11:30:31.742Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.970 ms - -[0m
+[2026-11-04T11:31:45.940Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:31:46.849Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.468 ms - 1630[0m
+[2026-11-04T11:31:56.859Z] GET /api/products
+[2026-11-04T11:31:59.937Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1b
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.130 ms - -[0m
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1b [32m200[0m 10006.688 ms - 281[0m
+[2026-11-04T11:32:09.945Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T11:32:09.949Z] GET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b
+Fetching related products for product ID: 60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T11:32:09.949Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T11:32:09.949Z
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1b [36m304[0m 10011.924 ms - -[0m
+Error in /related/:id endpoint: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+[0mGET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b [31m500[0m 10009.391 ms - 120[0m
+Error in /suggested endpoint: {
+  message: 'Operation `products.countDocuments()` buffering timed out after 10000ms',
+  name: 'MongooseError',
+  stack: 'MongooseError: Operation `products.countDocuments()` buffering timed out after 10000ms\n' +
+    '    at Timeout.<anonymous> (C:\\UnityProjects\\RSP-EcomWeb\\server\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\collection.js:187:23)\n' +
+    '    at listOnTimeout (node:internal/timers:685:17)\n' +
+    '    at process.processTimers (node:internal/timers:618:7)'
+}
+[0mGET /api/products/suggested [32m200[0m 10010.692 ms - 2[0m
+[2026-11-04T11:32:19.961Z] GET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b
+Fetching related products for product ID: 60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T11:32:19.961Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T11:32:19.961Z
+[2026-11-04T11:32:20.368Z] GET /api/products
+Error in /related/:id endpoint: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+[0mGET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b [31m500[0m 10013.692 ms - 120[0m
+Error in /suggested endpoint: {
+  message: 'Operation `products.countDocuments()` buffering timed out after 10000ms',
+  name: 'MongooseError',
+  stack: 'MongooseError: Operation `products.countDocuments()` buffering timed out after 10000ms\n' +
+    '    at Timeout.<anonymous> (C:\\UnityProjects\\RSP-EcomWeb\\server\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\collection.js:187:23)\n' +
+    '    at listOnTimeout (node:internal/timers:685:17)\n' +
+    '    at process.processTimers (node:internal/timers:618:7)'
+}
+[0mGET /api/products/suggested [36m304[0m 10013.680 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10012.473 ms - -[0m
+[2026-11-04T11:32:30.382Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.919 ms - -[0m
+[0mGET /api/health [32m200[0m 0.177 ms - 54[0m
+[2026-11-04T11:32:55.081Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:32:58.279Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10008.725 ms - 1630[0m
+[2026-11-04T11:33:08.291Z] GET /api/products
+[2026-11-04T11:33:08.802Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.602 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10009.636 ms - 1630[0m
+[2026-11-04T11:33:18.843Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1a
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1a [32m200[0m 10001.993 ms - 269[0m
+[2026-11-04T11:33:28.867Z] GET /api/test/status
+Test status endpoint hit
+[0mGET /api/test/status [32m200[0m 0.199 ms - 87[0m
+[2026-11-04T11:33:30.448Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:33:33.564Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:33:38.563Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:33:45.435Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:33:46.370Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[2026-11-04T11:33:48.671Z] POST /api/auth/login
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10014.995 ms - 1630[0m
+[2026-11-04T11:33:56.386Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T11:33:58.677Z
+Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/auth/login
+Request Method: POST
+Request Headers: {
+  host: '127.0.0.1:5001',
+  'user-agent': 'curl/8.21.0',
+  accept: '*/*',
+  'content-type': 'application/json',
+  'content-length': '46'
+}
+Request Body: { email: 'test@test.com', password: 'test123' }
+Request Query: {}
+Request Params: {}
+[0mPOST /api/auth/login [31m500[0m 10007.844 ms - 1334[0m
+ReferenceError: mongoose is not defined
+    at errorHandler (file:///C:/UnityProjects/RSP-EcomWeb/server/middleware/errorHandler.js:20:48)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:71:5)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:280:10)
+    at Layer.handle_error (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\layer.js:67:12)
+    at trim_prefix (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:326:13)
+    at C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:286:9
+    at router.process_params (C:\UnityProjects\RSP-EcomWeb\server\node_modules\express\lib\router\index.js:346:12)
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10009.084 ms - -[0m
+[2026-11-04T11:36:20.270Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.269 ms - -[0m
+[2026-11-04T11:36:30.276Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.397 ms - -[0m
+[2026-11-04T11:43:55.196Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.399 ms - -[0m
+[2026-11-04T11:44:05.200Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.765 ms - -[0m
+[2026-11-04T11:45:20.965Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:45:28.411Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10005.975 ms - 1630[0m
+[2026-11-04T11:45:38.419Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T11:45:41.468Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10000.579 ms - 1630[0m
+[2026-11-04T11:45:51.470Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10008.899 ms - -[0m
+[2026-11-04T11:48:29.041Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10002.103 ms - -[0m
+[2026-11-04T11:48:39.045Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.471 ms - -[0m
