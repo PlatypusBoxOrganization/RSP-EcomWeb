@@ -2464,3 +2464,164 @@ DB error, returning mock products: Operation `products.find()` buffering timed o
 [2026-11-04T16:03:45.574Z] GET /api/products
 DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
 [0mGET /api/products [36m304[0m 10005.986 ms - -[0m
+[2026-11-04T16:08:19.448Z] POST /api/auth/login
+[0mPOST /api/auth/login [32m200[0m 10012.032 ms - 320[0m
+[2026-11-04T16:08:29.473Z] GET /api/cart
+[2026-11-04T16:08:29.523Z] GET /api/auth/me
+[2026-11-04T16:08:37.877Z] GET /api/profile/me
+[0mGET /api/auth/me [32m200[0m 10009.041 ms - 235[0m
+[2026-11-04T16:08:39.533Z] GET /api/auth/me
+[2026-11-04T16:08:44.497Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T16:08:49.493Z
+Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/cart
+Request Method: GET
+Request Headers: {
+  host: 'localhost:5004',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVlYzQ5ZTFiMGRjMmM0YzhkOGY5OSIsImlhdCI6MTc5MzgwODUwOSwiZXhwIjoxNzk2NDAwNTA5fQ.BbttB0HM8_LveONkbYYxZXuHbJJ8jz3a7uisr29Yvnw',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  origin: 'http://localhost:3000',
+  'sec-fetch-site': 'same-site',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'http://localhost:3000/',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9,en-IN;q=0.8',
+  cookie: 'rzp_unified_session_id=Tw9on1oEwSHeFY'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+MongoDB Connection State: 0
+[0mGET /api/cart [31m500[0m 20020.037 ms - 439[0m
+[0mGET /api/auth/me [36m304[0m 10005.802 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.456 ms - -[0m
+[2026-11-04T16:08:54.504Z] GET /api/products
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T16:08:57.883Z
+Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/profile/me
+Request Method: GET
+Request Headers: {
+  host: 'localhost:5004',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVlYzQ5ZTFiMGRjMmM0YzhkOGY5OSIsImlhdCI6MTc5MzgwODUwOSwiZXhwIjoxNzk2NDAwNTA5fQ.BbttB0HM8_LveONkbYYxZXuHbJJ8jz3a7uisr29Yvnw',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  origin: 'http://localhost:3000',
+  'sec-fetch-site': 'same-site',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'http://localhost:3000/',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9,en-IN;q=0.8',
+  cookie: 'rzp_unified_session_id=Tw9on1oEwSHeFY'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+MongoDB Connection State: 0
+[0mGET /api/profile/me [31m500[0m 20006.232 ms - 439[0m
+[2026-11-04T16:08:57.884Z] GET /api/profile/me
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10015.742 ms - -[0m
+[2026-11-04T16:09:04.521Z] GET /api/products
+[2026-11-04T16:09:06.110Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10000.053 ms - -[0m
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10001.686 ms - 1630[0m
+
+===== ERROR HANDLER =====
+Timestamp: 2026-11-04T16:09:17.906Z
+Error: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Error Stack: MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+Request URL: /api/profile/me
+Request Method: GET
+Request Headers: {
+  host: 'localhost:5004',
+  connection: 'keep-alive',
+  'sec-ch-ua-platform': '"Windows"',
+  authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVlYzQ5ZTFiMGRjMmM0YzhkOGY5OSIsImlhdCI6MTc5MzgwODUwOSwiZXhwIjoxNzk2NDAwNTA5fQ.BbttB0HM8_LveONkbYYxZXuHbJJ8jz3a7uisr29Yvnw',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  accept: 'application/json, text/plain, */*',
+  'sec-ch-ua': '"Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"',
+  'sec-ch-ua-mobile': '?0',
+  origin: 'http://localhost:3000',
+  'sec-fetch-site': 'same-site',
+  'sec-fetch-mode': 'cors',
+  'sec-fetch-dest': 'empty',
+  referer: 'http://localhost:3000/',
+  'accept-encoding': 'gzip, deflate, br, zstd',
+  'accept-language': 'en-US,en;q=0.9,en-IN;q=0.8',
+  cookie: 'rzp_unified_session_id=Tw9on1oEwSHeFY'
+}
+Request Body: {}
+Request Query: {}
+Request Params: {}
+MongoDB Connection State: 0
+[0mGET /api/profile/me [31m500[0m 20022.889 ms - 439[0m
+[2026-11-04T16:09:32.176Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1b
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1b [32m200[0m 10001.884 ms - 281[0m
+[2026-11-04T16:09:42.179Z] GET /api/products/60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T16:09:42.183Z] GET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b
+Fetching related products for product ID: 60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T16:09:42.183Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T16:09:42.183Z
+[2026-11-04T16:09:45.772Z] POST /api/cart
+[2026-11-04T16:09:46.675Z] POST /api/cart
+[0mGET /api/products/60d5ec49e1b0dc2c4c8d8f1b [36m304[0m 10014.395 ms - -[0m
+Error in /related/:id endpoint: MongooseError: Operation `products.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\UnityProjects\RSP-EcomWeb\server\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:187:23)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+[0mGET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b [31m500[0m 10012.233 ms - 120[0m
+Error in /suggested endpoint: {
+  message: 'Operation `products.countDocuments()` buffering timed out after 10000ms',
+  name: 'MongooseError',
+  stack: 'MongooseError: Operation `products.countDocuments()` buffering timed out after 10000ms\n' +
+    '    at Timeout.<anonymous> (C:\\UnityProjects\\RSP-EcomWeb\\server\\node_modules\\mongoose\\lib\\drivers\\node-mongodb-native\\collection.js:187:23)\n' +
+    '    at listOnTimeout (node:internal/timers:685:17)\n' +
+    '    at process.processTimers (node:internal/timers:618:7)'
+}
+[0mGET /api/products/suggested [32m200[0m 10014.105 ms - 2[0m
+[2026-11-04T16:09:52.198Z] GET /api/products/related/60d5ec49e1b0dc2c4c8d8f1b
+Fetching related products for product ID: 60d5ec49e1b0dc2c4c8d8f1b
+[2026-11-04T16:09:52.198Z] GET /api/products/suggested
+
+===== SUGGESTED PRODUCTS ENDPOINT =====
+Request received at: 2026-11-04T16:09:52.198Z
