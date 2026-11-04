@@ -2437,3 +2437,30 @@ DB error, returning mock products: Operation `products.find()` buffering timed o
 [2026-11-04T15:53:54.564Z] GET /api/products
 [0mGET /api/products [0m-[0m - ms - -[0m
 [2026-11-04T15:53:56.102Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:53:56.430Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:53:57.030Z] GET /api/products
+[0mGET /api/products [0m-[0m - ms - -[0m
+[2026-11-04T15:53:58.412Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [32m200[0m 10010.881 ms - 1630[0m
+[2026-11-04T15:54:08.424Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10014.909 ms - -[0m
+[2026-11-04T15:54:47.175Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10013.199 ms - -[0m
+[2026-11-04T15:54:57.190Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10007.476 ms - -[0m
+[2026-11-04T16:03:35.562Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10010.416 ms - -[0m
+[2026-11-04T16:03:45.574Z] GET /api/products
+DB error, returning mock products: Operation `products.find()` buffering timed out after 10000ms
+[0mGET /api/products [36m304[0m 10005.986 ms - -[0m
