@@ -147,6 +147,20 @@ function App() {
                       </AdminRoute>
                     </ProtectedRoute>
                   } />
+                  <Route path="/admin/products" element={
+                    <ProtectedRoute>
+                      <AdminRoute>
+                        <AdminProducts />
+                      </AdminRoute>
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/admin/users" element={
+                    <ProtectedRoute>
+                      <AdminRoute>
+                        <AdminUsers />
+                      </AdminRoute>
+                    </ProtectedRoute>
+                  } />
                   
                   {/* Error routes */}
                   <Route path="/unauthorized" element={<Unauthorized />} />
