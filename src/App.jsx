@@ -24,6 +24,8 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'));
 const OrderHistory = lazy(() => import('./pages/OrderHistory'));
 const AdminOrders = lazy(() => import('./pages/admin/orders/AdminOrders'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
 const ProtectedRoute = lazy(() => import('./components/common/ProtectedRoute'));
 const AdminRoute = lazy(() => import('./components/common/AdminRoute'));
 const PaymentTest = lazy(() => import('./pages/PaymentTest'));

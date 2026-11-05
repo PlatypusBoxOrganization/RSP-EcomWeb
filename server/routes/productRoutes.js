@@ -2,6 +2,14 @@ import express from 'express';
 import Product from '../models/productModel.js';
 import asyncHandler from 'express-async-handler';
 import mongoose from 'mongoose';
+import { protect, admin } from '../middleware/auth.js';
+import {
+  getProducts,
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
+} from '../controllers/productController.js';
 
 const router = express.Router();
 
@@ -331,5 +339,14 @@ router.get(
     }
   })
 );
+
+// Admin CRUD routes
+router.use(protect);
+router.use(admin);
+
+router.get('/admin/all', getProducts);
+router.post('/', createProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
 export default router;
